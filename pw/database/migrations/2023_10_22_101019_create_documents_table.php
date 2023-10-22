@@ -27,7 +27,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("name");
-            $table->string("size");
+            $table->float('size', 4, 2);            
             $table->string("format");
             $table->softdeletes();
         });
