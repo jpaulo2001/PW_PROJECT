@@ -13,15 +13,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->timestamps();
+            $table->softdeletes();
+            $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
-            $table->timestamps();
+            $table->foreignId("departments_id")->nullable()->constrained();
+            $table->foreignId("userTypes_id")->nullable()->constrained();
+        });
+
+        Schema::create('usersTypes', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
         });
     }
-    '''''''''''''''''''''
+
 
     /**
      * Reverse the migrations.
@@ -29,5 +37,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('usersTypes');
+
     }
 };
