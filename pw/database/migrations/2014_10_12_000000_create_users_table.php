@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
-            $table->foreignId("departments_id")->nullable()->constrained();
-            $table->foreignId("userTypes_id")->nullable()->constrained();
+            $table->foreignId("departments_id");
+            $table->foreignId("userTypes_id");
         });
 
         Schema::create('usersTypes', function (Blueprint $table) {

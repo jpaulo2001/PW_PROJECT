@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId("users_id")->nullable()->constrained();
             $table->foreignId("documents_id")->nullable()->constrained();
             $table->timestamps();
-            $table->date();
+            $table->DateTime("date");
             $table->softdeletes();
             $table->string("body");
         });

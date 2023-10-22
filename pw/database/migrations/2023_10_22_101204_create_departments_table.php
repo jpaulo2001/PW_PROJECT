@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->strings("name");
-            $table->strings("code");
-            $table->foreign("departmentsTypes_id");
+            $table->string("name");
+            $table->string("code");
+            $table->foreignId("departmentsTypes_id");
             $table->softdeletes();
         });
 

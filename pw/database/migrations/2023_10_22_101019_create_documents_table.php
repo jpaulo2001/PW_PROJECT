@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->foreignId("users_id")->nullable()->constrained();
-            $table->foreignId("metadata_id")->nullable()->constrained();
-            $table->foreignId("permitions_id")->nullable()->constrained();
+            $table->foreignId("users_id");
+            $table->foreignId("metadata_id");
+            $table->foreignId("permitions_id");
         });
 
 
@@ -26,9 +26,9 @@ return new class extends Migration
         Schema::create('metadata', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->strings("name");
-            $table->strings("size");
-            $table->strings("format");
+            $table->string("name");
+            $table->string("size");
+            $table->string("format");
             $table->softdeletes();
         });
     }
