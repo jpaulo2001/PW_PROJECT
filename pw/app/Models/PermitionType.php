@@ -10,6 +10,7 @@ class PermitionType extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['types'];
 
     public function permition(){
         return $this->belongsTo(Permition::class);

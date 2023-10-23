@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->foreignId("permitionsTypes_id");
+            $table->foreignId("permitions_types_id");
         });
 
-        Schema::create('permitionsTypes', function (Blueprint $table) {
+        Schema::create('permitions_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
@@ -33,7 +33,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('permitions');
-        Schema::dropIfExists('permitionsTypes');
+        Schema::dropIfExists('permitions_types');
 
     }
 };

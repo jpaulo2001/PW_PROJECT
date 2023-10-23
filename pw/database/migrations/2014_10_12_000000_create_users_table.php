@@ -21,11 +21,12 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->foreignId("departments_id");
-            $table->foreignId("userTypes_id");
+            $table->foreignId("usersTypes_id");
         });
 
-        Schema::create('usersTypes', function (Blueprint $table) {
+        Schema::create('user_types', function (Blueprint $table) {
             $table->id();
+            $table->softDeletes();
             $table->string('name')->nullable();
         });
     }

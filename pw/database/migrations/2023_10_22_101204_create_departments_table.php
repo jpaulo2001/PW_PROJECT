@@ -16,11 +16,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name");
             $table->string("code");
-            $table->foreignId("departmentsTypes_id");
+            $table->foreignId("departments_types_id");
             $table->softdeletes();
         });
 
-        Schema::create('departmentsTypes', function (Blueprint $table) {
+        Schema::create('departments_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string("types");
@@ -35,7 +35,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('departments');
-        Schema::dropIfExists('departmentsTypes');
+        Schema::dropIfExists('departments_types');
 
     }
 };
