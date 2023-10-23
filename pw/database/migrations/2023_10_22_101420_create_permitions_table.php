@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->foreignId("types_id");
+            $table->foreignId("permitionsTypes_id");
         });
 
         Schema::create('permitionsTypes', function (Blueprint $table) {

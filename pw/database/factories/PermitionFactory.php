@@ -18,7 +18,8 @@ class PermitionFactory extends Factory
     public function definition(): array
     {
         return [
-            'types' => fake()->name(),
+            'permitionsTypes_id' => fake()->numberBetween(1, 200)
         ];
+        
     }
 }

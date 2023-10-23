@@ -18,9 +18,12 @@ class DocumentFactory extends Factory
     public function definition(): array
     {
         return [
+            'users_id' => fake()->numberBetween(1, 50),
+            'metadata_id' => fake()->numberBetween(1, 200),
+            'permitions_id' => fake()->numberBetween(1, 200),
             'name' => fake()->name(),
-            'code' => fake()->name(),
-
+            'size' => Str::random(16),
+            'format' => fake()->name()
         ];
     }
 }
