@@ -22,13 +22,10 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId("departments_id");
             $table->foreignId("usersTypes_id");
+            $table->boolean('is_admin')->default(false);
         });
 
-        Schema::create('user_types', function (Blueprint $table) {
-            $table->id();
-            $table->softDeletes();
-            $table->string('name')->nullable();
-        });
+
     }
 
 
@@ -38,7 +35,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('usersTypes');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('is_admin');
+        });
 
     }
 };

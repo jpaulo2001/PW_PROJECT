@@ -16,17 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name");
             $table->string("code");
-            $table->foreignId("departments_types_id");
             $table->softdeletes();
         });
 
-        Schema::create('departments_types', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string("types");
-            $table->softdeletes();
 
-        });
     }
 
     /**
@@ -35,7 +28,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('departments');
-        Schema::dropIfExists('departments_types');
-
+ 
     }
 };

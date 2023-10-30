@@ -14,9 +14,15 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function userType(){
-        return $this->hasMany(UserType::class);
+
+    public function department(){
+        return $this->belongsTo(Department::class);
     }
+
+    public function document(){
+        return $this->hasMany(Department::class);
+    }
+
 
 
     /**

@@ -9,13 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Department extends Model
 {
     use HasFactory, SoftDeletes;
-
-    public function departmentType(){
-        return $this->belongsTo(DepartmentType::class);
-    }
+    
 
     public function user(){
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
 
 

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('historics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("users_id")->nullable()->constrained();
-            $table->foreignId("documents_id")->nullable()->constrained();
+            $table->foreignId("users_id")->constrained();
+            $table->foreignId("documents_id")->constrained();
             $table->timestamps();
             $table->DateTime("date");
             $table->softdeletes();

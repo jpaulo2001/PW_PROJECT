@@ -16,23 +16,27 @@ return new class extends Migration
             $table->timestamps();
             $table->softdeletes();
             $table->foreignId("users_id");
-            $table->foreignId("metadata_id");
             $table->foreignId("permitions_id");
         });
 
-
-
-
+        Schema::create('document_metadata', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->softdeletes();
+            $table->foreignId("metadata_id");
+            $table->foreignId("documents_id");
+            $table->string("content");
+        });
+  
         Schema::create('metadata', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("name");
-            $table->float('size', 4, 2);            
+            $table->string("name");         
             $table->string("format");
             $table->softdeletes();
         });
     }
-
+    
 
     /**
      * Reverse the migrations.
@@ -41,6 +45,8 @@ return new class extends Migration
     {
         Schema::dropIfExists('documents');
         Schema::dropIfExists('metadata');
+        Schema::dropIfExists('document_metadata');
+        
 
     }
 };

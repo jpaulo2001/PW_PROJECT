@@ -10,8 +10,8 @@ class Document extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function metadata(){
-        return $this->hasMany(Metadata::class);
+    public function documentMetadata(){
+        return $this->hasMany(DocumentMetadata::class);
     }
 
 
@@ -21,7 +21,7 @@ class Document extends Model
 
 
     public function user(){
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
 
