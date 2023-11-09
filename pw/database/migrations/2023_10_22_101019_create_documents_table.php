@@ -32,6 +32,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("name");         
+            $table->string("size");
+            $table->string("type");
             $table->string("format");
             $table->softdeletes();
         });

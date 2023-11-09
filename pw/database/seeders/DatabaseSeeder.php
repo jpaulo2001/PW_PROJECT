@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
 
 
     public function run(): void{
-        $this->call(UserTypeSeeder::class);
-
+   
         if (App::environment() == 'local') {
             //UserTypes::factory(100)->create();
             //Department::factory(25)->create();
