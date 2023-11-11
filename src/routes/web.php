@@ -20,15 +20,11 @@ Route::get('/', function () {
     return view('welcome-pw');
 })->name('inicio');
 
-//Route::get('/breeze', function () {
-//    return view('welcome');
-//});
 
-/*
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('inicio');
-*/
+});
+
     
 
 Route::middleware('auth')->group(function () {
