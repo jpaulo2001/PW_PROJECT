@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Department;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\PunchEvent;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
@@ -27,6 +29,8 @@ class DatabaseSeeder extends Seeder
         if (App::environment() == 'local') {
             //User::factory(200)->create();
             //Document::factory(5000)->create();
+            User::factory(500)->create();
+            Department::factory(8)->create();
         }
 
     }
