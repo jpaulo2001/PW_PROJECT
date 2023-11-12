@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Employee;
-use App\Models\PunchEvent;
+use App\Models\Department;
+use App\Models\User;
+use App\Models\Historic;
+use App\Models\Document;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
@@ -23,10 +25,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
         if (App::environment() == 'local') {
-            //User::factory(200)->create();
-            //Document::factory(5000)->create();
+            User::factory(500)->create();
+            Department::factory(8)->create();
+            Document::factory(500)->create();
+            Historic::factory(500)->create();
+
         }
 
     }
