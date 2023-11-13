@@ -11,7 +11,7 @@ class DocumentPermitionType extends Model
     use HasFactory, SoftDeletes;
 
     public function documentPermition(){
-        return $this->belongsTo(DocumentPermition::class);
+        return $this->belongsTo(DocumentsPermition::class);
     }
 
     public function document(){

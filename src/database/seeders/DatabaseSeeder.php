@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\User;
 use App\Models\Historic;
 use App\Models\Document;
+use App\Models\DocumentsPermition;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             Department::factory(8)->create();
             Document::factory(500)->create();
             Historic::factory(500)->create();
+            DocumentsPermition::factory(3)->create();
 
         }
 
