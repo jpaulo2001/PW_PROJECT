@@ -19,7 +19,7 @@ class UserTypeFactory extends Factory
         return [
             'user_id' =>fake()->numberBetween(1, 500),
             'user_type_permitions_id' =>fake()->numberBetween(1, 5),
-            'name' => fake()->name,
+//            'name' => fake()->name,
         ];
     }
 }

@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Historic;
 use App\Models\Document;
 use App\Models\DocumentsPermition;
+use App\Models\UserType;
+use App\Models\UserTypePermition;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
@@ -32,7 +34,8 @@ class DatabaseSeeder extends Seeder
             Document::factory(500)->create();
             Historic::factory(500)->create();
             DocumentsPermition::factory(3)->create();
-
+            UserTypePermition::factory(5)->create();
+            UserType::factory(500)->create();
         }
 
     }

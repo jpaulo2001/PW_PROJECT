@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_types_permitions', function (Blueprint $table) {
+        Schema::create('user_type_permitions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softDeletes();
             $table->string('type');
         });
 
-        Schema::create('users_types', function (Blueprint $table) {
+        Schema::create('user_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_types_permitions_id')->constrained();
-            $table->foreignId('users_id')->constrained();
-            $table->string('name');
+            $table->timestamps();
+            $table->foreignId('user_type_permitions_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+//            $table->string('name');
         });
     }
 
@@ -31,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_types_permitions');
-        Schema::dropIfExists('users_types');
+        Schema::dropIfExists('user_type_permitions');
+        Schema::dropIfExists('user_type');
     }
 };
