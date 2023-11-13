@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +22,32 @@ Route::get('/', function () {
     return view('welcome-pw');
 })->name('inicio');
 
-
+//main dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-    
+
+//register
+Route::get('/auth/register', function(){
+    return view('register');
+});
+
+
+
+
+
+
+//controllor for documents with all the resorces created
+Route::resource('/documents', DocumentController::class);
+
+
+//controller for deparments with all the resurces created ^^
+Route::resource('/deparments', DepartmentController::class);
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

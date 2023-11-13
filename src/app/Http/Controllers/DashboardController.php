@@ -16,7 +16,7 @@ class DashboardController extends Controller
         return view(
             'dashboard',
             [
-                'data' => $service->getDashboardData()
+
             ]
         );
     }
