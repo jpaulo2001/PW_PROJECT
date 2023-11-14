@@ -28,18 +28,18 @@ return new class extends Migration
             $table->string("content");
             $table->integer("value");
         });
-  
+
         Schema::create('metadata', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->string("name");         
+            $table->string("doc_name");
             $table->string("size");
             $table->string("type");
             $table->string("format");
         });
     }
-    
+
 
     /**
      * Reverse the migrations.
@@ -49,7 +49,7 @@ return new class extends Migration
         Schema::dropIfExists('documents');
         Schema::dropIfExists('metadata');
         Schema::dropIfExists('document_metadata');
-        
+
 
     }
 };
