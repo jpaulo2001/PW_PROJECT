@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string("types");
         });
 
-        Schema::create('documents_permitions_types', function (Blueprint $table) {
+        Schema::create('document_permition_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->foreignId("documents_permitions");
-            $table->foreignId("documents_id");
+            $table->foreignId("document_permitions_id");
+            $table->foreignId("document_id");
         });
     }
 
@@ -34,7 +34,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('documents_permitions');
-        Schema::dropIfExists('documents_permitions_types');
+        Schema::dropIfExists('document_permition_types');
 
     }
 };
