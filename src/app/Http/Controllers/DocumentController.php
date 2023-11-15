@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Documents;
 
 class DocumentController extends Controller
 {
@@ -11,7 +12,13 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        //
+        $documents = Documents::orderBy('id')->paginate(25);
+        return view(
+            'documents.index',
+            [
+                'documents' => $documents
+            ]
+        );
     }
 
     /**
@@ -35,7 +42,12 @@ class DocumentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view(
+            'documents.show',
+            [
+                'documents' => $documents
+            ]
+        );
     }
 
     /**
@@ -43,7 +55,12 @@ class DocumentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view(
+            'documents.edit',
+            [
+                'documents' => $documents
+            ]
+        );
     }
 
     /**
