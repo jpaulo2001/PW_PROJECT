@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-       
+
     <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -28,11 +28,20 @@
 {{--        Interface--}}
 {{--    </div>--}}
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{}">
+    <!-- Nav Item - Documents -->
+    <li class="nav-item {{ request()->routeIs('documents.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('documents.index') }}">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Documentos</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Users -->
+    <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('users.index') }}">
             <i class="fas fa-fw fa-user"></i>
-            <span>Documentos</span></a>
+            <span>Utilizadores</span>
+        </a>
     </li>
 
     <!-- Nav Item - Pages Collapse Menu -->

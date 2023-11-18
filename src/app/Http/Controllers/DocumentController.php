@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\Controller;
 use Illuminate\Http\Request;
-use App\Models\Documents;
+use App\Models\Document;
 
 class DocumentController extends Controller
 {
@@ -12,7 +13,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $documents = Documents::orderBy('id')->paginate(25);
+        $documents = Document::orderBy('id')->paginate(25);
         return view(
             'documents.index',
             [
@@ -40,7 +41,7 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Document $documents)
     {
         return view(
             'documents.show',
@@ -53,7 +54,7 @@ class DocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Document $documents)
     {
         return view(
             'documents.edit',
@@ -74,8 +75,13 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Document $documents)
     {
-        //
+        return view(
+            'documents.destory',
+            [
+                'documents'=> $documents
+            ]
+        );
     }
 }
