@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DocumentPermition;
+
+
 
 class DocumentPermitionController extends Controller
 {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Department;
 
 class DepartmentController extends Controller
 {
@@ -11,7 +12,13 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = Department::orderBy('id')->paginate(25);
+        return view(
+            'departments.index',
+            [
+                'departments' => $departments
+            ]
+        );
     }
 
     /**

@@ -31,6 +31,6 @@ class UpdateEmployeeRequest extends FormRequest
 
     public function toDTO(): EmployeeDTO
     {
-        return new EmployeeDTO($this->nome);
+        return new User($this->nome);
     }
 }

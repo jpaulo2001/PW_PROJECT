@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreignId("departments_id");
-            $table->foreignId("users_types_id");
+            $table->foreignId("departments_id")->nullable();
+            $table->foreignId("users_types_id")->nullable();
         });
     }
 

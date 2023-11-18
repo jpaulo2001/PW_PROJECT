@@ -38,11 +38,11 @@ Route::get('/auth/register', function(){
 
 
 
-//controllor for documents with all the resorces created
+//controllor for documents with all the resources created
 Route::resource('/documents', DocumentController::class);
 
 
-//controller for deparments with all the resurces created ^^
+//controller for deparments with all the resources created ^^
 Route::resource('/deparments', DepartmentController::class);
 
 

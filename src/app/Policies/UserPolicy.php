@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Department;
+use App\Models\UserTypePermition;
 
 
 class UserPolicy
@@ -19,7 +20,7 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Department $Department): bool
+    public function view(User $user, UserTypePermition $UserTypePermition): bool
     {
         return true;
     }
@@ -27,23 +28,23 @@ class UserPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, UserTypePermition $UserTypePermition): bool
     {
-        return $user->is_admin;
+        return $UserTypePermition->type("Administrador");
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Department $Department): bool
+    public function update(User $user): bool
     {
-        return $user->is_admin /*|| $user->email = 'joaopaulo6069@hotmail.com'*/;
+        return true; /*|| $user->email = 'joaopaulo6069@hotmail.com'*/;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Department $Department): bool
+    public function delete(User $user, UserTypePermition $UserTypePermition): bool
     {
         //
     }
@@ -51,7 +52,7 @@ class UserPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Department $Department): bool
+    public function restore(User $user, UserTypePermition $UserTypePermition): bool
     {
         //
     }
@@ -59,7 +60,7 @@ class UserPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Department $Department): bool
+    public function forceDelete(User $user, UserTypePermition $UserTypePermition): bool
     {
         //
     }
