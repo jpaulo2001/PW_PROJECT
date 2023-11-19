@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Dto\EmployeeDTO;
+use App\Dto\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEmployeeRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class UpdateEmployeeRequest extends FormRequest
         ];
     }
 
-    public function toDTO(): EmployeeDTO
+    public function toDTO(): UserDTO
     {
         return new User($this->nome);
     }

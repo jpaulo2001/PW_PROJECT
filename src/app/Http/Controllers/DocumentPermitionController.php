@@ -14,7 +14,13 @@ class DocumentPermitionController extends Controller
      */
     public function index()
     {
-        //
+        $documentsPermitions = DocumentPermition::orderBy('id');
+        return view(
+            'documentsPermitions.index',
+            [
+                'documentsPermitions' => $documentsPermitions
+            ]
+        );
     }
 
     /**

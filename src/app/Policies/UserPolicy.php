@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function view(User $user, UserTypePermition $UserTypePermition): bool
     {
-        return true;
+        return $UserTypePermition->type("Administrador");
     }
 
     /**

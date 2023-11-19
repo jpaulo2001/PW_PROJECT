@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\MetadataController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,9 @@ Route::resource('/documents', DocumentController::class);
 
 //controller for deparments with all the resources created ^^
 Route::resource('/deparments', DepartmentController::class);
+
+//controller for metadata with all the resources created ^^
+Route::resource('/Metadata', MetadataController::class);
 
 
 

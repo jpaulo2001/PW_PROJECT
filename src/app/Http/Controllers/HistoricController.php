@@ -13,7 +13,13 @@ class HistoricController extends Controller
      */
     public function index()
     {
-        //
+        $historics = Historic::class();
+        return view(
+            'historics.index',
+            [
+                'historics' => $historics
+            ]
+        );
     }
 
     /**

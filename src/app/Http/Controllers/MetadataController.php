@@ -12,7 +12,13 @@ class MetadataController extends Controller
      */
     public function index()
     {
-        //
+        $Metadatas = Metadata::orderBy('id');
+        return view(
+            'Metadata.index',
+            [
+                'Metadata' => $Metadatas
+            ]
+        );
     }
 
     /**
@@ -34,9 +40,10 @@ class MetadataController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $format)
     {
-        //
+        return view('Metadata.show', ['metadata' => Metadata::findOrFail($format)]);
+
     }
 
     /**
