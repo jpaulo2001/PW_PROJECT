@@ -28,7 +28,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        //
+        return view ('documents.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('documents')->with('sucess');
     }
 
     /**

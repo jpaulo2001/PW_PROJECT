@@ -28,7 +28,7 @@ class DocumentPermitionController extends Controller
      */
     public function create()
     {
-        //
+        return view ('documentsPermitions.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class DocumentPermitionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('documentsPermitions')->with('sucess');
     }
 
     /**
@@ -44,7 +44,7 @@ class DocumentPermitionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('documentsPermitions.show', ['documentsPermitions' => DocumentPermition::findOrFail($format)]);
     }
 
     /**

@@ -13,7 +13,7 @@ class HistoricController extends Controller
      */
     public function index()
     {
-        $historics = Historic::class();
+        $historics = Historic::orderBy('id');
         return view(
             'historics.index',
             [
@@ -27,7 +27,7 @@ class HistoricController extends Controller
      */
     public function create()
     {
-        //
+        return view ('historics.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class HistoricController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('historics')->with('sucess');
     }
 
     /**
@@ -43,7 +43,7 @@ class HistoricController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('historics.show', ['historics' => Historic::findOrFail($format)]);
     }
 
     /**

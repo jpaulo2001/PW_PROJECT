@@ -26,7 +26,7 @@ class MetadataController extends Controller
      */
     public function create()
     {
-        //
+        return view ('Metadata.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class MetadataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('Metadata')->with('sucess');
     }
 
     /**

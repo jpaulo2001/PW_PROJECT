@@ -10,6 +10,7 @@ class DepartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $departments = Department::orderBy('name');
@@ -26,7 +27,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view ('departments.create');
     }
 
     /**
@@ -34,7 +35,7 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('departments')->with('sucess');
     }
 
     /**
@@ -42,7 +43,7 @@ class DepartmentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('departments.show', ['departments' => Department::findOrFail($format)]);
     }
 
     /**
