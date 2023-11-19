@@ -2,7 +2,7 @@
 
 namespace App\Dto;
 
-class MetadataDTO
+class UserDTO
 {
     public string $name;
 
