@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Policies;
-
 use App\Models\User;
 use App\Models\Department;
 use App\Models\UserTypePermition;
@@ -20,17 +19,20 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, UserTypePermition $UserTypePermition): bool
+    public function view(User $user)
     {
-        return $UserTypePermition->type("Administrador");
+        $user->userType->name == ("Admin");    
     }
+
+
+
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, UserTypePermition $UserTypePermition): bool
+    public function create(User $user): bool
     {
-        return $UserTypePermition->type("Administrador");
+        return $userType->type == ("Administrador");
     }
 
     /**
@@ -41,18 +43,23 @@ class UserPolicy
         return true; /*|| $user->email = 'joaopaulo6069@hotmail.com'*/;
     }
 
+
+
+
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, UserTypePermition $UserTypePermition): bool
+    public function delete(User $user): bool
     {
         //
     }
 
+
+
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, UserTypePermition $UserTypePermition): bool
+    public function restore(User $user): bool
     {
         //
     }
@@ -60,7 +67,7 @@ class UserPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, UserTypePermition $UserTypePermition): bool
+    public function forceDelete(User $user): bool
     {
         //
     }
