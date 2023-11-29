@@ -8,7 +8,7 @@ class UserDTO
 
     public function __construct(string $name, string $password, string $email)
     {
-        $this->name = $nome;
+        $this->name = $name;
         $this->password = $password;
         $this->email = $email;
     }
@@ -16,7 +16,7 @@ class UserDTO
     public function toArray() : array
     {
         return [
-            'nome' => $this->names,
+            'nome' => $this->name,
             'password' => $this->password,
             'email' => $this->email,
         ];
