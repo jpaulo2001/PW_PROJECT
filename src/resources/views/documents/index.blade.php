@@ -7,7 +7,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>UserID</th>
+                        <th>Documents ID</th>
                         <th class="text-end">Acções</th>
                     </tr>
                     </thead>
@@ -19,8 +19,6 @@
                             <td class="text-end">
                                 <a href="{{ route('documents.show', ['document' => $document->id]) }}"
                                     class="btn btn-primary btn-outline">Ver</a>
-
-
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
                                    class="btn btn-warning btn-outline-sm">Modificar</a>
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
