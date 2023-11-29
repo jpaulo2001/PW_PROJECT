@@ -54,5 +54,10 @@ class User extends Authenticatable
         return $this->belongsTo(UserType::class);
     }
 
+    public function document(){
+        return $this->hasMany(UserType::class);
+    }
+
+
 
 }
