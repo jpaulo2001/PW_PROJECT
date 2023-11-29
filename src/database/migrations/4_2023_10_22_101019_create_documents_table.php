@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
         });
 
-        Schema::create('user_documents', function (Blueprint $table) {
+        Schema::create('user_document', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
