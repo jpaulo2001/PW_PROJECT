@@ -10,7 +10,7 @@ use App\Models\Metadata;
 use App\Models\User;
 use App\Models\Historic;
 use App\Models\Document;
-use App\Models\DocumentsPermition;
+use App\Models\DocumentPermition;
 use App\Models\UserType;
 use App\Models\UserTypePermition;
 use Database\Factories\DocumentPermitionTypeFactory;
@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             Department::factory(8)->create();
             Document::factory(500)->create();
             Historic::factory(500)->create();
-            DocumentsPermition::factory(3)->create();
+            DocumentPermition::factory(3)->create();
             DocumentPermitionType::factory(500)->create();
             UserTypePermition::factory(5)->create();
             UserType::factory(500)->create();
