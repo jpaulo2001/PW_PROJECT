@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Historic;
 use App\Models\Document;
 use App\Models\DocumentPermition;
+use App\Models\UserDocument;
 use App\Models\UserType;
 use App\Models\UserTypePermition;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,8 @@ class DatabaseSeeder extends Seeder
             UserType::factory(500)->create();
 
             DocumentMdata::factory(50)->create(); // ok
+
+            UserDocument::factory(500)->create();
         }
 
     }
