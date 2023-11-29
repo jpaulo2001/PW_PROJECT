@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentPermition>
  */
-class DocumentsPermitionFactory extends Factory
+class DocumentPermitionFactory extends Factory
 {
     /**
      * Define the model's default state.

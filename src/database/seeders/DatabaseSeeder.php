@@ -13,8 +13,6 @@ use App\Models\Document;
 use App\Models\DocumentPermition;
 use App\Models\UserType;
 use App\Models\UserTypePermition;
-use Database\Factories\DocumentPermitionTypeFactory;
-use Database\Factories\MetadataFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
@@ -34,15 +32,17 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         if (App::environment() == 'local') {
-            User::factory(500)->create();
             Department::factory(8)->create();
+            User::factory(500)->create();
+
             Document::factory(500)->create();
             Historic::factory(500)->create();
+            Mdata::factory(50)->create();
             DocumentPermition::factory(3)->create();
             DocumentPermitionType::factory(500)->create();
             UserTypePermition::factory(5)->create();
             UserType::factory(500)->create();
-            Mdata::factory(50)->create();
+
             DocumentMdata::factory(50)->create();
         }
 
