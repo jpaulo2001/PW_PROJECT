@@ -19,17 +19,13 @@ class Document extends Model
         return $this->hasMany(Historic::class);
     }
 
-
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
-
-
     public function documentPermitionType(){
         return $this->hasMany(DocumentPermitionType::class);
     }
 
-
+    public function userDocument(){
+        return $this->hasMany(UserDocument::class);
+    }
 
 
 

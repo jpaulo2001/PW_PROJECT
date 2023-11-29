@@ -29,7 +29,7 @@ class User extends Authenticatable
      * The attributes that should be hidden for serialization.
      *
         * @var array<int, string>
-        
+
         */
     protected $hidden = [
         'password',
@@ -54,9 +54,10 @@ class User extends Authenticatable
         return $this->belongsTo(UserType::class);
     }
 
-    public function document(){
-        return $this->hasMany(UserType::class);
+    public function userDocument(){
+        return $this->hasMany(UserDocument::class);
     }
+
 
 
 

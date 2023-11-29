@@ -21,6 +21,14 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId("departments_id")->nullable();
         });
+
+        Schema::create('user_documents', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->softdeletes();
+            $table->foreignId("user_id");
+            $table->foreignId("document_id");
+        });
     }
 
     /**
