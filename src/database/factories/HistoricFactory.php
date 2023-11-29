@@ -17,9 +17,9 @@ class HistoricFactory extends Factory
     public function definition(): array
     {
         return [
-            'documents_id' => fake()->numberBetween(1, 500),
             'date' => fake()->dateTime(),
             'body' => fake()->text,
+            'document_id' => fake()->numberBetween(1, 500),
         ];
     }
 }

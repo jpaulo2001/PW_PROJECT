@@ -17,7 +17,7 @@ class DocumentFactory extends Factory
     public function definition(): array
     {
         return [
-            'users_id' => fake()->numberBetween(1, 500),
+            'user_id' => fake()->numberBetween(1, 500),
         ];
     }
 }

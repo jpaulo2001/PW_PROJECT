@@ -19,8 +19,8 @@ class DocumentMetadataFactory extends Factory
     public function definition(): array
     {
         return [
-            'metadata_id' => $this->faker->numberBetween(1, 50),
-            'documents_id' => $this->faker->numberBetween(1, 500),
+            'mdata_id' => $this->faker->numberBetween(1, 50),
+            'document_id' => $this->faker->numberBetween(1, 500),
             'content' => $this->faker->text,
             'value' => $this->faker->numberBetween(1, 20),
         ];

@@ -17,9 +17,8 @@ class UserTypeFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_type_permition_id' =>fake()->numberBetween(1, 5),
             'user_id' =>fake()->numberBetween(1, 500),
-            'user_type_permitions_id' =>fake()->numberBetween(1, 5),
-//            'name' => fake()->name,
         ];
     }
 }
