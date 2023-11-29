@@ -19,15 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId("departments_id")->nullable();
-        });
-
-        Schema::create('user_documents', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->softdeletes();
-            $table->foreignId("user_id");
-            $table->foreignId("document_id");
+            $table->foreignId("departments_id")->nullable()->constrained();
         });
     }
 

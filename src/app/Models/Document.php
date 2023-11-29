@@ -11,7 +11,7 @@ class Document extends Model
     use HasFactory, SoftDeletes;
 
     public function documentMetadata(){
-        return $this->hasMany(DocumentMetadata::class);
+        return $this->belongsToMany(DocumentMetadata::class);
     }
 
 

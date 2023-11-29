@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('document_permitions', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->string("types");
+            // Relation to user table
+            $table->foreignId('user_id')->constrained();
         });
 
-        Schema::create('document_permition_type', function (Blueprint $table) {
+        Schema::create('user_document', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->foreignId("document_permition_id")->constrained();
+            $table->foreignId("user_id")->constrained();
             $table->foreignId("document_id")->constrained();
         });
     }
@@ -32,8 +33,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('document_permitions');
-        Schema::dropIfExists('document_permition_type');
+        Schema::dropIfExists('documents');
+        Schema::dropIfExists('user_document');
+
 
     }
 };

@@ -18,12 +18,11 @@ return new class extends Migration
             $table->string('type');
         });
 
-        Schema::create('user_types', function (Blueprint $table) {
+        Schema::create('user_type', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_type_permitions_id')->constrained();
+            $table->foreignId('user_type_permition_id')->constrained();
             $table->foreignId('user_id')->constrained();
-//            $table->string('name');
         });
     }
 

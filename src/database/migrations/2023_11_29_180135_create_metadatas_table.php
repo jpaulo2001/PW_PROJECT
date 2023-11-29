@@ -11,25 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->softdeletes();
-            // Relation to user table
-            $table->foreignId('users_id');
-        });
 
-        Schema::create('document_metadata', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->softdeletes();
-            $table->foreignId("metadata_id");
-            $table->foreignId("documents_id");
-            $table->string("content");
-            $table->integer("value");
-        });
-
-        Schema::create('metadata', function (Blueprint $table) {
+        Schema::create('metadatas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
@@ -38,18 +21,25 @@ return new class extends Migration
             $table->string("type");
             $table->string("format");
         });
-    }
 
+        Schema::create('document_metadata', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->softdeletes();
+            $table->foreignId("metadata_id")->constrained();
+            $table->foreignId("document_id")->constrained();
+            $table->string("content");
+            $table->integer("value");
+        });
+
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
-        Schema::dropIfExists('metadata');
+        Schema::dropIfExists('metadatas');
         Schema::dropIfExists('document_metadata');
-
-
     }
 };
