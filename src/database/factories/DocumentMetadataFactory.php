@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Document;
-use App\Models\Metadata;
+use App\Models\Mdata;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentMetadata>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentMdata>
  */
 class DocumentMetadataFactory extends Factory
 {

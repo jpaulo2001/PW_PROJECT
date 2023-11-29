@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->softdeletes();
             $table->timestamps();
-            $table->foreignId("document_id")->constrained();
             $table->DateTime("date");
             $table->string("body");
+            $table->foreignId("document_id")->constrained();
         });
     }
 

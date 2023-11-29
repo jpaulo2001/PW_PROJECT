@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
 
-        Schema::create('metadatas', function (Blueprint $table) {
+        Schema::create('mdatas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
@@ -22,11 +22,11 @@ return new class extends Migration
             $table->string("format");
         });
 
-        Schema::create('document_metadata', function (Blueprint $table) {
+        Schema::create('document_mdata', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->foreignId("metadata_id")->constrained();
+            $table->foreignId("mdata_id")->constrained();
             $table->foreignId("document_id")->constrained();
             $table->string("content");
             $table->integer("value");
@@ -39,7 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('metadatas');
-        Schema::dropIfExists('document_metadata');
+        Schema::dropIfExists('mdatas');
+        Schema::dropIfExists('document_mdata');
     }
 };

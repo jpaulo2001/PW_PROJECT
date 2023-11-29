@@ -47,7 +47,7 @@ Route::resource('/documents', DocumentController::class);
 Route::resource('/deparments', DepartmentController::class);
 
 //controller for metadata with all the resources created ^^
-Route::resource('/Metadata', MetadataController::class);
+Route::resource('/Mdata', MetadataController::class);
 
 
 

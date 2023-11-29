@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
 use App\Models\Document;
-use App\Models\DocumentMetadata;
+use App\Models\DocumentMdata;
 
 class DashboardService
 {
@@ -19,7 +19,7 @@ class DashboardService
             $date = Carbon::now();
         }
 
-        return DocumentMetadata::query()
+        return DocumentMdata::query()
             ->where('documents_id', $document->id)
             ->where('created_at', '>=', $date = Carbon::now()->subDays(7))
             ->orderBy('created_at')

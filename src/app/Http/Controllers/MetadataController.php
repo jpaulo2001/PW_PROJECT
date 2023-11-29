@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Metadata;
+use App\Models\Mdata;
 
 class MetadataController extends Controller
 {
@@ -12,11 +12,11 @@ class MetadataController extends Controller
      */
     public function index()
     {
-        $Metadatas = Metadata::orderBy('id');
+        $Metadatas = Mdata::orderBy('id');
         return view(
-            'Metadata.index',
+            'Mdata.index',
             [
-                'Metadata' => $Metadatas
+                'Mdata' => $Metadatas
             ]
         );
     }
@@ -26,7 +26,7 @@ class MetadataController extends Controller
      */
     public function create()
     {
-        return view ('Metadata.create');
+        return view ('Mdata.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class MetadataController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('Metadata')->with('sucess');
+        return redirect()->route('Mdata')->with('sucess');
     }
 
     /**
@@ -42,7 +42,7 @@ class MetadataController extends Controller
      */
     public function show(string $format)
     {
-        return view('Metadata.show', ['metadata' => Metadata::findOrFail($format)]);
+        return view('Mdata.show', ['metadata' => Mdata::findOrFail($format)]);
 
     }
 

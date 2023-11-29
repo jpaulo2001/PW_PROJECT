@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Department;
-use App\Models\DocumentMetadata;
+use App\Models\DocumentMdata;
 use App\Models\DocumentPermitionType;
-use App\Models\Metadata;
+use App\Models\Mdata;
 use App\Models\User;
 use App\Models\Historic;
 use App\Models\Document;
@@ -42,8 +42,8 @@ class DatabaseSeeder extends Seeder
             DocumentPermitionType::factory(500)->create();
             UserTypePermition::factory(5)->create();
             UserType::factory(500)->create();
-            Metadata::factory(50)->create();
-            DocumentMetadata::factory(50)->create();
+            Mdata::factory(50)->create();
+            DocumentMdata::factory(50)->create();
         }
 
     }
