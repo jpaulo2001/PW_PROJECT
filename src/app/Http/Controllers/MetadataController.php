@@ -40,9 +40,9 @@ class MetadataController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $format)
+    public function show(string $id)
     {
-        return view('Mdata.show', ['metadata' => Mdata::findOrFail($format)]);
+        return view('Mdata.show', ['metadata' => Mdata::findOrFail($id)]);
 
     }
 

@@ -43,7 +43,7 @@ class HistoricController extends Controller
      */
     public function show(string $id)
     {
-        return view('historics.show', ['historics' => Historic::findOrFail($format)]);
+        return view('historics.show', ['historics' => Historic::findOrFail($id)]);
     }
 
     /**
