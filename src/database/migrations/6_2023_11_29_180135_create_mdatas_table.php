@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string("format");
         });
 
-        Schema::create('document_mdata', function (Blueprint $table) {
+        Schema::create('document_mdatas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();

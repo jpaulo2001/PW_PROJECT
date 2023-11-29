@@ -29,7 +29,6 @@ class DocumentPermitionFactory extends Factory
             self::$index = 0;
         }
         return [
-            'permitions_types_id' => fake()->numberBetween(1, 3),
             'types' => self::$types[self::$index++],
         ];
     }

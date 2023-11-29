@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("types");
         });
 
-        Schema::create('document_permition_type', function (Blueprint $table) {
+        Schema::create('document_permition_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softdeletes();

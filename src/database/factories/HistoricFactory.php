@@ -17,11 +17,7 @@ class HistoricFactory extends Factory
     public function definition(): array
     {
         return [
-<<<<<<< Updated upstream
-            'documents_id' => fake()->numberBetween(1, 500),
-            'date' => fake()->dateTime(),
-=======
->>>>>>> Stashed changes
+            'document_id' => fake()->numberBetween(1, 500),
             'body' => fake()->text,
         ];
     }
