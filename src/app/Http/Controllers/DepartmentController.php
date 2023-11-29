@@ -43,7 +43,7 @@ class DepartmentController extends Controller
      */
     public function show(string $id)
     {
-        return view('departments.show', ['departments' => Department::findOrFail($format)]);
+        return view('departments.show', ['departments' => Department::findOrFail($id)]);
     }
 
     /**
