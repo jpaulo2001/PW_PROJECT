@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col">
-                @can('create', App\Models\User::class) // está assim porque não conseguia o user e foi maneira de trabalhar...ver mais a frente
+                @can('create', App\Models\User::class)
                     <a href="{{ route('users.create') }}" class="btn btn-success btn-sm mb-3">Criar</a>
                 @endcan
 
@@ -13,6 +13,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Email</th>
+                        <th class="text-left">Departamento</th>
                         <th class="text-end">Ações</th>
                     </tr>
                     </thead>
@@ -21,6 +22,11 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                {{ \DB::table('users')->join('departments', 'users.department_id', '=', 'departments.id')
+                                    ->where('users.id', $user->id)
+                                    ->value('departments.name') }}
+                            </td>
                             <td class="text-end">
                                 <a href="{{ route('users.show', ['user' => $user]) }}" class="btn btn-primary btn-sm">Ver</a>
                                 @can('create', App\Models\User::class)
