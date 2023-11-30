@@ -11,7 +11,7 @@ class Mdata extends Model
     use HasFactory, SoftDeletes;
 
 
-    public function documentMetadata(){
+    public function documentMdata(){
         return $this->hasMany(DocumentMdata::class);
     }
 
