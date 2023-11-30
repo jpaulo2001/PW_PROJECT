@@ -40,12 +40,16 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        $userType = $user->userType()->where('user_type_permition_id', 1);
-        if ($userType !== null) {
-            return true;
-        }
-        return false;
+        // Verifica se existe um registro em user_types para o usuário com user_type_permition_id igual a 1
+        $userWithPermission = User::join('user_types', 'users.id', '=', 'user_types.user_id')
+            ->where('users.id', $user->id)
+            ->where('user_types.user_type_permition_id', 1)
+            ->exists();
+
+        // Retorna true se encontrar um registro, indicando que o usuário pode criar
+        return $userWithPermission;
     }
+
 
     /**
      * Determine whether the user can update the model.
