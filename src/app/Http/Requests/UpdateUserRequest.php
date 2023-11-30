@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Dto\User;
+use App\Dto\UserDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -31,6 +32,6 @@ class UpdateUserRequest extends FormRequest
 
     public function toDTO(): UserDTO
     {
-        return new User($this->nome);
+        return new UserDTO($this->nome);
     }
 }

@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->authorizeResource(User::class, 'user');
-//    }
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
 
     /**
      * Display a listing of the resource.
@@ -31,9 +31,12 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+        return view(
+            'users.create', [
+            'user' => $user
+        ]);
     }
 
     /**

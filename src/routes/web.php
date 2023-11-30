@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\MetadataController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,11 +35,6 @@ Route::get('/auth/register', function(){
     return view('register');
 });
 
-
-
-
-
-
 //controllor for documents with all the resources created
 Route::resource('/documents', DocumentController::class);
 
@@ -54,10 +50,14 @@ Route::resource('/Mdata', MetadataController::class);
 
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::resource('/users', \App\Http\Controllers\UserController::class);
+
+
     Route::resource('/documents', \App\Http\Controllers\DocumentController::class);
 });
 

@@ -4,6 +4,9 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col">
+                <a href="{{ route('users.create') }}"
+                   class="btn btn-success btn-sm mb-3">Criar</a>
+
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -12,7 +15,6 @@
                         <th class="text-end">Acções</th>
                     </tr>
                     </thead>
-
                     <tbody>
                     @foreach($users as $user)
                         <tr>
