@@ -23,9 +23,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                {{ \DB::table('users')->join('departments', 'users.department_id', '=', 'departments.id')
-                                    ->where('users.id', $user->id)
-                                    ->value('departments.name') }}
+                                {{ $user->departmentName() }}
                             </td>
                             <td class="text-end">
                                 <a href="{{ route('users.show', ['user' => $user]) }}" class="btn btn-primary btn-sm">Ver</a>
