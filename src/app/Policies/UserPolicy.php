@@ -40,13 +40,11 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        // Verifica se existe um registro em user_types para o usuário com user_type_permition_id igual a 1
         $userWithPermission = User::join('user_types', 'users.id', '=', 'user_types.user_id')
             ->where('users.id', $user->id)
             ->where('user_types.user_type_permition_id', 1)
             ->exists();
 
-        // Retorna true se encontrar um registro, indicando que o usuário pode criar
         return $userWithPermission;
     }
 
@@ -56,15 +54,12 @@ class UserPolicy
      */
     public function update(User $user): bool
     {
-        $authUser = Auth::user();
-        if ($authUser->id == $user->id) {
-            return true;
-        }
-        $userType = $authUser->userType()->where('user_type_permition_id', 1)->first();
-        if ($userType !== null) {
-            return true;
-        }
-        return false;
+        $userWithPermission = User::join('user_types', 'users.id', '=', 'user_types.user_id')
+            ->where('users.id', $user->id)
+            ->where('user_types.user_type_permition_id', 1)
+            ->exists();
+
+        return $userWithPermission;
     }
 
     /**
@@ -72,22 +67,24 @@ class UserPolicy
      */
     public function delete(User $user): bool
     {
-        $userType = $user->userType()->where('user_type_permition_id', 1)->first();
-        if ($userType !== null) {
-            return true;
-        }
-        return false;
+        $userWithPermission = User::join('user_types', 'users.id', '=', 'user_types.user_id')
+            ->where('users.id', $user->id)
+            ->where('user_types.user_type_permition_id', 1)
+            ->exists();
+
+        return $userWithPermission;
     }
     /**
      * Determine whether the user can restore the model.
      */
     public function restore(User $user): bool
     {
-        $userType = $user->userType()->where('user_type_permition_id', 1)->first();
-        if ($userType !== null) {
-            return true;
-        }
-        return false;
+        $userWithPermission = User::join('user_types', 'users.id', '=', 'user_types.user_id')
+            ->where('users.id', $user->id)
+            ->where('user_types.user_type_permition_id', 1)
+            ->exists();
+
+        return $userWithPermission;
     }
 
     /**
@@ -95,10 +92,11 @@ class UserPolicy
      */
     public function forceDelete(User $user): bool
     {
-        $userType = $user->userType()->where('user_type_permition_id', 1)->first();
-        if ($userType !== null) {
-            return true;
-        }
-        return false;
+        $userWithPermission = User::join('user_types', 'users.id', '=', 'user_types.user_id')
+            ->where('users.id', $user->id)
+            ->where('user_types.user_type_permition_id', 1)
+            ->exists();
+
+        return $userWithPermission;
     }
 }
