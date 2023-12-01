@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -44,7 +45,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->nome;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->department_id = $request->departamento;
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 
     /**
