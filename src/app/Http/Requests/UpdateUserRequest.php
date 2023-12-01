@@ -23,14 +23,15 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required', 'max:250', 'min:6'],
+            'name' => ['required', 'max:250', 'min:6'],
             'email' => ['nullable', 'email'],
-            'password' => ['required', 'min:8', 'max:16']
+            'password' => ['required', 'min:8', 'max:16'],
+            'department_id' => ['nullable', 'min:1', 'max:2']
         ];
     }
 
     public function toDTO(): UserDTO
     {
-        return new UserDTO($this->nome);
+        return new UserDTO($this->nome, $this->password, $this->email, $this->department_id);
     }
 }

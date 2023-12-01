@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -77,6 +78,7 @@ class UserController extends Controller
             'users.edit',
             [
                 'user' => $user
+
             ]
         );
     }
@@ -84,18 +86,38 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $user->update($request->toDTO()->toArray());
-        return redirect()
-            ->route('users.show', ['user' => $user]);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'department_id' => 'required',
+        ]);
+
+        $user->update($validatedData);
+
+        return redirect()->route('users.show')->with('success', 'User updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request): RedirectResponse
     {
-        //
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
     }
 }
