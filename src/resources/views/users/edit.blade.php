@@ -14,6 +14,11 @@
         Departament: <input type="text" name="department_id" id="" class="form-control" value="{{ old('department_id', $user->department_id) }}"><br>
         @error('department_id') <span class="text-danger">{{ $message }}</span><br>@enderror
 
+{{--isto está tudo partido-> fazer depois!!!--}}
+{{--        <select name="department_id" id="" class="form-control">--}}
+{{--            <option value="{{ $user->departmentId }}">{{ $user->departmentName() }}</option>--}}
+{{--        </select>--}}
+
         <button type="submit" class="btn btn-success btn-lg">Guardar Modificações</button>
     </form>
 
