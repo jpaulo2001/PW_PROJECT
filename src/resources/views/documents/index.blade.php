@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col">
+                <a href="{{ route('documents.create') }}" class="btn btn-success btn-sm mb-3">Criar</a>
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
