@@ -13,7 +13,7 @@ use App\Models\DocumentMdata;
 
 class DashboardService
 {
-    protected function getLastSevenDocuments(Document $Document, ?Carbon $date = null)
+    protected function getLastSevenDocuments(Document $document, ?Carbon $date = null)
     {
         if ($date == null) {
             $date = Carbon::now();
