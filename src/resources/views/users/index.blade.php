@@ -31,6 +31,8 @@
                                 <a href="{{ route('users.show', ['user' => $user]) }}" class="btn btn-primary btn-sm">Ver</a>
                                 @can('create', App\Models\User::class)
                                     <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-warning btn-sm">Modificar</a>
+                                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-delete btn-outline-danger">Eliminar</a>
+
                                 @endcan
                             </td>
                         </tr>
