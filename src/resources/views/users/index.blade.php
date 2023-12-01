@@ -29,11 +29,20 @@
                             </td>
                             <td class="text-end">
                                 <a href="{{ route('users.show', ['user' => $user]) }}" class="btn btn-primary btn-sm">Ver</a>
-                                @can('create', App\Models\User::class)
-                                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-warning btn-sm">Modificar</a>
-                                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-delete btn-outline-danger">Eliminar</a>
 
+                                @can('update', App\Models\User::class)
+                                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-warning btn-sm">Modificar</a>
                                 @endcan
+
+                                @can('delete', App\Models\User::class)
+                                    <form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar</button>
+                                    </form>
+                                @endcan
+
+
                             </td>
                         </tr>
                     @endforeach
