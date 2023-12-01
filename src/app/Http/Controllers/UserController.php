@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -96,14 +97,14 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('users.show')->with('success', 'User updated successfully');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],

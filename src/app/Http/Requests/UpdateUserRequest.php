@@ -32,6 +32,7 @@ class UpdateUserRequest extends FormRequest
 
     public function toDTO(): UserDTO
     {
-        return new UserDTO($this->nome, $this->password, $this->email, $this->department_id);
+        return new UserDTO($this->name, $this->email, $this->password, $this->department_id);
     }
 }
+
