@@ -47,10 +47,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User;
-        $user->name = $request->nome;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->department_id = $request->departamento;
+        $user->department_id = $request->department_id;
         $user->save();
 
         return redirect()->route('users.index');
