@@ -15,16 +15,15 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            // Relation to user table
-            $table->foreignId('user_id')->constrained();
+            $table->string('path');
         });
 
         Schema::create('user_documents', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->softdeletes();
             $table->foreignId("user_id")->constrained();
             $table->foreignId("document_id")->constrained();
+            $table->softDeletes();
         });
     }
 
