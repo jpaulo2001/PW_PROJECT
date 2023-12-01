@@ -8,28 +8,25 @@
                     <thead>
                     <tr>
                         <th>Documents ID</th>
-                        <th class="text-end">Acções</th>
+                        <th class="text-right">Ações</th>
                     </tr>
                     </thead>
-
                     <tbody>
                     @foreach($documents as $document)
                         <tr>
-                            <td>{{ $document->users_id }}</td>
-                            <td class="text-end">
+                            <td>{{ $document->id }}</td>
+                            <td class="text-right">
                                 <a href="{{ route('documents.show', ['document' => $document->id]) }}"
-                                    class="btn btn-primary btn-outline">Ver</a>
+                                   class="btn btn-primary btn-outline">Ver</a>
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
                                    class="btn btn-warning btn-outline-sm">Modificar</a>
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
                                    class="btn btn-delete btn-outline-danger">Eliminar</a>
-{{--                                @endcan--}}
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-
                 {{ $documents->links() }}
             </div>
         </div>

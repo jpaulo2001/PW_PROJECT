@@ -40,12 +40,14 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
                                         Login
                                     </button>
+                                        <button type="submit" class="btn btn-secondary btn-lg btn-block">
+                                            Registar
+                                        </button>
                                     <hr>
                                 </form>
-                                <hr>
                                 @if (Route::has('password.request'))
                                 <div class="text-center">
                                     <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
