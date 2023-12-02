@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Historic;
-
+use Illuminate\Support\Facades\Redirect;
 
 class HistoricController extends Controller
 {
@@ -35,6 +35,10 @@ class HistoricController extends Controller
      */
     public function store(Request $request)
     {
+        $historic = new Historic;
+        $historic->body = $request->body;
+        $historic->document_id = $request->document_id;
+        $historic->save();
         return redirect()->route('historics')->with('sucess');
     }
 
@@ -43,7 +47,9 @@ class HistoricController extends Controller
      */
     public function show(string $id)
     {
-        return view('historics.show', ['historics' => Historic::findOrFail($format)]);
+        $historic = Historic::all();
+
+        return view('historics.show', ['historic' => $historic]);
     }
 
     /**
@@ -51,7 +57,8 @@ class HistoricController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $historic = Historic::find($id);
+        return view('historics.edit', compact('historics'));
     }
 
     /**
@@ -59,7 +66,12 @@ class HistoricController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+    //update logic
+    $historic = Historic::find($id);
+    $historic->body = $request->input('body');
+    $historic->document_id = $request->input("document_id");
+    $historic->update();
+    return redirect()->route('historics.index')->with('sucess');
     }
 
     /**
@@ -67,6 +79,11 @@ class HistoricController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $historic = Historic::find($id);
+        if (empty($historic)) {
+            abort(404);
+        }
+        $historic->delete();
+        return redirect()->route('historics.index');
     }
 }

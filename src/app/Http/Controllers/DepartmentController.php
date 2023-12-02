@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use Illuminate\Support\Facades\Redirect;
+
+
 
 class DepartmentController extends Controller
 {
@@ -35,7 +38,11 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('departments')->with('sucess');
+        $department = new Department;
+        $department->name = $request->name;
+        $department->code = $request->code;
+        $department->save();
+        return redirect()->route('departments.index')->with('sucess');
     }
 
     /**
@@ -43,9 +50,9 @@ class DepartmentController extends Controller
      */
     public function show(string $id)
     {
-        $departamentos = Department::all();
+        $department = Department::all();
 
-        return view('departments.show', ['departments' => $departamentos]);
+        return view('departments.show', ['departments' => $department]);
 
     }
 
@@ -54,7 +61,8 @@ class DepartmentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $department = Department::find($id);
+        return view('departments.edit', compact('department'));
     }
 
     /**
@@ -62,7 +70,12 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //update logic
+        $department = Student::find($id);
+        $department->name = $request->input('name');
+        $department->code = $request->input('code');
+        $department->update();
+        return redirect()->route('departments.index')->with('sucess');
     }
 
     /**
@@ -70,6 +83,11 @@ class DepartmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $department = Department::find($id);
+        if (empty($department)) {
+            abort(404);
+        }
+        $department->delete();
+        return redirect()->route('departments.index');
     }
 }

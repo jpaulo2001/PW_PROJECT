@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Auth\Controller;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use Illuminate\Support\Facades\Redirect;
+
 
 class DocumentController extends Controller
 {
@@ -15,12 +17,7 @@ class DocumentController extends Controller
     public function index()
     {
         $documents = Document::orderBy('id')->paginate(25);
-        return view(
-            'documents.index',
-            [
-                'documents' => $documents
-            ]
-        );
+        return view('documents.index',['documents' => $documents]);
     }
 
     /**
@@ -36,20 +33,20 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        $document = new Document;
+        $document->name = $request->path;
+        $document->save();
         return redirect()->route('documents')->with('sucess');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Document $documents)
+    public function show(Document $document)
     {
-        return view(
-            'documents.show',
-            [
-                'documents' => $documents
-            ]
-        );
+        $document = Document::all();
+
+        return view('documents.show', ['documents' => $document]);
     }
 
     /**
@@ -57,12 +54,8 @@ class DocumentController extends Controller
      */
     public function edit(Document $documents)
     {
-        return view(
-            'documents.edit',
-            [
-                'documents' => $documents
-            ]
-        );
+        $document = Document::find($id);
+        return view('documents.edit', compact('documents'));
     }
 
     /**
@@ -70,7 +63,11 @@ class DocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //update logic
+        $document = Document::find($id);
+        $document->name = $request->input('path');
+        $document->update();
+        return redirect()->route('documents.index')->with('sucess');
     }
 
     /**
@@ -78,11 +75,11 @@ class DocumentController extends Controller
      */
     public function destroy(Document $documents)
     {
-        return view(
-            'documents.destory',
-            [
-                'documents'=> $documents
-            ]
-        );
+        $document = Document::find($id);
+        if (empty($document)) {
+            abort(404);
+        }
+        $document->delete();
+        return redirect()->route('documents.index');
     }
 }
