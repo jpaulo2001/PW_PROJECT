@@ -2,7 +2,7 @@
 
 @section('main-content')
 
-    <h1>Ficha de Utilizador</h1>
+    <h1>Ficha do documento</h1>
 
     <div class="row">
         <div class="col">
@@ -11,7 +11,7 @@
                     Dados Gerais
                 </div>
                 <card-body>
-                    Olá, {{ $documents->user_id }}
+                    O caminho do documento: {{ $documents->first()->path }}
                 </card-body>
             </div>
         </div>
