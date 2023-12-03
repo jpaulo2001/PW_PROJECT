@@ -43,8 +43,8 @@
                                     </div>
                                     <a type="submit" class="btn btn-primary btn-lg btn-block">
                                         Login
-</a>
-                                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg btn-block">register</a>
+                                    </a>
+                                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg btn-block">Register</a>
                                     <hr>
                                 </form>
                                 @if (Route::has('password.request'))
