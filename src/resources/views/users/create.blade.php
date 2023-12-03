@@ -10,10 +10,16 @@
         Email: <input type="text" name="email" id="" class="form-control"><br>
         @error('email') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        Password: <input type="text" name="password" id="" class="form-control"><br>
+        Password: <input type="password" name="password" id="" class="form-control"><br>
         @error('password') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        Departamento: <input type="text" name="department_id" id="" class="form-control"><br>
+        Departamento:
+        <select name="department_id" id="" class="form-control">
+            @foreach ($departments as $department)
+                <option value="{{ $department->id }}" {{ old('department_id', $user->department_id) == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+            @endforeach
+        </select>
+        <br>
         @error('department_id') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <button type="submit" class="btn btn-success btn-lg">Guardar Modificações</button>

@@ -35,12 +35,11 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(User $user)
+    public function create()
     {
-        return view(
-            'users.create', [
-            'user' => $user
-        ]);
+        $departments = Department::all();
+        $user = new User;
+        return view('users.create', compact('user', 'departments'));
     }
 
     /**
