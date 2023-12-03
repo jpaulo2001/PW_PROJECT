@@ -24,16 +24,9 @@ class UserPolicy
 
     public function view(User $user): bool
     {
-        $authUser = Auth::user();
-        if ($authUser->id == $user->id) {
-            return true;
-        }
-        $userType = $authUser->userType()->where('user_type_permition_id', 1)->first();
-        if ($userType !== null) {
-            return true;
-        }
-        return false;
+        return true;
     }
+
 
     /**
      * Determine whether the user can create models.
