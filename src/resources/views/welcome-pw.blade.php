@@ -2,6 +2,7 @@
 
 @section('main-content')
 
+
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
@@ -40,12 +41,10 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                    <a type="submit" class="btn btn-primary btn-lg btn-block">
                                         Login
-                                    </button>
-                                        <button type="submit" class="btn btn-secondary btn-lg btn-block">
-                                            Registar
-                                        </button>
+</a>
+                                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg btn-block">register</a>
                                     <hr>
                                 </form>
                                 @if (Route::has('password.request'))
