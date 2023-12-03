@@ -21,7 +21,7 @@ return new class extends Migration
         Schema::create('user_documents', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("user_id")->constrained();
+            $table->foreignId("user_id")->constrained()->onDelete('cascade');
             $table->foreignId("document_id")->constrained();
             $table->softDeletes();
         });
