@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Redirect;
@@ -25,7 +26,9 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        return view ('documents.create');
+        $user = auth()->user();
+        $departments = Department::all();
+        return view('documents.create', compact('user', 'departments'));
     }
 
     /**

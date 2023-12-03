@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             UserTypePermition::factory(5)->create();
             UserType::factory(500)->create();
 
-            DocumentMdata::factory(50)->create(); // ok
+            DocumentMdata::factory(500)->create(); // ok
 
             UserDocument::factory(500)->create();
         }
