@@ -8,7 +8,7 @@
         Nome: <input type="text" name="name" id="" class="form-control" value="{{ old('name', $user->name) }}"><br>
         @error('name') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        Email: <input type="text" name="email" id="" class="form-control" value="{{ old('email', $user->email) }}"><br>
+        Email: <input type="text" disabled = 'disabled' name="email" id="" class="form-control" value="{{ old('email', $user->email) }}"><br>
         @error('email') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         Departamento:
