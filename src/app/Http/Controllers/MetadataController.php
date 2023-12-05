@@ -62,7 +62,7 @@ class MetadataController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $mdata = new Mdata;
+        $mdata = Mdata::find($id);
         $mdata->doc_name = $request->input("doc_name");
         $mdata->size = $request->input("size");
         $mdata->type = $request->input("type");

@@ -44,7 +44,7 @@ class DocumentPermitionController extends Controller
      */
     public function show(string $id)
     {
-        return view('documentsPermitions.show', ['documentsPermitions' => DocumentPermition::findOrFail($format)]);
+        return view('documentsPermitions.show', ['documentsPermitions' => DocumentPermition::findOrFail($id)]);
     }
 
     /**

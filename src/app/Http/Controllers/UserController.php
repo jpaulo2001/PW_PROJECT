@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +36,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $departments = Department::all();
+        $user = User::all();
         $user = new User;
-        return view('users.create', compact('user', 'departments'));
+        return view('users.create', compact('users'));
     }
 
     /**
@@ -73,10 +72,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $departments, User $user)
+    public function edit($id)
     {
-        $departments = Department::all();
-        return view('users.edit', compact('user', 'departments'));
+        $user = User::find($id);
+        return view('users.edit', compact('users'));
     }
 
     /**

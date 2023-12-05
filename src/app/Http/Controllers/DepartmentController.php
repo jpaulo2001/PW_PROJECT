@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\Redirect;
@@ -71,7 +72,7 @@ class DepartmentController extends Controller
     public function update(Request $request, string $id)
     {
         //update logic
-        $department = Student::find($id);
+        $department = Department::find($id);
         $department->name = $request->input('name');
         $department->code = $request->input('code');
         $department->update();

@@ -41,8 +41,9 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <a type="submit" class="btn btn-primary btn-lg btn-block">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
                                         Login
+                                    </button>
                                     </a>
                                     <a href="{{ route('register') }}" class="btn btn-primary btn-lg btn-block">Register</a>
                                     <hr>

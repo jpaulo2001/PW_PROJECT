@@ -13,7 +13,7 @@ class HistoricController extends Controller
      */
     public function index()
     {
-        $historics = Historic::orderBy('id');
+        $historics = Historic::orderBy('id')->paginate(25);
         return view(
             'historics.index',
             [
@@ -45,7 +45,7 @@ class HistoricController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         $historic = Historic::all();
 
