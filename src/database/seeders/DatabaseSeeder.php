@@ -25,16 +25,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
 
         if (App::environment() == 'local') {
             Department::factory(8)->create();
             User::factory(500)->create();
+            User::factory()->create(['name' => 'Test User', 'email' => 'test@example.com', 'password'=> "test123"]);
 
             Document::factory(500)->create();
             Historic::factory(500)->create();
