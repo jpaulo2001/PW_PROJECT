@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserType;
+use App\Models\UserTypePermition;
 use Illuminate\Http\Request;
 
 class UserTypeController extends Controller
 {
+    public function index()
+    {
+        $usertypes = UserTypePermition::orderBy('type');
+        return view(
+            'userTypes.index',
+            [
+                'userTypes' => $usertypes
+            ]
+        );
+    }
     public function update(Request $request, UserType $userType)
     {
         $validatedData = $request->validate([
