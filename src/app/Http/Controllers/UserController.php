@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +37,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = User::all();
+        $departments = Department::all();
         $user = new User;
-        return view('users.create', compact('users'));
+        return view('users.create', compact('user', 'departments'));
     }
 
     /**
@@ -72,10 +73,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Department $departments, User $user)
     {
-        $user = User::find($id);
-        return view('users.edit', compact('users'));
+        $departments = Department::all();
+        return view('users.edit', compact('user', 'departments'));
     }
 
     /**
@@ -88,7 +89,6 @@ class UserController extends Controller
             'email' => 'required|email',
             'department_id' => 'required',
         ]);
-
         $user->update($validatedData);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
@@ -100,8 +100,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-
-        $user->delete();
+        $user->deleteQuietly();
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
