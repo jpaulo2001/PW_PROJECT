@@ -21,7 +21,9 @@
         </select>
         <br>
         @error('department_id') <span class="text-danger">{{ $message }}</span><br>@enderror
+        User Type Permission: <input type="text" name="user_type_permition_id" id="" class="form-control"><br>
 
+        @error('user_type_permition_id') <span class="text-danger">{{ $message }}</span><br>@enderror
         <button type="submit" class="btn btn-success btn-lg">Guardar Modificações</button>
     </form>
 

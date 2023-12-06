@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\UserType;
 
 use App\Http\Controllers\Auth\Controller;
-use App\Http\Requests\UpdateUserRequest;
+
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+
 
 class UserController extends Controller
 {
@@ -53,6 +54,11 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->department_id = $request->department_id;
         $user->save();
+
+        $userType = new UserType;
+        $userType->user_id = $user->id;
+        $userType->user_type_permition_id = $request->user_type_permition_id;
+        $userType->save();
 
         return redirect()->route('users.index');
     }
