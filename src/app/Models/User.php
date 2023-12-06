@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->hasMany(UserDocument::class);
     }
 
+    public function documentPermitionType()
+    {
+        return $this->hasMany(DocumentPermitionType::class);
+    }
+
     public function departmentName()
     {
         return $this->join('departments', 'users.department_id', '=', 'departments.id')

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->softdeletes();
             $table->foreignId("document_permition_id")->constrained();
             $table->foreignId("document_id")->constrained();
+            $table->foreignId("user_id")->constrained();
+            $table->foreignId("department_id")->constrained();
         });
     }
 

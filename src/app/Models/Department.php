@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Department extends Model
 {
     use HasFactory, SoftDeletes;
-    
 
-    public function user(){
+
+    public function user()
+    {
         return $this->hasMany(User::class);
     }
 
-
-        
+    public function documentPermitionType()
+    {
+        return $this->hasMany(DocumentPermitionType::class);
+    }
 }

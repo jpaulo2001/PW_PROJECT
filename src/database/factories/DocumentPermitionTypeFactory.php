@@ -19,6 +19,8 @@ class DocumentPermitionTypeFactory extends Factory
         return [
             'document_permition_id' => fake()->numberBetween(1,3),
             'document_id' => fake()->numberBetween(1,500),
+            'user_id' => fake()->numberBetween(1,500),
+            'department_id' => fake()->numberBetween(1,8),
         ];
     }
 }
