@@ -92,14 +92,22 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            //'email' => 'required|email',
             'department_id' => 'required',
+            'user_type_permition_id' => 'required',
         ]);
+
         $user->update($validatedData);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
-    }
+        // Update the UserType
+        $userType = UserType::where('user_id', $user->id)->first();
+        if ($userType) {
+            $userType->user_type_permition_id = $request->user_type_permition_id;
+            $userType->save();
+        }
 
+        return redirect()->route('users.index')->with('success', 'User and UserType updated successfully');
+    }
 
     /**
      * Remove the specified resource from storage.
