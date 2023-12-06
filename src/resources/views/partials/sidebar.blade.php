@@ -44,6 +44,14 @@
         </a>
     </li>
 
+    <!-- Nav Item - Departments -->
+    <li class="nav-item {{ request()->routeIs('departments.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('departments.index') }}">
+            <i class="fas fa-fw fa-house-user"></i>
+            <span>Departamentos</span>
+        </a>
+    </li>
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
 {{--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"--}}

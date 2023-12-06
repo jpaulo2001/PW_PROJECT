@@ -40,8 +40,7 @@ Route::get('/auth/register', function(){
 Route::resource('/documents', DocumentController::class);
 
 
-//controller for deparments with all the resources created ^^
-Route::resource('/deparments', DepartmentController::class);
+
 
 //controller for metadata with all the resources created ^^
 Route::resource('/Mdata', MetadataController::class);
@@ -60,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/historics', \App\Http\Controllers\HistoricController::class);
 
     Route::resource('/documents', \App\Http\Controllers\DocumentController::class);
+
+    Route::resource('/departments', DepartmentController::class);
 });
 
 
