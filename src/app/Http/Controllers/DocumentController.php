@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
 use App\Models\Department;
+use App\Models\DocumentPermitionType;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Redirect;
@@ -17,9 +18,15 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $documents = Document::orderBy('id')->paginate(25);
+        $userId = auth()->user()->id;
+        $documents = Document::whereHas('documentPermitionType', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->orderBy('id')->paginate(25);
+
         return view('documents.index',['documents' => $documents]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

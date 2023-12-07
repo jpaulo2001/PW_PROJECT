@@ -47,10 +47,15 @@
                                 @endif
                             </td>
                             <td class="text-right">
-                                <a href="{{ route('documents.show', ['document' => $document->id]) }}"
-                                   class="btn btn-primary btn-outline">Ver</a>
+
+                                @can('view', $document)
+                                    <a href="{{ route('documents.show', ['document' => $document->id]) }}"
+                                       class="btn btn-primary btn-outline">Ver</a>
+                                @endcan
+
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
                                    class="btn btn-warning btn-outline-sm">Modificar</a>
+
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
                                    class="btn btn-delete btn-outline-danger">Eliminar</a>
                             </td>

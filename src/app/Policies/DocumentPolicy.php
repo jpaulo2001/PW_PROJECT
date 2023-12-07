@@ -4,8 +4,7 @@ namespace App\Policies;
 
 use App\Models\Document;
 use App\Models\DocumentPermitionType;
-
-
+use App\Models\User;
 
 
 class DocumentPolicy
@@ -21,9 +20,15 @@ class DocumentPolicy
     /**
      * Determine whether the Document can view the model.
      */
-    public function view(Document $document): string
+    public function view(User $user, Document $document): bool
     {
-        return $document->DocumentPermitionType->name == ("document__");    
+        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
+            ->where('documents.id', $document->id)
+            ->where('user_id', $user->id)
+            ->where('document_permition_types.document_permition_id', 1)
+            ->exists();
+
+        return $userWithPermission;
     }
 
 
