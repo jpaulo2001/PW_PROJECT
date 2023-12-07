@@ -44,21 +44,23 @@
         </a>
     </li>
 
-    <!-- Nav Item - Departments -->
-    <li class="nav-item {{ request()->routeIs('departments.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('departments.index') }}">
-            <i class="fas fa-fw fa-house-user"></i>
-            <span>Departamentos</span>
-        </a>
-    </li>
+    @can('update', App\Models\User::class)
+        <!-- Nav Item - Departments -->
+        <li class="nav-item {{ request()->routeIs('departments.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('departments.index') }}">
+                <i class="fas fa-fw fa-house-user"></i>
+                <span>Departamentos</span>
+            </a>
+        </li>
 
-    <!-- Nav Item - UserTypePermition -->
-    <li class="nav-item {{ request()->routeIs('userTypes.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('userTypes.index') }}">
-            <i class="fas fa-fw fa-user-secret"></i>
-            <span>Permissões</span>
-        </a>
-    </li>
+        <!-- Nav Item - UserTypePermition -->
+        <li class="nav-item {{ request()->routeIs('userTypes.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('userTypes.index') }}">
+                <i class="fas fa-fw fa-user-secret"></i>
+                <span>Permissões</span>
+            </a>
+        </li>
+    @endcan
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
