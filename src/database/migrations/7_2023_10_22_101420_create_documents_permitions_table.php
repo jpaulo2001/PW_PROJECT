@@ -21,11 +21,11 @@ return new class extends Migration
         Schema::create('document_permition_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->softdeletes();
-            $table->foreignId("document_permition_id")->constrained();
-            $table->foreignId("document_id")->constrained();
-            $table->foreignId("user_id")->constrained();
-            $table->foreignId("department_id")->constrained();
+            $table->softDeletes();
+            $table->foreignId("document_permition_id")->nullable()->constrained();
+            $table->foreignId("document_id")->nullable()->constrained();
+            $table->foreignId("user_id")->nullable()->constrained();
+            $table->foreignId("department_id")->nullable()->constrained();
         });
     }
 

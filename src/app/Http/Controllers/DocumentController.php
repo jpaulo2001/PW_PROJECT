@@ -19,8 +19,10 @@ class DocumentController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $documents = Document::whereHas('documentPermitionType', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
+        $userDepartmentId = auth()->user()->department_id;
+        $documents = Document::whereHas('documentPermitionType', function ($query) use ($userId, $userDepartmentId) {
+            $query->where('user_id', $userId)
+                ->orWhere('department_id', $userDepartmentId);
         })->orderBy('id')->paginate(25);
 
         return view('documents.index',['documents' => $documents]);
