@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Auth\Controller;
 use App\Models\Department;
 use App\Models\DocumentPermitionType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Redirect;
@@ -56,17 +57,16 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        $document = Document::all();
-
-        return view('documents.show', ['documents' => $document]);
+        return view('documents.show', ['document' => $document]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Document $documents)
     {
-        $document = Document::find($id);
+        $document = Document::find($documents);
         return view('documents.edit', compact('documents'));
     }
 
@@ -85,13 +85,15 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Document $documents)
+
+    public function destroy(User $user, Document $document)
     {
-        $document = Document::find($id);
-        if (empty($document)) {
-            abort(404);
+
+        if ($this->authorize('delete', $document)) {
+            $document->delete();
+            return redirect()->route('documents.index')->with('success', 'Document deleted successfully');
         }
-        $document->delete();
-        return redirect()->route('documents.index');
+
+        return redirect()->route('documents.index')->with('error', 'You do not have permission to delete this document');
     }
 }

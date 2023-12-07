@@ -10,6 +10,7 @@ class Document extends Model
 {
     use HasFactory, SoftDeletes;
 
+
     public function documentMdata(){
         return $this->belongsToMany(DocumentMdata::class);
     }

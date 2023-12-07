@@ -57,8 +57,14 @@
                                 <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
                                    class="btn btn-warning btn-outline-sm">Modificar</a>
 
-                                <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                   class="btn btn-delete btn-outline-danger">Eliminar</a>
+                                @can('delete', $document)
+                                    <form action="{{ route('documents.destroy', ['document' => $document->id]) }}" method="POST" class="d-inline">
+                                    @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar</button>
+                                    </form>
+                                @endcan
+
                             </td>
                         </tr>
                     @endforeach
