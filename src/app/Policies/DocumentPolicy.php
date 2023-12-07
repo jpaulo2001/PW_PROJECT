@@ -35,9 +35,6 @@ class DocumentPolicy
     }
 
 
-
-
-
     /**
      * Determine whether the Document can create models.
      */
@@ -49,12 +46,19 @@ class DocumentPolicy
     /**
      * Determine whether the Document can update the model.
      */
-    public function update(Document $document): bool
+    public function update(User $user, Document $document): bool
     {
-        return true;
+        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
+            ->where('documents.id', $document->id)
+            ->where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->orWhere('department_id', $user->department_id);
+            })
+            ->where('document_permition_types.document_permition_id', 2)
+            ->exists();
+
+        return $userWithPermission;
     }
-
-
 
 
     /**
@@ -63,6 +67,7 @@ class DocumentPolicy
     public function delete(Document $document): bool
     {
         return true;
+        /// miguel
     }
 
 
