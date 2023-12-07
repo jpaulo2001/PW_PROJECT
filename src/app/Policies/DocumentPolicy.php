@@ -64,10 +64,18 @@ class DocumentPolicy
     /**
      * Determine whether the Document can delete the model.
      */
-    public function delete(Document $document): bool
+    public function delete(User $user, Document $document): bool
     {
-        return true;
-        /// miguel
+        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
+            ->where('documents.id', $document->id)
+            ->where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->orWhere('department_id', $user->department_id);
+            })
+            ->where('document_permition_types.document_permition_id', 3)
+            ->exists();
+
+        return $userWithPermission;
     }
 
 
