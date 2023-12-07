@@ -56,10 +56,9 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        $document = Document::all();
-
-        return view('documents.show', ['documents' => $document]);
+        return view('documents.show', ['document' => $document]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

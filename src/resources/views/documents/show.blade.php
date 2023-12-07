@@ -11,7 +11,7 @@
                     Dados Gerais
                 </div>
                 <card-body>
-                    O caminho do documento: {{ $documents->first()->path }}
+                    O caminho do documento: {{ $document->path }}
                 </card-body>
             </div>
         </div>
