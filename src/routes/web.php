@@ -65,5 +65,10 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::get('/uploadfile', [UploadFileController::class, 'index'])->name('upload.index');
+Route::post('/uploadfile', [UploadFileController::class, 'showUploadFile'])->name('upload.showUploadFile');
+
+
+
 
 require __DIR__.'/auth.php';

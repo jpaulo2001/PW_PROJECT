@@ -33,7 +33,7 @@ class DocumentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $user = auth()->user();
         $departments = Department::all();
@@ -46,9 +46,9 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $document = new Document;
-        $document->name = $request->path;
+        $document->path = "C:\Users\joaop\AppData\Local\Temp\fak56E1.tmp";
         $document->save();
-        return redirect()->route('documents')->with('sucess');
+        return redirect()->route('documents.store')->with('sucess');
     }
 
     /**

@@ -10,6 +10,9 @@
         <b>Tipo documento:</b> <input type="text" name="document" id="" class="form-control"><br>
         @error('tipo documento') <span class="text-danger">{{ $message }}</span><br>@enderror
 
+        <b>Path:</b> <input type="text" name="document" id="" class="form-control"><br>
+        @error('Path') <span class="text-danger">{{ $message }}</span><br>@enderror
+
         <b>Escolher departamento: </b> <br>
         <select name="department_id" id="" class="form-control">
             @foreach ($departments as $department)
