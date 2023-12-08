@@ -46,6 +46,8 @@ Route::resource('/documents', DocumentController::class);
 Route::resource('/Mdata', MetadataController::class);
 
 
+
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -64,9 +66,19 @@ Route::middleware('auth')->group(function () {
 });
 
 
+//upload files
+Route::resource('/uploadfile', \App\Http\Controllers\UploadFileController::class);
 
-Route::get('/uploadfile', [UploadFileController::class, 'index'])->name('upload.index');
-Route::post('/uploadfile', [UploadFileController::class, 'showUploadFile'])->name('upload.showUploadFile');
+
+//send email
+/*
+
+Route::get('/sendbasicemail',\App\Http\Controllers\MailController::class, 'basic_email');
+Route::get('/sendhtmlemail',\App\Http\Controllers\MailController::class,'html_email');
+Route::get('/sendattachmentemail',\App\Http\Controllers\MailController::class,'attachment_email');
+*/
+
+
 
 
 
