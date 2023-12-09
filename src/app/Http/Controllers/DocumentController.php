@@ -29,6 +29,20 @@ class DocumentController extends Controller
         return view('documents.index',['documents' => $documents]);
     }
 
+    public function publicShow($id)
+    {
+        $document = Document::find($id);
+
+        // Certifique-se de que o documento existe
+        if (!$document) {
+            abort(404);
+        }
+
+        // Retorne a view do documento
+        return view('documents.publicShow', ['document' => $document]);
+    }
+
+
     /**
      * Share a specific document
      * @param $id
@@ -36,10 +50,10 @@ class DocumentController extends Controller
      */
     public function share($id)
     {
-
         $document = Document::find($id);
 
-        $shareableLink = url('/documents/' . $document->id);
+        // Gere o link compartilhável
+        $shareableLink = route('documents.publicShow', $document->id);
 
         return redirect()->route('documents.show', $document->id)->with('success', 'Documento partilhado com sucesso! Aqui está o seu link: ' . $shareableLink);
     }
