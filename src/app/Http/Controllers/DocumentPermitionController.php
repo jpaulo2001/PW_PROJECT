@@ -36,6 +36,12 @@ class DocumentPermitionController extends Controller
      */
     public function store(Request $request)
     {
+        $documentsPermitions = new DocumentPermition;
+        $documentsPermitions->document_permition_id = $request->document_permition_id;
+        $documentsPermitions->document_id = $request->document_id;
+        $documentsPermitions->user_id = $request->user_id;
+        $documentsPermitions->department_id = $request->department_id;
+        $documentsPermitions->save();
         return redirect()->route('documentsPermitions')->with('sucess');
     }
 
@@ -60,7 +66,13 @@ class DocumentPermitionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $documentsPermitions = new DocumentPermition;
+        $documentsPermitions->document_permition_id = $request->input("document_permition_id");
+        $documentsPermitions->document_id = $request->input("document_id");
+        $documentsPermitions->user_id = $request->input("user_id");
+        $documentsPermitions->department_id = $request->input("department_id");
+        $documentsPermitions->save();
+        return redirect()->route('documentsPermitions')->with('sucess');
     }
 
     /**

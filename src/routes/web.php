@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/documents', \App\Http\Controllers\DocumentController::class);
 
     Route::resource('/departments', DepartmentController::class);
+
+    Route::resource('/documentsPermitions', DocumentPermitionController::class);
 });
 
 
