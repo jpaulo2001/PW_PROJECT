@@ -12,7 +12,15 @@
                 </div>
 
                 <div class="card-body">
-                    <a href="{{ route('historics.show', $document->id) }}" class="btn btn-primary">Ver Histórico</a>
+                    <a href="{{ route('documents.share', $document->id) }}" class="btn btn-primary">Partilhar Documento</a>
+                    <a href="{{ route('historics.show', $document->id) }}" class="btn btn-secondary">Ver Histórico</a>
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
 
                     <p><strong>ID do Documento:</strong> {{ $document->id }}</p>
                     <p><strong>Caminho do Documento:</strong> {{ $document->path }}</p>
@@ -32,6 +40,7 @@
                         <p><strong>Tamanho:</strong> {{ $documentData->size }}</p>
                     @endif
                 </div>
+
             </div>
         </div>
     </div>

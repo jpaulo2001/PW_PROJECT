@@ -29,7 +29,20 @@ class DocumentController extends Controller
         return view('documents.index',['documents' => $documents]);
     }
 
+    /**
+     * Share a specific document
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function share($id)
+    {
 
+        $document = Document::find($id);
+
+        $shareableLink = url('/documents/' . $document->id);
+
+        return redirect()->route('documents.show', $document->id)->with('success', 'Documento partilhado com sucesso! Aqui está o seu link: ' . $shareableLink);
+    }
 
     /**
      * Show the form for creating a new resource.
