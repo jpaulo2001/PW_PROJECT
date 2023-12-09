@@ -17,7 +17,7 @@ class DepartmentController extends Controller
 
     public function index()
     {
-        $departments = Department::orderBy('name');
+        $departments = Department::orderBy('name')->paginate(25);
         return view(
             'departments.index',
             [
@@ -31,7 +31,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view ('departments.create');
+        $department = new Department();
+        return view('departments.create', compact('department'));
     }
 
     /**
