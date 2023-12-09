@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.naoautenticado')
 
 @section('main-content')
 
