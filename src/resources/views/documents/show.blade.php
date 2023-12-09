@@ -1,4 +1,4 @@
-@extends('layouts.simple')
+@extends('layouts.autenticado')
 
 @section('main-content')
 
@@ -10,9 +10,28 @@
                 <div class="card-header">
                     Dados Gerais
                 </div>
-                <card-body>
-                    O caminho do documento: {{ $document->path }}
-                </card-body>
+
+                <div class="card-body">
+                    <a href="{{ route('historics.show', $document->id) }}" class="btn btn-primary">Ver Histórico</a>
+
+                    <p><strong>ID do Documento:</strong> {{ $document->id }}</p>
+                    <p><strong>Caminho do Documento:</strong> {{ $document->path }}</p>
+
+                    @php
+                        $documentData = \DB::table('document_mdatas')
+                            ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
+                            ->select('mdatas.*')
+                            ->where('document_mdatas.document_id', $document->id)
+                            ->first();
+                    @endphp
+
+                    @if ($documentData)
+                        <p><strong>Nome do Documento:</strong> {{ $documentData->doc_name }}</p>
+                        <p><strong>Tipo:</strong> {{ $documentData->type }}</p>
+                        <p><strong>Formato:</strong> {{ $documentData->format }}</p>
+                        <p><strong>Tamanho:</strong> {{ $documentData->size }}</p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

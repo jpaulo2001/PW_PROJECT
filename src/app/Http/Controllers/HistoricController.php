@@ -45,12 +45,13 @@ class HistoricController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        $historic = Historic::all();
+        $historics = Historic::where('document_id', $id)->get();
 
-        return view('historics.show', ['historic' => $historic]);
+        return view('historics.show', ['historics' => $historics]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
