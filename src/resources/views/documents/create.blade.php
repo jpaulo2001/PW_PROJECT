@@ -17,7 +17,7 @@
             @endforeach
         </select><br>
             
-«
+
         <b>Permissões do departamento:</b><br>
         <select name="type" id="" class="form-control">
 {{--            @foreach ($user_type_permitions as $types)--}}
@@ -26,8 +26,8 @@
         </select>
         <?php
          echo Form::open(array('url' => '/uploadfile','files'=>'true'));
-         echo 'Select the file to upload.';
          echo Form::file('image');
+         echo "</br>";  
          echo Form::submit('Guardar Modificações');
          echo Form::close();
         ?>
