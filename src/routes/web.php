@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DocumentPermitionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DepartmentController;
@@ -36,14 +37,7 @@ Route::get('/auth/register', function(){
     return view('register');
 });
 
-//controllor for documents with all the resources created
-Route::resource('/documents', DocumentController::class);
 
-
-
-
-//controller for metadata with all the resources created ^^
-Route::resource('/Mdata', MetadataController::class);
 
 
 
@@ -65,6 +59,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/departments', DepartmentController::class);
 
     Route::resource('/documentsPermitions', DocumentPermitionController::class);
+
+    Route::resource('/documents', DocumentController::class);
+    Route::get('/documents/{id}/share', [App\Http\Controllers\DocumentController::class, 'share'])->name('documents.share');
+
+    Route::resource('/Mdata', MetadataController::class);
 });
 
 
