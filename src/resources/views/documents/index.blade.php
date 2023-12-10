@@ -64,7 +64,11 @@
                                         <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar</button>
                                     </form>
                                 @endcan
-
+                                @can('download', $document)
+                                        <a href="{{ route('documents.download', ['document' => $document->id]) }}" class="btn btn-outline-success">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

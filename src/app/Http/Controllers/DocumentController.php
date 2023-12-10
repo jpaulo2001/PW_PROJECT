@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
 use App\Models\Department;
-use App\Models\DocumentPermitionType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Document;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class DocumentController extends Controller
@@ -33,20 +33,16 @@ class DocumentController extends Controller
     {
         $document = Document::find($id);
 
-        // Certifique-se de que o documento existe
         if (!$document) {
             abort(404);
         }
 
-        // Retorne a view do documento
         return view('documents.publicShow', ['document' => $document]);
     }
 
 
     /**
      * Share a specific document
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function share($id)
     {
@@ -123,4 +119,20 @@ class DocumentController extends Controller
 
         return redirect()->route('documents.index')->with('error', 'You do not have permission to delete this document');
     }
+
+    /**
+     * Download the specified document.
+     */
+    public function download(Document $document)
+    {
+        $path = $document->path;
+
+        if (!Storage::exists($path)) {
+            return redirect()->back()->with('error', 'The document doesnt exist.');
+        }
+
+        return Storage::download($path);
+    }
+
+
 }
