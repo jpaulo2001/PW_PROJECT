@@ -21,7 +21,7 @@
         <b>Content:</b> <input type="text" name="content" id="" class="form-control"><br>
         @error('content') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-
+    
 
         <b>Valor:</b> <input type="text" name="value" id="" class="form-control"><br>
         @error('value') <span class="text-danger">{{ $message }}</span><br>@enderror
@@ -41,11 +41,14 @@
         </select><br>
             
 
-        <b>Permissões do departamento:</b><br>
-        <select name="type" id="" class="form-control">
-{{--            @foreach ($user_type_permitions as $types)--}}
-{{--                <option value="{{ $type->id }}" {{ old('department_id', $user->department_id) == $type->id ? 'selected' : '' }}>{{ $type->$types }}</option>--}}
-{{--            @endforeach--}}
+        <b>Permissões do departamento:</b> <input type="text" name="document_permition_id" id="" class="form-control"><br>
+        @error('document_permition_id') <span class="text-danger">{{ $message }}</span><br>@enderror
+
+
+
+
+        {{--@endforeach--}}
+
         </select>
         <?php
          echo Form::open(array('url' => '/uploadfile','files'=>'true'));

@@ -81,6 +81,7 @@ class DocumentController extends Controller
         $document->path = "C:\Users\joaop\AppData\Local\Temp\fak56E1.tmp";
         $document->save();
 
+
         //
         $mdata = new Mdata;
         $mdata->doc_name = $request->doc_name;  // nome documento
@@ -89,22 +90,17 @@ class DocumentController extends Controller
         $mdata->format = $request->format;
         $mdata->save();
 
+
         $documentsPermitionsTypes = new DocumentPermitionType;
         $documentsPermitionsTypes->document_permition_id = $request->document_permition_id;
-        $documentsPermitionsTypes->document_id = $request->document_id;
-        $documentsPermitionsTypes->user_id = $request->user_id;
+        $documentsPermitionsTypes->document_id = $document->id;
+        $user = auth()->user();
+        $documentsPermitionsTypes->user_id = $user->id;
         $documentsPermitionsTypes->department_id = $request->department_id;
         $documentsPermitionsTypes->save();
-        //
-        $documentMdata = new DocumentMdata;
-        $documentMdata->mdata_id = $mdata->id;
-        $documentMdata->document_id = $document->id;
-        $documentMdata->content = $request->content;
-        $documentMdata->value = $request->value;
-        $documentMdata->save();
-        
-        //
 
+        //
+  
 
         return redirect()->route('documents.store')->with('sucess');
 
