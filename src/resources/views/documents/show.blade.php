@@ -1,3 +1,4 @@
+
 @extends('layouts.autenticado')
 
 @section('main-content')
@@ -39,6 +40,17 @@
                         <p><strong>Formato:</strong> {{ $documentData->format }}</p>
                         <p><strong>Tamanho:</strong> {{ $documentData->size }}</p>
                     @endif
+
+                    @php
+                        if (Storage::exists($document->path)) {
+                            $content = Storage::get($document->path);
+                        } else {
+                            $content = 'O documento solicitado não existe.';
+                        }
+                    @endphp
+                    <h2>Conteúdo do Documento:</h2>
+                    <pre>{{ $content }}</pre>
+
                 </div>
 
             </div>
