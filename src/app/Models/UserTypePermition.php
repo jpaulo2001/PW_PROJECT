@@ -10,8 +10,11 @@ class UserTypePermition extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     public function userType(){
         return $this->belongsTo(UserType::class);
     }
+
+    protected $fillable = [
+        'type'
+    ];
 }
