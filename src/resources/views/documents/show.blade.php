@@ -1,10 +1,7 @@
-
 @extends('layouts.autenticado')
-
 @section('main-content')
 
     <h1>Ficha do documento</h1>
-
     <div class="row">
         <div class="col">
             <div class="card card-primary">

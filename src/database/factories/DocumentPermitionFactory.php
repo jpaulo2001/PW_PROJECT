@@ -20,6 +20,7 @@ class DocumentPermitionFactory extends Factory
         'Read',
         'Edit',
         'Delete',
+        'Download',
     ];
 
 

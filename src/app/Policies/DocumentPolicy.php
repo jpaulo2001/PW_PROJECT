@@ -89,7 +89,7 @@ class DocumentPolicy
                 $query->where('user_id', $user->id)
                     ->orWhere('department_id', $user->department_id);
             })
-            ->where('document_permition_types.document_permition_id', 3)
+            ->where('document_permition_types.document_permition_id', 4)
             ->exists();
 
         return $userWithPermission;

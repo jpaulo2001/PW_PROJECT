@@ -17,7 +17,7 @@ class DocumentPermitionTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'document_permition_id' => fake()->numberBetween(1,3),
+            'document_permition_id' => fake()->numberBetween(1,4),
             'document_id' => fake()->numberBetween(1,500),
             'user_id' => fake()->numberBetween(1,500),
             'department_id' => fake()->numberBetween(1,8),
