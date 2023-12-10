@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
 use App\Models\Department;
+use App\Models\DocumentPermitionType;
+use App\Models\DocumentPermition;
+use App\Models\DocumentMdata;
 use App\Models\User;
+use App\Models\Mdata;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Storage;
@@ -69,10 +73,36 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $document = new Document;
         $document->path = "C:\Users\joaop\AppData\Local\Temp\fak56E1.tmp";
         $document->save();
+
+
+        //
+        $mdata = new Mdata;
+        $mdata->doc_name = $request->doc_name;  // nome documento
+        $mdata->size = $request->size;
+        $mdata->type = $request->type;
+        $mdata->format = $request->format;
+        $mdata->save();
+
+
+        $documentsPermitionsTypes = new DocumentPermitionType;
+        $documentsPermitionsTypes->document_permition_id = $request->document_permition_id;
+        $documentsPermitionsTypes->document_id = $document->id;
+        $user = auth()->user();
+        $documentsPermitionsTypes->user_id = $user->id;
+        $documentsPermitionsTypes->department_id = $request->department_id;
+        $documentsPermitionsTypes->save();
+
+        //
+  
+
         return redirect()->route('documents.store')->with('sucess');
+
+
+
     }
 
     /**

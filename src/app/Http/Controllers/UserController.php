@@ -55,6 +55,9 @@ class UserController extends Controller
         $user->department_id = $request->department_id;
         $user->save();
 
+        
+
+        
         $userType = new UserType;
         $userType->user_id = $user->id;
         $userType->user_type_permition_id = $request->user_type_permition_id;
