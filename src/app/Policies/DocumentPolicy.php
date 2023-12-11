@@ -20,18 +20,23 @@ class DocumentPolicy
     /**
      * Determine whether the Document can view the model.
      */
-    public function view(User $user, Document $document)
+    public function view(User $user, Document $document): bool
     {
-        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
-            ->where('documents.id', $document->id)
-            ->where(function ($query) use ($user) {
-                $query->where('user_id', $user->id)
-                    ->orWhere('department_id', $user->department_id);
-            })
-            ->where('document_permition_types.document_permition_id', 1)
-            ->exists();
+        $queryResult = User::query()
+            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.document_id", "=", $document->id)
+            ->select("document_permition_types.document_permition_id")->get();
 
-        return $userWithPermission;
+        $hasPermission = false;
+        foreach ($queryResult as $result) {
+            if ($result->document_permition_id == "1") {
+                $hasPermission = true;
+                break;
+            }
+        }
+        return $hasPermission;
     }
 
 
@@ -48,16 +53,21 @@ class DocumentPolicy
      */
     public function update(User $user, Document $document): bool
     {
-        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
-            ->where('documents.id', $document->id)
-            ->where(function ($query) use ($user) {
-                $query->where('user_id', $user->id)
-                    ->orWhere('department_id', $user->department_id);
-            })
-            ->where('document_permition_types.document_permition_id', 2)
-            ->exists();
+        $queryResult = User::query()
+            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.document_id", "=", $document->id)
+            ->select("document_permition_types.document_permition_id")->get();
 
-        return $userWithPermission;
+        $hasPermission = false;
+        foreach ($queryResult as $result) {
+            if ($result->document_permition_id == "2") {
+                $hasPermission = true;
+                break;
+            }
+        }
+        return $hasPermission;
     }
 
 
@@ -66,16 +76,21 @@ class DocumentPolicy
      */
     public function delete(User $user, Document $document): bool
     {
-        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
-            ->where('documents.id', $document->id)
-            ->where(function ($query) use ($user) {
-                $query->where('user_id', $user->id)
-                    ->orWhere('department_id', $user->department_id);
-            })
-            ->where('document_permition_types.document_permition_id', 3)
-            ->exists();
+        $queryResult = User::query()
+            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.document_id", "=", $document->id)
+            ->select("document_permition_types.document_permition_id")->get();
 
-        return $userWithPermission;
+        $hasPermission = false;
+        foreach ($queryResult as $result) {
+            if ($result->document_permition_id == "3") {
+                $hasPermission = true;
+                break;
+            }
+        }
+        return $hasPermission;
     }
 
     /**
@@ -83,18 +98,22 @@ class DocumentPolicy
      */
     public function download(User $user, Document $document): bool
     {
-        $userWithPermission = Document::join('document_permition_types', 'document_id', '=', 'document_permition_types.document_id')
-            ->where('documents.id', $document->id)
-            ->where(function ($query) use ($user) {
-                $query->where('user_id', $user->id)
-                    ->orWhere('department_id', $user->department_id);
-            })
-            ->where('document_permition_types.document_permition_id', 4)
-            ->exists();
+        $queryResult = User::query()
+            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.document_id", "=", $document->id)
+            ->select("document_permition_types.document_permition_id")->get();
 
-        return $userWithPermission;
+        $hasPermission = false;
+        foreach ($queryResult as $result) {
+            if ($result->document_permition_id == "4") {
+                $hasPermission = true;
+                break;
+            }
+        }
+        return $hasPermission;
     }
-
 
 
     /**
