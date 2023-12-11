@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Mdata;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -23,15 +24,15 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id;
-        $userDepartmentId = auth()->user()->department_id;
-        $documents = Document::whereHas('documentPermitionType', function ($query) use ($userId, $userDepartmentId) {
-            $query->where('user_id', $userId)
-                ->orWhere('department_id', $userDepartmentId);
-        })->orderBy('id')->paginate(25);
-
-        return view('documents.index',['documents' => $documents]);
+        $documents = Document::orderBy('id')->paginate(25);
+        return view(
+            'documents.index',
+            [
+                'documents' => $documents
+            ]
+        );
     }
+
 
     public function publicShow($id)
     {
@@ -97,7 +98,7 @@ class DocumentController extends Controller
         $documentsPermitionsTypes->save();
 
         //
-  
+
 
         return redirect()->route('documents.store')->with('sucess');
 
@@ -110,7 +111,11 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        return view('documents.show', ['document' => $document]);
+        if (Auth::user()->can('view', $document)) {
+            return view('documents.show', ['document' => $document]);
+        } else {
+            abort(403);
+        }
     }
 
 
@@ -119,6 +124,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $documents)
     {
+
         $document = Document::find($documents);
         return view('documents.edit', compact('documents'));
     }

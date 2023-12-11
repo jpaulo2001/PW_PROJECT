@@ -18,59 +18,64 @@
                     </thead>
                     <tbody>
                     @foreach($documents as $document)
-                        <tr>
-                            <td>{{ $document->id }}</td>
-                            <td>
-                                @if ($documentData = \DB::table('document_mdatas')
+                        @can('view', $document)
+                            <tr>
+                                <td>{{ $document->id }}</td>
+                                <td>
+                                    @if ($documentData = \DB::table('document_mdatas')
+                                            ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
+                                            ->select('mdatas.doc_name')
+                                            ->where('document_mdatas.document_id', $document->id)
+                                            ->first())
+                                        {{ $documentData->doc_name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($documentData = \DB::table('document_mdatas')
                                         ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                                        ->select('mdatas.doc_name')
+                                        ->select('mdatas.type')
                                         ->where('document_mdatas.document_id', $document->id)
                                         ->first())
-                                    {{ $documentData->doc_name }}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($documentData = \DB::table('document_mdatas')
-                                    ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                                    ->select('mdatas.type')
-                                    ->where('document_mdatas.document_id', $document->id)
-                                    ->first())
-                                    {{ $documentData->type }}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($documentData = \DB::table('document_mdatas')
-                                    ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                                    ->select('mdatas.format')
-                                    ->where('document_mdatas.document_id', $document->id)
-                                    ->first())
-                                    {{ $documentData->format }}
-                                @endif
-                            </td>
-                            <td class="text-right">
+                                        {{ $documentData->type }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($documentData = \DB::table('document_mdatas')
+                                        ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
+                                        ->select('mdatas.format')
+                                        ->where('document_mdatas.document_id', $document->id)
+                                        ->first())
+                                        {{ $documentData->format }}
+                                    @endif
+                                </td>
+                                <td class="text-right">
 
-                                @can('view', $document)
-                                    <a href="{{ route('documents.show', ['document' => $document->id]) }}"
-                                       class="btn btn-primary btn-outline">Ver</a>
-                                @endcan
-
-                                <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                   class="btn btn-warning btn-outline-sm">Modificar</a>
-
-                                @can('delete', $document)
-                                    <form action="{{ route('documents.destroy', ['document' => $document->id]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar</button>
-                                    </form>
-                                @endcan
-                                @can('download', $document)
-                                        <a href="{{ route('documents.download', ['document' => $document->id]) }}" class="btn btn-outline-success">
+                                    @can('view', $document)
+                                        <a href="{{ route('documents.show', ['document' => $document->id]) }}"
+                                           class="btn btn-primary btn-outline">Ver</a>
+                                    @endcan
+                                    @can('update', $document)
+                                        <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
+                                           class="btn btn-warning btn-outline-sm">Modificar</a>
+                                    @endcan
+                                    @can('delete', $document)
+                                        <form action="{{ route('documents.destroy', ['document' => $document->id]) }}"
+                                              method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar
+                                            </button>
+                                        </form>
+                                    @endcan
+                                    @can('download', $document)
+                                        <a href="{{ route('documents.download', ['document' => $document->id]) }}"
+                                           class="btn btn-outline-success">
                                             <i class="fas fa-download"></i>
                                         </a>
-                                @endcan
-                            </td>
-                        </tr>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endcan
                     @endforeach
                     </tbody>
                 </table>
