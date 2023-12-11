@@ -23,22 +23,26 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                {{ $user->departmentName() }}
+                                {{ app('App\Http\Controllers\UserController')->departmentName($user) }}
                             </td>
                             <td class="text-end">
 
                                 @can('view', App\Models\User::class)
-                                <a href="{{ route('users.show', ['user' => $user]) }}" class="btn btn-primary btn-sm">Ver</a>
+                                    <a href="{{ route('users.show', ['user' => $user]) }}"
+                                       class="btn btn-primary btn-sm">Ver</a>
                                 @endcan
                                 @can('update', App\Models\User::class)
-                                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-warning btn-sm">Modificar</a>
+                                    <a href="{{ route('users.edit', ['user' => $user]) }}"
+                                       class="btn btn-warning btn-sm">Modificar</a>
                                 @endcan
 
                                 @can('delete', App\Models\User::class)
-                                    <form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST"
+                                          class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar</button>
+                                        <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar
+                                        </button>
                                     </form>
                                 @endcan
 

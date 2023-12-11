@@ -55,9 +55,9 @@ class UserController extends Controller
         $user->department_id = $request->department_id;
         $user->save();
 
-        
 
-        
+
+
         $userType = new UserType;
         $userType->user_id = $user->id;
         $userType->user_type_permition_id = $request->user_type_permition_id;
@@ -121,4 +121,12 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
+
+    public function departmentName(User $user)
+    {
+        return $user->join('departments', 'users.department_id', '=', 'departments.id')
+            ->where('users.id', $user->id)
+            ->value('departments.name');
+    }
+
 }
