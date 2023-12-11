@@ -14,11 +14,19 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Services\DocumentServices;
 
 
 
 class DocumentController extends Controller
 {
+    protected $documentService;
+
+    public function __construct(DocumentServices $documentService)
+    {
+        $this->documentService = $documentService;
+    }
+
     /**
      * Display a listing of the resource.
      */

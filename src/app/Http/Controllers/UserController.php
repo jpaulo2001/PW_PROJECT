@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\Controller;
 
 use App\Models\Department;
 use App\Models\User;
+use App\Services\UserServices;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
@@ -14,9 +15,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $userService;
+
+    public function __construct(UserServices $userService)
     {
         $this->authorizeResource(User::class, 'user');
+        $this->userService = $userService;
     }
 
     /**
