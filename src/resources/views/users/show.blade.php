@@ -12,15 +12,12 @@
             <card-body>
                 Olá, {{ $user->name }} <br><br>
                 <b>Os seus dados:</b> <br><br>
-                <b>Nome:</b>  {{ $user->name }} <br><br>
-                <b>Email:</b>  {{ $user->email }} <br><br>
+                <b>Nome:</b> {{ $user->name }} <br><br>
+                <b>Email:</b> {{ $user->email }} <br><br>
                 <td>
                     <b>Departamento: </b>
-                    {{ \DB::table('users')->join('departments', 'users.department_id', '=', 'departments.id')
-                        ->where('users.id', $user->id)
-                        ->value('departments.name') }}
+                    {{ app('App\Http\Controllers\UserController')->departmentName($user) }}
                 </td>
-
             </card-body>
 
         </div>
