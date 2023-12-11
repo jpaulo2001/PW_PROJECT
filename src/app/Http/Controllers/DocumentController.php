@@ -170,5 +170,12 @@ class DocumentController extends Controller
         return Storage::download($path);
     }
 
+    public function getDocumentData($documentId)
+    {
+        return DocumentMdata::join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
+            ->select('mdatas.*')
+            ->where('document_mdatas.document_id', $documentId)
+            ->first();
+    }
 
 }

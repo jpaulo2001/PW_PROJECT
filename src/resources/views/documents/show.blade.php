@@ -10,7 +10,8 @@
                 </div>
 
                 <div class="card-body">
-                    <a href="{{ route('documents.share', $document->id) }}" class="btn btn-primary">Partilhar Documento</a>
+                    <a href="{{ route('documents.share', $document->id) }}" class="btn btn-primary">Partilhar
+                        Documento</a>
                     <a href="{{ route('historics.show', $document->id) }}" class="btn btn-secondary">Ver Histórico</a>
 
                     @if (session('success'))
@@ -22,13 +23,8 @@
 
                     <p><strong>ID do Documento:</strong> {{ $document->id }}</p>
                     <p><strong>Caminho do Documento:</strong> {{ $document->path }}</p>
-
                     @php
-                        $documentData = \DB::table('document_mdatas')
-                            ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                            ->select('mdatas.*')
-                            ->where('document_mdatas.document_id', $document->id)
-                            ->first();
+                        $documentData = app('App\Http\Controllers\DocumentController')->getDocumentData($document->id);
                     @endphp
 
                     @if ($documentData)
