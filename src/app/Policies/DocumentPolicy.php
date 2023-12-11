@@ -23,9 +23,9 @@ class DocumentPolicy
     public function view(User $user, Document $document): bool
     {
         $queryResult = User::query()
-            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("document_permition_types", "users.department_id", "=", "document_permition_types.department_id")
             ->join("documents", "document_permition_types.document_id", "=", "documents.id")
-            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.department_id", "=", $user->department_id)
             ->where("document_permition_types.document_id", "=", $document->id)
             ->select("document_permition_types.document_permition_id")->get();
 

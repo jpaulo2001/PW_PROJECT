@@ -130,11 +130,14 @@ class DocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Document $documents)
+    public function edit(Document $document)
     {
-
-        $document = Document::find($documents);
-        return view('documents.edit', compact('documents'));
+        if (Auth::user()->can('edit', $document)) {
+            $document = Document::find($document);
+            return view('documents.edit', compact('document'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
