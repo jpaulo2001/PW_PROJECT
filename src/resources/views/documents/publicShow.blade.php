@@ -24,11 +24,7 @@
                     <p><strong>Caminho do Documento:</strong> {{ $document->path }}</p>
 
                     @php
-                        $documentData = \DB::table('document_mdatas')
-                            ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                            ->select('mdatas.*')
-                            ->where('document_mdatas.document_id', $document->id)
-                            ->first();
+                        $documentData = app('App\Http\Controllers\DocumentController')->getDocumentData($document->id);
                     @endphp
 
                     @if ($documentData)
