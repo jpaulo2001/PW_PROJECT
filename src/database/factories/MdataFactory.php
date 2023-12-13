@@ -14,21 +14,24 @@ class MdataFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected static $index = 0;
+    protected static $types = [
+        'doc_name',
+        'size',
+        'format',
+        'type',
+        'author',
+        'proprietary',
+    ];
+
+
     public function definition(): array
     {
-        $commonDocumentFormats = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'];
-        $commonDocumentTypes = ['Contract', 'Report', 'Proposal', 'Presentation', 'Spreadsheet', 'Article'];
-
-        // Generate a random size in bytes (between 100 KB and 10 MB for example)
-        $sizeInBytes = $this->faker->numberBetween(100 * 1024, 10 * 1024 * 1024);
-        // Convert the size to kilobytes
-        $sizeInKB = round($sizeInBytes / 1024);
-
+        if (self::$index === count(self::$types)) {
+            self::$index = 0;
+        }
         return [
-            'doc_name' => $this->faker->unique()->word,
-            'size' => $sizeInKB,
-            'type' => $this->faker->randomElement($commonDocumentTypes),
-            'format' => $this->faker->randomElement($commonDocumentFormats),
+            'mdata' => self::$types[self::$index++],
         ];
     }
 }

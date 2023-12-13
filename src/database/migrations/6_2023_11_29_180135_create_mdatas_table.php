@@ -16,10 +16,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softdeletes();
-            $table->string("doc_name");
-            $table->string("size");
-            $table->string("type");
-            $table->string("format");
+            $table->string("mdata");
         });
 
         Schema::create('document_mdatas', function (Blueprint $table) {
@@ -28,8 +25,7 @@ return new class extends Migration
             $table->softdeletes();
             $table->foreignId("mdata_id")->constrained();
             $table->foreignId("document_id")->constrained();
-            $table->string("content");
-            $table->integer("value");
+            $table->string("content"); // se o id da metatada for equivalente ao autor o value sera por exemplo HP
         });
 
     }

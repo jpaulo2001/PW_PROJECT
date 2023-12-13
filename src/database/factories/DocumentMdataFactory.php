@@ -19,10 +19,9 @@ class DocumentMdataFactory extends Factory
     public function definition(): array
     {
         return [
-            'mdata_id' => $this->faker->numberBetween(1, 50),
+            'mdata_id' => $this->faker->numberBetween(1, 6),
             'document_id' => $this->faker->numberBetween(1, 500),
-            'content' => $this->faker->text,
-            'value' => $this->faker->numberBetween(1, 20),
+            'content' => $this->faker->name,
         ];
     }
 }
