@@ -82,20 +82,18 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('file');
+
         $document = new Document;
-        $document->path = "C:\Users\joaop\AppData\Local\Temp\fak56E1.tmp";
+        $document->path = $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension());
         $document->save();
 
-
-        //
         $mdata = new Mdata;
-        $mdata->doc_name = $request->doc_name;  // nome documento
-        $mdata->size = $request->size;
+        $mdata->doc_name = $request->doc_name;
+        $mdata->size = $file->getSize();
         $mdata->type = $request->type;
-        $mdata->format = $request->format;
+        $mdata->format = $file->getClientOriginalExtension();
         $mdata->save();
-
 
         $documentsPermitionsTypes = new DocumentPermitionType;
         $documentsPermitionsTypes->document_permition_id = $request->document_permition_id;
@@ -105,13 +103,7 @@ class DocumentController extends Controller
         $documentsPermitionsTypes->department_id = $request->department_id;
         $documentsPermitionsTypes->save();
 
-        //
-
-
         return redirect()->route('documents.store')->with('sucess');
-
-
-
     }
 
     /**
