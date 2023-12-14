@@ -6,9 +6,17 @@ use App\Models\UserType;
 use App\Models\UserTypePermition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\UserTypeService;
 
 class UserTypeController extends Controller
 {
+    protected $userTypeService;
+
+    public function __construct(UserTypeService $userTypeService)
+    {
+        $this->userTypeService = $userTypeService;
+    }
+
     public function index()
     {
         $usertypes = UserTypePermition::orderBy('type')->paginate(25);

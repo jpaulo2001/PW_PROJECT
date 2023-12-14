@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mdata;
+use App\Services\MetadataService;
 
 class MetadataController extends Controller
 {
+    protected $metadataService;
+
+    public function __construct(MetadataService $metadataService)
+    {
+        $this->metadataService = $metadataService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -54,7 +62,7 @@ class MetadataController extends Controller
     public function edit(string $id)
     {
         $mdata = Mdata::find($id);
-        return view('Mdata.edit', compact('Mdata'));
+        return view('Mdata.edit', compact('mdata'));
     }
 
     /**

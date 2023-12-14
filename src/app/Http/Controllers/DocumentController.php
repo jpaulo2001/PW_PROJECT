@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Services\DocumentServices;
+use App\Services\DocumentService;
 
 
 
@@ -22,7 +22,7 @@ class DocumentController extends Controller
 {
     protected $documentService;
 
-    public function __construct(DocumentServices $documentService)
+    public function __construct(DocumentService $documentService)
     {
         $this->documentService = $documentService;
     }

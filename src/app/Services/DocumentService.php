@@ -9,7 +9,7 @@ use App\Models\Mdata;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class DocumentServices
+class DocumentService
 {
     public function createDocument(array $documentData, array $mdataData, array $documentPermitionTypeData)
     {

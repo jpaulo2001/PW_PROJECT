@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Support\Facades\Hash;
 
-class UserServices
+class UserService
 {
     public function createUser(array $userData, array $userTypeData)
     {

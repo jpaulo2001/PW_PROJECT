@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\DocumentMdata;
-
+use App\Services\DocumentMetadataService;
 
 use Illuminate\Http\Request;
 
-class DocumentMetadata extends Controller
+class DocumentMetadataController extends Controller
 {
+    protected $documentMetadataService;
+
+    public function __construct(DocumentMetadataService $documentMetadataService)
+    {
+        $this->documentMetadataService = $documentMetadataService;
+    }
+
     /**
      * Display a listing of the resource.
      */

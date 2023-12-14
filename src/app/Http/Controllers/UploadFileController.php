@@ -4,8 +4,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\UploadFileService;
 
-class UploadFileController extends Controller {
+class UploadFileController extends Controller
+{
+    protected $uploadFileService;
+
+    public function __construct(UploadFileService $uploadFileService)
+    {
+        $this->uploadFileService = $uploadFileService;
+    }
+
    public function index() {
       return view('uploads/uploadfile');
    }
@@ -16,17 +25,17 @@ class UploadFileController extends Controller {
       //Display File Name
       echo 'File Name: '.$file->getClientOriginalName();
       echo '<br>';
-   
+
 
       //Display File Extension
       echo 'File Extension: '.$file->getClientOriginalExtension();
       echo '<br>';
-   
+
 
       //Display File Real Path
       echo 'File Real Path: '.$file->getRealPath();
       echo '<br>';
-   
+
 
       //Display File Size
       echo 'File Size: '.$file->getSize();
@@ -35,7 +44,7 @@ class UploadFileController extends Controller {
 
       //Display File Mime Type
       echo 'File Mime Type: '.$file->getMimeType();
-   
+
 
       //Move Uploaded File
       $destinationPath = 'uploads';

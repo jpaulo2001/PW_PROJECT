@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\UserType;
 
 use App\Http\Controllers\Auth\Controller;
-
 use App\Models\Department;
 use App\Models\User;
-use App\Services\UserServices;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +17,7 @@ class UserController extends Controller
 {
     protected $userService;
 
-    public function __construct(UserServices $userService)
+    public function __construct(UserService $userService)
     {
         $this->authorizeResource(User::class, 'user');
         $this->userService = $userService;

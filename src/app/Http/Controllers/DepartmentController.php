@@ -6,15 +6,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\DocumentPermitionService;
 
 
 
 class DepartmentController extends Controller
 {
+    protected $departmentService;
+
+    public function __construct(DocumentPermitionService $departmentService)
+    {
+        $this->departmentService = $departmentService;
+    }
+
     /**
      * Display a listing of the resource.
      */
-
     public function index()
     {
         $departments = Department::orderBy('name')->paginate(25);

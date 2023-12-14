@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-
+use App\Services\DocumentPermitionTypeService;
 
 class DocumentPermitionTypeController extends Controller
 {
+    protected $documentPermitionTypeService;
+
+    public function __construct(DocumentPermitionTypeService $documentPermitionTypeService)
+    {
+        $this->documentPermitionTypeService = $documentPermitionTypeService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+
 
 
     }
@@ -34,7 +40,7 @@ class DocumentPermitionTypeController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $documentsPermitions = new DocumentPermitionType;
         $documentsPermitions->document_permition_id = $request->document_permition_id;
         $documentsPermitions->document_id = $request->document_id;

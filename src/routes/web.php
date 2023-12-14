@@ -4,7 +4,7 @@ use App\Http\Controllers\DocumentPermitionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\DocumentMetadata;
+use App\Http\Controllers\DocumentMetadataController;
 use App\Http\Controllers\MetadataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistoricController;
@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/documentsPermitions', DocumentPermitionController::class);
 
-    Route::resource('/documentMdata', DocumentMetadata::class);
+    Route::resource('/documentMdata', DocumentMetadataController::class);
 
 
     Route::resource('/documents', DocumentController::class);

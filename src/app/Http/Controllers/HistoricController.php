@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Historic;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\HistoricService;
 
 class HistoricController extends Controller
 {
+    protected $historicService;
+
+    public function __construct(HistoricService $historicService)
+    {
+        $this->historicService = $historicService;
+    }
+
     /**
      * Display a listing of the resource.
      */

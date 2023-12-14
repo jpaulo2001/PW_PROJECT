@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DocumentPermition;
-
+use App\Services\DocumentPermitionService;
 
 
 class DocumentPermitionController extends Controller
 {
+    protected $departmentService;
+
+    public function __construct(DocumentPermitionService $departmentService)
+    {
+        $this->departmentService = $departmentService;
+    }
+
     /**
      * Display a listing of the resource.
      */

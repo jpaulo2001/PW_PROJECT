@@ -5,10 +5,18 @@ use Illuminate\Http\Request;
 use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\MailService;
 
 
-class MailController extends Controller {
-   public function basic_email() {
+class MailController extends Controller
+{
+    protected $mailService;
+
+    public function __construct(MailService $mailService)
+    {
+        $this->mailService = $mailService;
+    }
+    public function basic_email() {
       $data = array('name'=>"Virat Gandhi");
       Mail::send(['text'=>'mail'], $data, function($message) {
          $message->to('abc@gmail.com', 'Tutorials Point')->subject
@@ -16,7 +24,7 @@ class MailController extends Controller {
          $message->from('xyz@gmail.com','Virat Gandhi');
       });
       echo "Basic Email Sent. Check your inbox.";
-   }
+    }
 
 
    public function html_email() {
