@@ -27,6 +27,19 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:191',
+            'email' => 'required|email|max:191',
+            'password' => 'required|string|max:20',
+            'department_id' => 'required|digits|max:1'
+        ]);
+        
+        if($validator->fail()){
+            return abort(403);
+        }else{
+            $user = User::create();
+        }
+    
     }
 
     /**
