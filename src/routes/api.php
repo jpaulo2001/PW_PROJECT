@@ -21,7 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     Route::apiResource('users', \App\Http\Controllers\Api\UserController::class); // api resource for all users
 
+    Route::apiResource('deparments', \App\Http\Controllers\Api\DocumentController::class); // api resource for all users
 
 
-    
+
 });
