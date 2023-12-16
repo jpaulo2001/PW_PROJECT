@@ -1,4 +1,5 @@
 @extends('layouts.autenticado')
+
 @section('main-content')
 
     <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
@@ -16,15 +17,23 @@
         <b>Proprietario:</b> <input type="text" name="proprietary" id="" class="form-control"><br>
         @error('proprietary') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <b>Escolher departamento: </b> <br>
-        <select name="department_id" id="" class="form-control">
-            @foreach ($departments as $department)
-                <option value="{{ $department->id }}" {{ old('department_id', $user->department_id) == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
-            @endforeach
-        </select><br>
+        <b>Escolher departamento:</b> <br>
+        @foreach ($departments as $department)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="selected_departments[]" value="{{ $department->id }}">
+                <label class="form-check-label">{{ $department->name }}</label>
+            </div>
+        @endforeach
+        @error('selected_departments') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <b>Permissões do departamento:</b> <input type="text" name="document_permition_id" id="" class="form-control"><br>
-        @error('document_permition_id') <span class="text-danger">{{ $message }}</span><br>@enderror
+        <b>Permissões do departamento:</b> <br>
+        @foreach ($permitions as $permition)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="permition" value="{{ $permition->id }}">
+                <label class="form-check-label">{{ $permition->types }}</label>
+            </div>
+        @endforeach
+        @error('permition') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Escolher ficheiro:</b><br>
         <input type="file" name="file" class="form-control"><br>

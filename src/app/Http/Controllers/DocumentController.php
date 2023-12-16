@@ -61,7 +61,6 @@ class DocumentController extends Controller
     {
         $document = Document::find($id);
 
-        // Gere o link compartilhável
         $shareableLink = route('documents.publicShow', $document->id);
 
         return redirect()->route('documents.show', $document->id)->with('success', 'Documento partilhado com sucesso! Aqui está o seu link: ' . $shareableLink);
@@ -74,7 +73,9 @@ class DocumentController extends Controller
     {
         $user = auth()->user();
         $departments = Department::all();
-        return view('documents.create', compact('user', 'departments'));
+        $permitions = DocumentPermition::all();
+
+        return view('documents.create', compact('user', 'departments', 'permitions'));
     }
 
     /**
@@ -100,13 +101,16 @@ class DocumentController extends Controller
         }
 
 
-        $documentsPermitionsTypes = new DocumentPermitionType;
-        $documentsPermitionsTypes->document_permition_id = $request->document_permition_id;
-        $documentsPermitionsTypes->document_id = $document->id;
-        $user = auth()->user();
-        $documentsPermitionsTypes->user_id = $user->id;
-        $documentsPermitionsTypes->department_id = $request->department_id;
-        $documentsPermitionsTypes->save();
+        $selectedDepartments = $request->selected_departments;
+
+        foreach ($selectedDepartments as $departmentId) {
+            $documentPermission = new DocumentPermition;
+            $documentPermission->document_permition_id = $request->document_permition_id;
+            $documentPermission->document_id = $document->id;
+            $documentPermission->user_id = $request->user_id;
+            $documentPermission->department_id = $departmentId;
+            $documentPermission->save();
+        }
 
         return redirect()->route('documents.store')->with('sucess');
     }
