@@ -18,34 +18,34 @@
                     </thead>
                     <tbody>
                     @foreach($documents as $document)
-                        @can('view', $document)
+{{--                        @can('view', $document)--}}
                             <tr>
                                 <td>{{ $document->id }}</td>
                                 <td>
                                     @if ($documentData = \DB::table('document_mdatas')
-                                            ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                                            ->select('mdatas.doc_name')
-                                            ->where('document_mdatas.document_id', $document->id)
-                                            ->first())
-                                        {{ $documentData->doc_name }}
+                                        ->where('document_id', $document->id)
+                                        ->where('mdata_id', 1)
+                                        ->select('content')
+                                        ->first())
+                                        {{ $documentData->content }}
                                     @endif
                                 </td>
                                 <td>
                                     @if ($documentData = \DB::table('document_mdatas')
-                                        ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                                        ->select('mdatas.type')
-                                        ->where('document_mdatas.document_id', $document->id)
+                                        ->where('document_id', $document->id)
+                                        ->where('mdata_id', 2)
+                                        ->select('content')
                                         ->first())
-                                        {{ $documentData->type }}
+                                        {{ $documentData->content }}
                                     @endif
                                 </td>
                                 <td>
                                     @if ($documentData = \DB::table('document_mdatas')
-                                        ->join('mdatas', 'document_mdatas.mdata_id', '=', 'mdatas.id')
-                                        ->select('mdatas.format')
-                                        ->where('document_mdatas.document_id', $document->id)
+                                        ->where('document_id', $document->id)
+                                        ->where('mdata_id', 3)
+                                        ->select('content')
                                         ->first())
-                                        {{ $documentData->format }}
+                                        {{ $documentData->content }}
                                     @endif
                                 </td>
                                 <td class="text-right">
@@ -75,7 +75,7 @@
                                     @endcan
                                 </td>
                             </tr>
-                        @endcan
+{{--                        @endcan--}}
                     @endforeach
                     </tbody>
                 </table>
