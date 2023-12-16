@@ -7,17 +7,14 @@
         <b>Nome documento:</b> <input type="text" name="doc_name" id="" class="form-control"><br>
         @error('doc_name') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <b>Type:</b> <input type="text" name="type" id="" class="form-control"><br>
+        <b>Tipo de Documento:</b> <input type="text" name="type" id="" class="form-control"><br>
         @error('type') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <b>Content:</b> <input type="text" name="content" id="" class="form-control"><br>
-        @error('content') <span class="text-danger">{{ $message }}</span><br>@enderror
+        <b>Autor:</b> <input type="text" name="author" id="" class="form-control"><br>
+        @error('author') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <b>Valor:</b> <input type="text" name="value" id="" class="form-control"><br>
-        @error('value') <span class="text-danger">{{ $message }}</span><br>@enderror
-
-        <b>Tipo documento:</b> <input type="text" name="document" id="" class="form-control"><br>
-        @error('tipo documento') <span class="text-danger">{{ $message }}</span><br>@enderror
+        <b>Proprietario:</b> <input type="text" name="proprietary" id="" class="form-control"><br>
+        @error('proprietary') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Escolher departamento: </b> <br>
         <select name="department_id" id="" class="form-control">

@@ -88,12 +88,17 @@ class DocumentController extends Controller
         $document->path = $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension());
         $document->save();
 
-        $mdata = new Mdata;
-        $mdata->doc_name = $request->doc_name;
-        $mdata->size = $file->getSize();
-        $mdata->type = $request->type;
-        $mdata->format = $file->getClientOriginalExtension();
-        $mdata->save();
+        $metadata = ['1', '2', '3', '4', '5', '6'];
+        $values = [$request->doc_name, $request->author, $request->type, $request->proprietary, $file->getSize(), $file->getClientOriginalExtension()];
+
+        for ($i = 0; $i < count($metadata); $i++) {
+            $documentMdata = new DocumentMdata;
+            $documentMdata->mdata_id = $metadata[$i];
+            $documentMdata->document_id = $document->id;
+            $documentMdata->content = $values[$i];
+            $documentMdata->save();
+        }
+
 
         $documentsPermitionsTypes = new DocumentPermitionType;
         $documentsPermitionsTypes->document_permition_id = $request->document_permition_id;
