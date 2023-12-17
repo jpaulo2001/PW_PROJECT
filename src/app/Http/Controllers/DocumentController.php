@@ -102,17 +102,24 @@ class DocumentController extends Controller
 
 
         $selectedDepartments = $request->selected_departments;
-
+        $selected_permissions = $request->selected_permissions;
         foreach ($selectedDepartments as $departmentId) {
-            $documentPermission = new DocumentPermition;
-            $documentPermission->document_permition_id = $request->document_permition_id;
-            $documentPermission->document_id = $document->id;
-            $documentPermission->user_id = $request->user_id;
-            $documentPermission->department_id = $departmentId;
-            $documentPermission->save();
+            foreach ($selected_permissions as $permissionsID ) {
+                if(!DocumentPermitionType::firstOrCreate(
+                    ['document_permition_id' => $permissionsID, 'department_id' => $departmentId],
+                    ['document_id' => $document->id, 'user_id' => Auth::user()->id]
+                )){
+                    $documentPermission = new DocumentPermitionType;
+                    $documentPermission->document_permition_id = $permissionsID;
+                    $documentPermission->document_id = $document->id;
+                    $documentPermission->user_id = Auth::user()->id;
+                    $documentPermission->department_id = $departmentId;
+                    $documentPermission->save();
+                }
+            }
         }
 
-        return redirect()->route('documents.store')->with('sucess');
+        return redirect()->route('documents.store')->with('success');
     }
 
     /**
