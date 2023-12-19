@@ -8,6 +8,7 @@ use App\Http\Controllers\DocumentMetadataController;
 use App\Http\Controllers\MetadataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistoricController;
+use App\Http\Controllers\UserTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,13 +50,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('/users', \App\Http\Controllers\UserController::class);
+    Route::resource('/users', UserController::class);
 
-    Route::resource('/userTypes', \App\Http\Controllers\UserTypeController::class);
+    Route::resource('/userTypes', UserTypeController::class);
 
-    Route::resource('/historics', \App\Http\Controllers\HistoricController::class);
+    Route::resource('/historics', HistoricController::class);
 
-    Route::resource('/documents', \App\Http\Controllers\DocumentController::class);
+    Route::resource('/documents', DocumentController::class);
 
     Route::resource('/departments', DepartmentController::class);
 

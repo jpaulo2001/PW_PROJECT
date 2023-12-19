@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\DocumentController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,14 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
     return $request->user();
 
-
-
-    Route::apiResource('users', \App\Http\Controllers\Api\UserController::class); // api resource for all users
-
-    Route::apiResource('deparments', \App\Http\Controllers\Api\DocumentController::class); // api resource for all users
-
-
-
 });
+
+
+
+
+
+Route::apiResource('users', UserController::class); // api resource for all users
+
+
+Route::apiResource('documents', DocumentController::class); // api resource for all users
+

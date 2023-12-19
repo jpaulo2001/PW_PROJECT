@@ -6,22 +6,30 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (!Auth::user()->tokenCan('users:list')) {
+        $users = User::all();
+        if ($users->count() > 0){
+            return response()->json([
+                'status' => 200,
+                'users' => $users
+            ],200);
+        } else {
             return response()->json([
                 'status' => 404,
-                'message' => "Nao existe esse utilizador"
-            ]);
+                'documents' => "sem user"], 404);
         }
-        return new UserResourceCollection(User::paginate(25));
     }
 
     /**
@@ -36,9 +44,14 @@ class UserController extends Controller
             'password' => 'required|string|max:20',
             'department_id' => 'required|digits|max:1'
         ]);
+
+
         
         if($validator->fail()){ //user se falha retorna 403
-            return abort(403);
+            return response()->json([
+                'status'=> 422,
+                'error' => $validator->messages(),
+            ] ,422);
         }else{
 
 
@@ -48,6 +61,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'department_id' => $request->department_id,
         ]);
+
+
             //return 201 (created status and users created)
             return response()->json([ 
                 'status' => 200,
@@ -60,15 +75,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id) //get()
+    public function show(Request $request,int $id) //get()
     {
-        if (!auth()->user()->tokenCan('users:show')) {
+        if (!Auth()->user()->tokenCan('users:show')) {
             abort('403');
         }
 
         try {
-            $user = User::findOrFail($user);
-            return new UserResource($user);
+            $user = User::findOrFail($id);
+            return new UserResource($id);
         } catch (\Exception $e) {
             if ($e instanceof ModelNotFoundException) {
                 return response()->json(['message' => 'Não encontrado'], 404);
@@ -80,6 +95,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    
     public function update(Request $request, int $id)
     {
         //validar dados name email password e departement
@@ -104,7 +120,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'department_id' => $request->department_id,
-         ]);
+            ]);
             
             //return 201 (created status and users created)
             return response()->json([ 
