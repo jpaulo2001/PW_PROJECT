@@ -35,39 +35,25 @@
         @endforeach
         @error('selected_departments') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <b>Escolher usuário:</b> <br>
-        <select name="selected_user" class="form-control" id="userSelect">
-            @foreach ($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
-            @endforeach
-        </select>
-
-        <b>Permissões do usuário:</b> <br>
-        @foreach ($permitions as $permition)
+        <b>Escolher Utilizador:</b> <br>
+        @foreach ($users as $user)
             <div class="form-check">
-                <input class="form-check-input user-permission" type="checkbox" name="selected_user_permissions[]" value="{{ $permition->id }}">
-                <label class="form-check-label">{{ $permition->types }}</label>
+                <input class="form-check-input" type="checkbox" name="selected_users[]" value="{{ $user->id }}">
+                <label class="form-check-label">{{ $user->name }}</label>
             </div>
+
+            <b>Permissões do Utilizador:</b> <br>
+            @foreach ($permitions as $permition)
+                <div class="form-check">
+                    <input class="form-check-input user-permission" type="checkbox" name="selected_user_permissions[{{ $user->id }}][]" value="{{ $permition->id }}">
+                    <label class="form-check-label">{{ $permition->types }}</label>
+                </div>
+            @endforeach
+            @error('permition') <span class="text-danger">{{ $message }}</span><br>@enderror
         @endforeach
-        @error('permition') <span class="text-danger">{{ $message }}</span><br>@enderror
+        @error('selected_users') <span class="text-danger">{{ $message }}</span><br>@enderror
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <script>
-            $(document).ready(function(){
-                $('#userSelect').change(function(){
-                    var userId = $(this).val();
-
-                    $('.user-permission').prop('checked', false);
-
-                    $.get('/user-permissions/' + userId, function(data){
-                        for(var i = 0; i < data.length; i++){
-                            $('input[value="' + data[i] + '"]').prop('checked', true);
-                        }
-                    });
-                });
-            });
-        </script>
 
         <b>Escolher ficheiro:</b><br>
         <input type="file" name="file" class="form-control"><br>

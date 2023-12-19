@@ -99,6 +99,15 @@ class DocumentController extends Controller
             $documentMdata->save();
         }
 
+        // Permissao para o user que carregou o documento
+        for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
+            $docPermition = new DocumentPermitionType;
+            $docPermition->user_id = Auth::user()->id;
+            $docPermition->document_permition_id = $permition_id;
+            $docPermition->document_id = $document->id;
+            $docPermition->save();
+        }
+
         $selectedDepartments = $request->selected_departments;
         $selected_permissions = $request->selected_permissions;
         if ($selectedDepartments) {
@@ -114,14 +123,22 @@ class DocumentController extends Controller
             }
         }
 
-        for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
-            $docPermition = new DocumentPermitionType;
-            $docPermition->user_id = Auth::user()->id;
-            $docPermition->document_permition_id = $permition_id;
-            $docPermition->document_id = $document->id;
-            $docPermition->save();
-        }
+        $selectedUsers = $request->selected_users;
+        $selectedUserPermissions = $request->selected_user_permissions;
 
+        if ($selectedUsers) {
+            foreach ($selectedUsers as $userId) {
+                if (isset($selectedUserPermissions[$userId])) {
+                    foreach ($selectedUserPermissions[$userId] as $permissionId) {
+                        DocumentPermitionType::firstOrCreate(
+                            ['document_permition_id' => $permissionId,
+                                'user_id' => $userId,
+                                'document_id' => $document->id],
+                        );
+                    }
+                }
+            }
+        }
         return redirect()->route('documents.store')->with('success');
     }
 
