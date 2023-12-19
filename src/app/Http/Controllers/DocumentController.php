@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
 
 
-
 class DocumentController extends Controller
 {
     protected $documentService;
@@ -71,11 +70,11 @@ class DocumentController extends Controller
      */
     public function create(Request $request)
     {
-        $user = auth()->user();
+        $users = User::all();
         $departments = Department::all();
         $permitions = DocumentPermition::all();
 
-        return view('documents.create', compact('user', 'departments', 'permitions'));
+        return view('documents.create', compact('users', 'departments', 'permitions'));
     }
 
     /**
@@ -100,27 +99,32 @@ class DocumentController extends Controller
             $documentMdata->save();
         }
 
-
         $selectedDepartments = $request->selected_departments;
         $selected_permissions = $request->selected_permissions;
-        foreach ($selectedDepartments as $departmentId) {
-            foreach ($selected_permissions as $permissionsID ) {
-                if(!DocumentPermitionType::firstOrCreate(
-                    ['document_permition_id' => $permissionsID, 'department_id' => $departmentId],
-                    ['document_id' => $document->id, 'user_id' => Auth::user()->id]
-                )){
-                    $documentPermission = new DocumentPermitionType;
-                    $documentPermission->document_permition_id = $permissionsID;
-                    $documentPermission->document_id = $document->id;
-                    $documentPermission->user_id = Auth::user()->id;
-                    $documentPermission->department_id = $departmentId;
-                    $documentPermission->save();
+        if ($selectedDepartments) {
+            foreach ($selectedDepartments as $departmentId) {
+                foreach ($selected_permissions as $permissionsID) {
+                    DocumentPermitionType::firstOrCreate(
+                        ['document_permition_id' => $permissionsID,
+                            'department_id' => $departmentId,
+                            'document_id' => $document->id],
+                        ['user_id' => Auth::user()->id]
+                    );
                 }
             }
         }
 
+        for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
+            $docPermition = new DocumentPermitionType;
+            $docPermition->user_id = Auth::user()->id;
+            $docPermition->document_permition_id = $permition_id;
+            $docPermition->document_id = $document->id;
+            $docPermition->save();
+        }
+
         return redirect()->route('documents.store')->with('success');
     }
+
 
     /**
      * Display the specified resource.
