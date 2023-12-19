@@ -44,7 +44,6 @@ class DocumentService
 
     public function deleteDocument(Document $document)
     {
-        // Adicione lógica adicional se necessário, como excluir permissões relacionadas
         $document->delete();
     }
 
@@ -53,7 +52,6 @@ class DocumentService
         $path = $document->path;
 
         if (!Storage::exists($path)) {
-            // Pode ser uma boa ideia lançar uma exceção aqui ou retornar uma mensagem de erro
             return false;
         }
 
