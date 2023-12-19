@@ -90,7 +90,7 @@ class DocumentController extends Controller
         $document->save();
 
         $metadata = ['1', '2', '3', '4', '5', '6'];
-        $values = [$request->doc_name, $request->author, $request->type, $request->proprietary, $file->getSize(), $file->getClientOriginalExtension()];
+        $values = [$request->doc_name,$file->getSize(),$file->getClientOriginalExtension(), $request->type, $request->author, $request->proprietary];
 
         for ($i = 0; $i < count($metadata); $i++) {
             $documentMdata = new DocumentMdata;
