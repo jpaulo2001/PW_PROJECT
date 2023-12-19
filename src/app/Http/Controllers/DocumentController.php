@@ -15,6 +15,7 @@ use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
+use App\DTO\DocumentDTO;
 
 
 class DocumentController extends Controller

@@ -8,7 +8,6 @@ class UploadFileService
 {
     public function processUploadedFile(UploadedFile $file)
     {
-        // Exemplo de lógica de negócios para processar o arquivo
         $fileDetails = [
             'name' => $file->getClientOriginalName(),
             'extension' => $file->getClientOriginalExtension(),
@@ -17,7 +16,6 @@ class UploadFileService
             'mimeType' => $file->getMimeType(),
         ];
 
-        // Move o arquivo para o destino desejado
         $destinationPath = 'uploads';
         $file->move($destinationPath, $fileDetails['name']);
 
