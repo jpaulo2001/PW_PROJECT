@@ -10,6 +10,7 @@ use App\Models\DocumentPermition;
 use App\Models\DocumentMdata;
 use App\Models\User;
 use App\Models\Mdata;
+use App\Models\UserDocument;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +100,11 @@ class DocumentController extends Controller
             $documentMdata->content = $values[$i];
             $documentMdata->save();
         }
+
+        $userDocument= new UserDocument;
+        $userDocument->document_id = $document->id;
+        $userDocument->user_id = Auth::user()->id;
+        $userDocument-> save();
 
         // Permissao para o user que carregou o documento
         for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
