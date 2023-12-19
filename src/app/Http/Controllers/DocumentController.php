@@ -10,11 +10,13 @@ use App\Models\DocumentPermition;
 use App\Models\DocumentMdata;
 use App\Models\User;
 use App\Models\Mdata;
+use App\Models\UserDocument;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
+use App\DTO\DocumentDTO;
 
 
 class DocumentController extends Controller
@@ -89,7 +91,7 @@ class DocumentController extends Controller
         $document->save();
 
         $metadata = ['1', '2', '3', '4', '5', '6'];
-        $values = [$request->doc_name, $request->author, $request->type, $request->proprietary, $file->getSize(), $file->getClientOriginalExtension()];
+        $values = [$request->doc_name,$file->getSize(),$file->getClientOriginalExtension(), $request->type, $request->author, $request->proprietary];
 
         for ($i = 0; $i < count($metadata); $i++) {
             $documentMdata = new DocumentMdata;
@@ -97,6 +99,20 @@ class DocumentController extends Controller
             $documentMdata->document_id = $document->id;
             $documentMdata->content = $values[$i];
             $documentMdata->save();
+        }
+
+        $userDocument= new UserDocument;
+        $userDocument->document_id = $document->id;
+        $userDocument->user_id = Auth::user()->id;
+        $userDocument-> save();
+
+        // Permissao para o user que carregou o documento
+        for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
+            $docPermition = new DocumentPermitionType;
+            $docPermition->user_id = Auth::user()->id;
+            $docPermition->document_permition_id = $permition_id;
+            $docPermition->document_id = $document->id;
+            $docPermition->save();
         }
 
         $selectedDepartments = $request->selected_departments;
@@ -114,14 +130,22 @@ class DocumentController extends Controller
             }
         }
 
-        for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
-            $docPermition = new DocumentPermitionType;
-            $docPermition->user_id = Auth::user()->id;
-            $docPermition->document_permition_id = $permition_id;
-            $docPermition->document_id = $document->id;
-            $docPermition->save();
-        }
+        $selectedUsers = $request->selected_users;
+        $selectedUserPermissions = $request->selected_user_permissions;
 
+        if ($selectedUsers) {
+            foreach ($selectedUsers as $userId) {
+                if (isset($selectedUserPermissions[$userId])) {
+                    foreach ($selectedUserPermissions[$userId] as $permissionId) {
+                        DocumentPermitionType::firstOrCreate(
+                            ['document_permition_id' => $permissionId,
+                                'user_id' => $userId,
+                                'document_id' => $document->id],
+                        );
+                    }
+                }
+            }
+        }
         return redirect()->route('documents.store')->with('success');
     }
 
@@ -142,14 +166,15 @@ class DocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Document $document)
+    public function edit($id)
     {
-        if (Auth::user()->can('edit', $document)) {
-            $document = Document::find($document);
-            return view('documents.edit', compact('document'));
-        } else {
-            abort(403);
-        }
+        // Mexi aqui , dps e preciso alterar como tava antes
+        $document = Document::find($id);
+        $departments = Department::all();
+        $permitions = DocumentPermition::all();
+        $users = User::all();
+
+        return view('documents.edit', compact('document', 'departments', 'permitions', 'users'));
     }
 
     /**
@@ -157,12 +182,23 @@ class DocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //update logic
+        // MExi aqui depois e preciso alterar como tava antes
         $document = Document::find($id);
-        $document->name = $request->input('path');
-        $document->update();
-        return redirect()->route('documents.index')->with('sucess');
+
+        if (!$document) {
+            return redirect()->route('documents.index')->with('error', 'Documento não encontrado.');
+        }
+
+        $document->doc_name = $request->input('doc_name');
+        $document->type = $request->input('type');
+        $document->author = $request->input('author');
+        $document->proprietary = $request->input('proprietary');
+
+        $document->save();
+
+        return redirect()->route('documents.index')->with('success', 'Documento atualizado com sucesso.');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -28,21 +28,62 @@
                     @endphp
 
                     @if ($documentData)
-                        <p><strong>Nome do Documento:</strong> {{ $documentData->doc_name }}</p>
-                        <p><strong>Tipo:</strong> {{ $documentData->type }}</p>
-                        <p><strong>Formato:</strong> {{ $documentData->format }}</p>
-                        <p><strong>Tamanho:</strong> {{ $documentData->size }}</p>
+                        <p><strong>Nome do Documento:</strong>
+                            @if ($documentData = \DB::table('document_mdatas')
+                                ->where('document_id', $document->id)
+                                ->where('mdata_id', 1)
+                                ->select('content')
+                                ->first())
+                                {{ $documentData->content }}
+                            @endif
+                        </p>
+
+                        <p><strong>Tipo:</strong>
+                            @if ($documentData = \DB::table('document_mdatas')
+                                ->where('document_id', $document->id)
+                                ->where('mdata_id', 4)
+                                ->select('content')
+                                ->first())
+                                {{ $documentData->content }}
+                            @endif
+                        </p>
+                        <p><strong>Formato:</strong>
+                            @if ($documentData = \DB::table('document_mdatas')
+                                ->where('document_id', $document->id)
+                                ->where('mdata_id', 3)
+                                ->select('content')
+                                ->first())
+                                {{ $documentData->content }}
+                            @endif
+                        </p>
+
+                        <p><strong>Tamanho:</strong>
+                            @if ($documentData = \DB::table('document_mdatas')
+                                ->where('document_id', $document->id)
+                                ->where('mdata_id', 2)
+                                ->select('content')
+                                ->first())
+                                {{ $documentData->content }}
+                            @endif
+                        </p>
                     @endif
 
                     @php
                         if (Storage::exists($document->path)) {
                             $content = Storage::get($document->path);
+                            $type = Storage::mimeType($document->path);
                         } else {
                             $content = 'O documento solicitado não existe.';
+                            $type = '';
                         }
                     @endphp
-                    <h2>Conteúdo do Documento:</h2>
-                    <pre>{{ $content }}</pre>
+
+                    @if (Str::startsWith($type, 'image/'))
+                        <img src="data:{{ $type }};base64,{{ base64_encode($content) }}" />
+                    @else
+                        <pre>{{ $content }}</pre>
+                    @endif
+
 
                 </div>
 

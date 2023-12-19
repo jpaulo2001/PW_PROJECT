@@ -23,9 +23,9 @@ class DocumentPolicy
     public function view(User $user, Document $document): bool
     {
         $queryResult = User::query()
-            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("document_permition_types", "users.department_id", "=", "document_permition_types.department_id")
             ->join("documents", "document_permition_types.document_id", "=", "documents.id")
-            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.department_id", "=", $user->department_id)
             ->where("document_permition_types.document_id", "=", $document->id)
             ->select("document_permition_types.document_permition_id")->get();
 
@@ -36,6 +36,23 @@ class DocumentPolicy
                 break;
             }
         }
+        if(!$hasPermission){
+            $queryResult = User::query()
+                ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+                ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+                ->where("document_permition_types.user_id", "=", $user->id)
+                ->where("document_permition_types.document_id", "=", $document->id)
+                ->select("document_permition_types.document_permition_id")->get();
+
+            $hasPermission = false;
+            foreach ($queryResult as $result) {
+                if ($result->document_permition_id == "1") {
+                    $hasPermission = true;
+                    break;
+                }
+            }
+        }
+
         return $hasPermission;
     }
 
@@ -45,7 +62,7 @@ class DocumentPolicy
      */
     public function create(Document $document): bool
     {
-        return $document->type == ("Administrador");
+        return true;
     }
 
     /**
@@ -54,9 +71,9 @@ class DocumentPolicy
     public function update(User $user, Document $document): bool
     {
         $queryResult = User::query()
-            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("document_permition_types", "users.department_id", "=", "document_permition_types.department_id")
             ->join("documents", "document_permition_types.document_id", "=", "documents.id")
-            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.department_id", "=", $user->department_id)
             ->where("document_permition_types.document_id", "=", $document->id)
             ->select("document_permition_types.document_permition_id")->get();
 
@@ -67,6 +84,23 @@ class DocumentPolicy
                 break;
             }
         }
+        if(!$hasPermission){
+            $queryResult = User::query()
+                ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+                ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+                ->where("document_permition_types.user_id", "=", $user->id)
+                ->where("document_permition_types.document_id", "=", $document->id)
+                ->select("document_permition_types.document_permition_id")->get();
+
+            $hasPermission = false;
+            foreach ($queryResult as $result) {
+                if ($result->document_permition_id == "2") {
+                    $hasPermission = true;
+                    break;
+                }
+            }
+        }
+
         return $hasPermission;
     }
 
@@ -77,9 +111,9 @@ class DocumentPolicy
     public function delete(User $user, Document $document): bool
     {
         $queryResult = User::query()
-            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("document_permition_types", "users.department_id", "=", "document_permition_types.department_id")
             ->join("documents", "document_permition_types.document_id", "=", "documents.id")
-            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.department_id", "=", $user->department_id)
             ->where("document_permition_types.document_id", "=", $document->id)
             ->select("document_permition_types.document_permition_id")->get();
 
@@ -90,6 +124,23 @@ class DocumentPolicy
                 break;
             }
         }
+        if(!$hasPermission){
+            $queryResult = User::query()
+                ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+                ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+                ->where("document_permition_types.user_id", "=", $user->id)
+                ->where("document_permition_types.document_id", "=", $document->id)
+                ->select("document_permition_types.document_permition_id")->get();
+
+            $hasPermission = false;
+            foreach ($queryResult as $result) {
+                if ($result->document_permition_id == "3") {
+                    $hasPermission = true;
+                    break;
+                }
+            }
+        }
+
         return $hasPermission;
     }
 
@@ -99,9 +150,9 @@ class DocumentPolicy
     public function download(User $user, Document $document): bool
     {
         $queryResult = User::query()
-            ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+            ->join("document_permition_types", "users.department_id", "=", "document_permition_types.department_id")
             ->join("documents", "document_permition_types.document_id", "=", "documents.id")
-            ->where("document_permition_types.user_id", "=", $user->id)
+            ->where("document_permition_types.department_id", "=", $user->department_id)
             ->where("document_permition_types.document_id", "=", $document->id)
             ->select("document_permition_types.document_permition_id")->get();
 
@@ -112,6 +163,23 @@ class DocumentPolicy
                 break;
             }
         }
+        if(!$hasPermission){
+            $queryResult = User::query()
+                ->join("document_permition_types", "users.id", "=", "document_permition_types.user_id")
+                ->join("documents", "document_permition_types.document_id", "=", "documents.id")
+                ->where("document_permition_types.user_id", "=", $user->id)
+                ->where("document_permition_types.document_id", "=", $document->id)
+                ->select("document_permition_types.document_permition_id")->get();
+
+            $hasPermission = false;
+            foreach ($queryResult as $result) {
+                if ($result->document_permition_id == "4") {
+                    $hasPermission = true;
+                    break;
+                }
+            }
+        }
+
         return $hasPermission;
     }
 

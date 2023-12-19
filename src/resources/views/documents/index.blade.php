@@ -55,9 +55,10 @@
                                            class="btn btn-primary btn-outline">Ver</a>
                                     @endcan
                                     @can('update', $document)
-                                        <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                           class="btn btn-warning btn-outline-sm">Modificar</a>
-                                    @endcan
+                                            <a href="{{ route('documents.edit', ['document' => $document->id]) }}"
+                                               class="btn btn-warning btn-outline-sm">Modificar</a>
+
+                                        @endcan
                                     @can('delete', $document)
                                         <form action="{{ route('documents.destroy', ['document' => $document->id]) }}"
                                               method="POST" class="d-inline">
