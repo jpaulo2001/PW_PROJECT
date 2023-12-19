@@ -166,14 +166,15 @@ class DocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Document $document)
+    public function edit($id)
     {
-        if (Auth::user()->can('edit', $document)) {
-            $document = Document::find($document);
-            return view('documents.edit', compact('document'));
-        } else {
-            abort(403);
-        }
+        // Mexi aqui , dps e preciso alterar como tava antes
+        $document = Document::find($id);
+        $departments = Department::all();
+        $permitions = DocumentPermition::all();
+        $users = User::all();
+
+        return view('documents.edit', compact('document', 'departments', 'permitions', 'users'));
     }
 
     /**
@@ -181,12 +182,23 @@ class DocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //update logic
+        // MExi aqui depois e preciso alterar como tava antes
         $document = Document::find($id);
-        $document->name = $request->input('path');
-        $document->update();
-        return redirect()->route('documents.index')->with('sucess');
+
+        if (!$document) {
+            return redirect()->route('documents.index')->with('error', 'Documento não encontrado.');
+        }
+
+        $document->doc_name = $request->input('doc_name');
+        $document->type = $request->input('type');
+        $document->author = $request->input('author');
+        $document->proprietary = $request->input('proprietary');
+
+        $document->save();
+
+        return redirect()->route('documents.index')->with('success', 'Documento atualizado com sucesso.');
     }
+
 
     /**
      * Remove the specified resource from storage.

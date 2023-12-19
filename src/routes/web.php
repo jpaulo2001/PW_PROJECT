@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/documents', DocumentController::class);
     Route::get('/documents/{id}/share', [App\Http\Controllers\DocumentController::class, 'share'])->name('documents.share');
     Route::get('/documents/{document}/download', [App\Http\Controllers\DocumentController::class, 'download'])->name('documents.download');
-
+    Route::get('/documents/{document}/edit', [App\Http\Controllers\DocumentController::class, 'edit'])->name('documents.edit');
 
 
     Route::resource('/Mdata', MetadataController::class);
