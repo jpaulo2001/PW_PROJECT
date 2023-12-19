@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\DTO\UserDTO;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -58,9 +59,6 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->department_id = $request->department_id;
         $user->save();
-
-
-
 
         $userType = new UserType;
         $userType->user_id = $user->id;

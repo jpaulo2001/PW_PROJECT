@@ -8,28 +8,29 @@ use App\Models\DocumentPermitionType;
 use App\Models\Mdata;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\DTO\DocumentDTO;
 
 class DocumentService
 {
-    public function createDocument(array $documentData, array $mdataData, array $documentPermitionTypeData)
+    public function createDocument(DocumentDTO $documentDTO, array $request)
     {
-        $document = new Document;
-        $document->path = $documentData['path'];
+        $document = new Document($documentDTO->toArray());
         $document->save();
 
-        $mdata = new Mdata;
-        $mdata->doc_name = $mdataData['doc_name'];
-        $mdata->size = $mdataData['size'];
-        $mdata->type = $mdataData['type'];
-        $mdata->format = $mdataData['format'];
+        $mdata = new Mdata([
+            'doc_name' => $documentDTO->doc_name,
+            'size' => $documentDTO->file_size,
+            'type' => $documentDTO->type,
+            'format' => $documentDTO->file_extension,
+        ]);
         $mdata->save();
 
-        $documentPermitionType = new DocumentPermitionType;
-        $documentPermitionType->document_permition_id = $documentPermitionTypeData['document_permition_id'];
-        $documentPermitionType->document_id = $document->id;
-        $user = Auth::user();
-        $documentPermitionType->user_id = $user->id;
-        $documentPermitionType->department_id = $documentPermitionTypeData['department_id'];
+        $documentPermitionType = new DocumentPermitionType([
+            'document_permition_id' => $request['selected_permissions'],
+            'document_id' => $document->id,
+            'user_id' => Auth::user()->id,
+            'department_id' => $request['selected_departments'],
+        ]);
         $documentPermitionType->save();
 
         return $document;
