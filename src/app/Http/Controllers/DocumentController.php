@@ -16,6 +16,7 @@ use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
+use Ramsey\Uuid\Uuid;
 use App\DTO\DocumentDTO;
 
 
@@ -43,9 +44,9 @@ class DocumentController extends Controller
     }
 
 
-    public function publicShow($id)
+    public function publicShow($uuid)
     {
-        $document = Document::find($id);
+        $document = Document::where('uuid', $uuid)->first();
 
         if (!$document) {
             abort(404);
@@ -62,7 +63,11 @@ class DocumentController extends Controller
     {
         $document = Document::find($id);
 
-        $shareableLink = route('documents.publicShow', $document->id);
+        if (!$document) {
+            abort(404);
+        }
+
+        $shareableLink = route('documents.publicShow', $document->uuid);
 
         return redirect()->route('documents.show', $document->id)->with('success', 'Documento partilhado com sucesso! Aqui está o seu link: ' . $shareableLink);
     }
@@ -88,6 +93,7 @@ class DocumentController extends Controller
 
         $document = new Document;
         $document->path = $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension());
+        $document->uuid = Uuid::uuid4()->toString();
         $document->save();
 
         $metadata = ['1', '2', '3', '4', '5', '6'];

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->timestamps();
             $table->softdeletes();
             $table->string('path');

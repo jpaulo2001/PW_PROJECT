@@ -39,7 +39,7 @@ Route::get('/auth/register', function(){
     return view('register');
 });
 
-Route::get('/shared-documents/{id}', [App\Http\Controllers\DocumentController::class, 'publicShow'])->name('documents.publicShow');
+Route::get('/shared-documents/{uuid}', [App\Http\Controllers\DocumentController::class, 'publicShow'])->name('documents.publicShow');
 
 
 
@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/documents', DocumentController::class);
-    Route::get('/documents/{id}/share', [App\Http\Controllers\DocumentController::class, 'share'])->name('documents.share');
+    Route::get('/documents/{uuid}/share', [App\Http\Controllers\DocumentController::class, 'share'])->name('documents.share');
     Route::get('/documents/{document}/download', [App\Http\Controllers\DocumentController::class, 'download'])->name('documents.download');
     Route::get('/documents/{document}/edit', [App\Http\Controllers\DocumentController::class, 'edit'])->name('documents.edit');
 
