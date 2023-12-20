@@ -182,21 +182,73 @@ class DocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // MExi aqui depois e preciso alterar como tava antes
         $document = Document::find($id);
 
-        if (!$document) {
-            return redirect()->route('documents.index')->with('error', 'Documento não encontrado.');
+        if ($document) {
+            $file = $request->file('file');
+            if ($file) {
+                $document->path = $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension());
+            }
+
+            $metadata = ['1', '2', '3', '4', '5', '6'];
+            $values = [$request->doc_name,$file->getSize(),$file->getClientOriginalExtension(), $request->type, $request->author, $request->proprietary];
+
+            for ($i = 0; $i < count($metadata); $i++) {
+                $documentMdata = DocumentMdata::where('mdata_id', $metadata[$i])->where('document_id', $document->id)->first();
+                if ($documentMdata) {
+                    $documentMdata->content = $values[$i];
+                    $documentMdata->save();
+                }
+            }
+
+            $selectedDepartments = $request->selected_departments;
+            $selected_permissions = $request->selected_permissions;
+
+            if ($selectedDepartments) {
+                foreach ($selectedDepartments as $departmentId) {
+                    foreach ($selected_permissions as $permissionsID) {
+                        $docPermition = DocumentPermitionType::firstOrCreate(
+                            ['document_permition_id' => $permissionsID,
+                                'department_id' => $departmentId,
+                                'document_id' => $document->id],
+                            ['user_id' => Auth::user()->id]
+                        );
+                        if (!$docPermition->wasRecentlyCreated) {
+                            $docPermition->user_id = Auth::user()->id;
+                            $docPermition->save();
+                        }
+                    }
+                }
+            }
+
+            $selectedUsers = $request->selected_users;
+            $selectedUserPermissions = $request->selected_user_permissions;
+
+            if ($selectedUsers) {
+                foreach ($selectedUsers as $userId) {
+                    if (isset($selectedUserPermissions[$userId])) {
+                        foreach ($selectedUserPermissions[$userId] as $permissionId) {
+                            $docPermition = DocumentPermitionType::firstOrCreate(
+                                ['document_permition_id' => $permissionId,
+                                    'user_id' => $userId,
+                                    'document_id' => $document->id],
+                            );
+                            if (!$docPermition->wasRecentlyCreated) {
+                                $docPermition->user_id = $userId;
+                                $docPermition->save();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            $document->save();
+
+            return redirect()->route('documents.update', $id)->with('success', 'Documento atualizado com sucesso!');
+        } else {
+            return redirect()->route('documents.update', $id)->with('error', 'Documento não encontrado!');
         }
-
-        $document->doc_name = $request->input('doc_name');
-        $document->type = $request->input('type');
-        $document->author = $request->input('author');
-        $document->proprietary = $request->input('proprietary');
-
-        $document->save();
-
-        return redirect()->route('documents.index')->with('success', 'Documento atualizado com sucesso.');
     }
 
 
