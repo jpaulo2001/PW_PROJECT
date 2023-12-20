@@ -5,7 +5,6 @@
         <div class="row mt-5">
             <div class="col">
                 <a href="{{ route('documents.create') }}" class="btn btn-success btn-sm mb-3">Criar</a>
-{{--                <a href="#" class="btn btn-success btn-sm mb-3">Links</a>--}}
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -18,7 +17,6 @@
                     </thead>
                     <tbody>
                     @foreach($documents as $document)
-{{--                        @can('view', $document)--}}
                             <tr>
                                 <td>{{ $document->id }}</td>
                                 <td>
@@ -76,7 +74,6 @@
                                     @endcan
                                 </td>
                             </tr>
-{{--                        @endcan--}}
                     @endforeach
                     </tbody>
                 </table>

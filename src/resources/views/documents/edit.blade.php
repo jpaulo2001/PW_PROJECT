@@ -7,19 +7,35 @@
         @method('PUT')
 
         <b>Nome documento:</b>
-        <input type="text" name="doc_name" id="doc_name" class="form-control" value="{{ old('doc_name', $document->doc_name) }}"><br>
-        @error('doc_name') <span class="text-danger">{{ $message }}</span><br>@enderror
-
+        <input type="text" name="doc_name" id="doc_name" class="form-control" value="{{ old('doc_name', $documentData = \DB::table('document_mdatas')
+                                    ->where('document_id', $document->id)
+                                    ->where('mdata_id', 1)
+                                    ->select('content')
+                                    ->first()->content ?? '') }}">
+        <br>
+        @error('doc_name') <span class="text-danger">{{ $message }}</span><br> @enderror
         <b>Tipo de Documento:</b>
-        <input type="text" name="type" id="type" class="form-control" value="{{ old('type', $document->type) }}"><br>
+        <input type="text" name="type" id="type" class="form-control" value="{{ old('type', $documentData = \DB::table('document_mdatas')
+                                    ->where('document_id', $document->id)
+                                    ->where('mdata_id', 4)
+                                    ->select('content')
+                                    ->first()->content ?? '') }}"><br>
         @error('type') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Autor:</b>
-        <input type="text" name="author" id="author" class="form-control" value="{{ old('author', $document->author) }}"><br>
+        <input type="text" name="author" id="author" class="form-control" value="{{ old('author', $documentData = \DB::table('document_mdatas')
+                                    ->where('document_id', $document->id)
+                                    ->where('mdata_id', 5)
+                                    ->select('content')
+                                    ->first()->content ?? '') }}"><br>
         @error('author') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Proprietario:</b>
-        <input type="text" name="proprietary" id="proprietary" class="form-control" value="{{ old('proprietary', $document->proprietary) }}"><br>
+        <input type="text" name="proprietary" id="proprietary" class="form-control" value="{{ old('proprietary', $documentData = \DB::table('document_mdatas')
+                                    ->where('document_id', $document->id)
+                                    ->where('mdata_id', 6)
+                                    ->select('content')
+                                    ->first()->content ?? '') }}"><br>
         @error('proprietary') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Escolher departamento:</b> <br>
@@ -59,7 +75,7 @@
         @error('selected_users') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Escolher ficheiro:</b><br>
-        <input type="file" name="file" class="form-control"><br>
+        <input type="file" name="file" class="form-control" value="{{ old('path', $document->path)}}"><br>
 
         <input type="submit" value="Guardar Modificações" class="btn btn-primary">
 
