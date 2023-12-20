@@ -18,6 +18,7 @@ class DocumentFactory extends Factory
     {
         return [
             'path' => fake()->filePath(),
+            'uuid' => fake()->uuid(),
         ];
     }
 }
