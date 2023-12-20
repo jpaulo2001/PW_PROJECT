@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use PHPUnit\TextUI\Exception;
 
 class UserController extends Controller
 {
@@ -19,11 +22,12 @@ class UserController extends Controller
      */
     public function index()
     {
+        
         $users = User::all();
         if ($users->count() > 0){
             return response()->json([
                 'status' => 200,
-                'users' => $users
+                'users' => $users //users variable
             ],200);
         } else {
             return response()->json([
@@ -37,58 +41,63 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //validar dados name email password e departement
-        $validator = Validator::make($request->all(),[
+         //validar dados name email password e departement
+         $validator = Validator::make($request->all(),[
+
             'name' => 'required|string|max:191',
             'email' => 'required|email|max:191',
             'password' => 'required|string|max:20',
             'department_id' => 'required|digits|max:1'
+
         ]);
-
-
         
-        if($validator->fail()){ //user se falha retorna 403
+        if($validator->fail()){ //user se falha retorna 422
+
             return response()->json([
-                'status'=> 422,
-                'error' => $validator->messages(),
-            ] ,422);
+                'status' => 422,
+                'message' => "Nao existe esse utilizador"
+            ],422);
         }else{
-
-
             $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'department_id' => $request->department_id,
-        ]);
-
-
-            //return 201 (created status and users created)
-            return response()->json([ 
-                'status' => 200,
-                'users' => $user
+                "name"=> $request->name,
+                "email"=> $request->email,
+                "password"=> Hash::make($request->password),
+                "department_id"=> $request->department_id
             ]);
-        }
-    
+                 //find by id the user and update after
+
+            if($user){
+            //return 201 (created status and users created)
+            return response()->json([
+                'status' => 201,
+                'message' => 'user criado com sucesso'
+            ]);
+            }else{
+            return response()->json([
+                'status' => 500,
+                'message' => "deu errado"
+            ]);
+            };
+        };
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request,int $id) //get()
+    public function show($id) //get()
     {
-        if (!Auth()->user()->tokenCan('users:show')) {
-            abort('403');
+        $user = User::find($id);
+        if($user){
+            return response()->json([ 
+                'status' => 200,
+                'users' => $user, //'user encontrado com sucesso'
+            ]);
         }
-
-        try {
-            $user = User::findOrFail($id);
-            return new UserResource($id);
-        } catch (\Exception $e) {
-            if ($e instanceof ModelNotFoundException) {
-                return response()->json(['message' => 'Não encontrado'], 404);
-            }
-            return response()->json(['message' => 'Ocorreu um erro de comunicação'], 503);
+        else{
+            return response()->json([ 
+                'status' => 404,
+                'users' => 'user nao encontrado'
+            ],404);
         }
     }
 
@@ -100,37 +109,40 @@ class UserController extends Controller
     {
         //validar dados name email password e departement
         $validator = Validator::make($request->all(),[
+
             'name' => 'required|string|max:191',
             'email' => 'required|email|max:191',
             'password' => 'required|string|max:20',
             'department_id' => 'required|digits|max:1'
+
         ]);
         
         if($validator->fail()){ //user se falha retorna 404
-            return response()->json([
-                'status' => 404,
-                'message' => "Nao existe esse utilizador"
-            ]);
-        }else{
 
-            $user = User::find($id); //find by id the user and update after
-            if($user){
-                $user = User::update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'department_id' => $request->department_id,
-            ]);
-            
-            //return 201 (created status and users created)
-            return response()->json([ 
-                'status' => 200,
-                'users' => $user
-            ]);
+            return response()->json([
+                'status' => 422,
+                'message' => "Nao existe esse utilizador"
+            ],422);
         }else{
+            //find by id the user and update after
+
+            $user = User::find($id);
+            if($user){
+                $user->update([
+                    "name"=> $request->name,
+                    "email"=> $request->email,
+                    "password"=> Hash::make($request->password),
+                    "department_id"=> $request->department_id
+                ]);
+            //return 201 (created status and users created)
+            return response()->json([
+                'status' => 200,
+                'message' => 'user updated com sucesso'
+            ]);
+            }else{
             return response()->json([
                 'status' => 404,
-                'message' => "Nao existe esse utilizador"
+                'message' => "nao existe esse utilizador"
             ]);
         }
     };
@@ -144,17 +156,21 @@ class UserController extends Controller
      */
     public function destroy(int $id)
     {
-        //
-        $user = User::find($id);
-        if ($user) {
+       //DELETE
+       $user = User::find($id);
+       if ($user) {
             $user ->delete();
+           return response()->json([
+               "status"=> 200, 
+               "message"=> $user, "removido com sucesso"]);
 
 
-    }else{
-        return response()->json([
-            'status' => 404,
-            'message' => "Nao existe esse utilizador"
-        ]);
+
+   }else{
+       return response()->json([
+           'status' => 404,
+           'message' => "Nao existe esse utilizador"
+       ]);
 
         }
     }
