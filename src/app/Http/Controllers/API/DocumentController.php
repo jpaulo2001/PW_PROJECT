@@ -19,8 +19,8 @@ class DocumentController extends Controller
      * Display a listing of the resource.
      */
 
-
      
+
     public function index()
     {
         $documents = Document::all();
@@ -33,16 +33,19 @@ class DocumentController extends Controller
             return response()->json([
                 'status' => 404,
                 'documents' => "sem documentos"], 404);
+
         }
     }
 
+
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-       //verificar se o utilizador tem permissão para criar um novo documento
+       //verificar DOCUMENTO
             //FAZER
 
        //validar dados name email password e departement
@@ -51,19 +54,17 @@ class DocumentController extends Controller
         'email' => 'required|email|max:191',
         'password' => 'required|string|max:20',
         'department_id' => 'required|digits|max:1'
+
     ]);
 
 
-        $validator = Validator::make(Input::all(), $validator);
-
         if($validator->fail()){ //document se falha retorna 403
-            return abort(403);
+            return response()->json([
+                'status'=> 400,
+                'error'=> $validator->messages()
+            ],422);
         }else{
-
-
-            $document = Document::create([
-                //completar
-        ]);
+            $document = Document::create($request->all());
             //return 201 (created status and documents created)
             return response()->json([ 
                 'status' => 201,
@@ -76,6 +77,9 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
+
+
+
     public function show(int $id) //get()
     {
         $document = Document::find($id);
@@ -93,13 +97,20 @@ class DocumentController extends Controller
             }
     }
 
+
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, int $id)
     {
-
-        
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:191',
+            'email' => 'required|email|max:191',
+            'password' => 'required|string|max:20',
+            'department_id' => 'required|digits|max:1'
+        ]);
+    
         if($validator->fail()){ //document se falha retorna 404
             return response()->json([
                 'status' => 404,
@@ -113,6 +124,8 @@ class DocumentController extends Controller
                     //COMPLETAR
          ]);
             
+
+
             //return 201 (created status and documents created)
             return response()->json([ 
                 'status' => 200,
@@ -141,7 +154,7 @@ class DocumentController extends Controller
             $document ->delete();
             return response()->json([
                 "status"=> 200, 
-                "message"=> "removido com sucesso"]);
+                "message"=> $document, "removido com sucesso"]);
 
 
 

@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Document;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Support\Str;
 
-class UserApiAcessTest extends TestCase
+class DocumentApiAcessTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -20,29 +19,17 @@ class UserApiAcessTest extends TestCase
         $response->assertStatus(200);
     }
 
-
-
-
-/********************************************************
- * 
- */
-
-
-
-    /**
-     * A basic feature test example.
-     */
     public function test_can_index(): void
     {
         $response = $this->get(
-            '/api/users',
+            '/api/documents',
             [
                 'User' => 'application/json',
             ]
         );
         $response->assertStatus(200);
 
-        $user = User::create([
+        $user = Document::create([
             'name' => 'admin',
             'email' => Str::random(8),
             'password' => '123',
@@ -53,34 +40,37 @@ class UserApiAcessTest extends TestCase
         $plainTextToken = $token->plainTextToken;
 
         $response = $this->get(
-            '/api/users',
+            '/api/documents',
             [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $plainTextToken
             ]
         );
-        $response->assertStatus(200);
+        $response->assertStatus(403);
     }
 
     public function test_ok()
     {
-        $user = User::create([
+        $user = Document::create([
             'name' => 'admin',
             'email' => Str::random(8),
             'password' => '123',
             'department_id' => '1',
         ]);
-        $token = $user->createToken('test_positivo', ['users:list']);
+        $token = $user->createToken('test_positivo', ['documents:list']);
         $plainTextToken = $token->plainTextToken;
         $response = $this->get(
-            '/api/users',
+            '/api/documents',
             [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $plainTextToken
             ]
         );
-        $response->assertStatus(200);
+        $response->assertStatus(403);
     }
+
+
+
 
 
 }
