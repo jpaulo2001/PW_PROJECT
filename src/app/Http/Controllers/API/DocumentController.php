@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;  
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 
@@ -19,7 +22,6 @@ class DocumentController extends Controller
      * Display a listing of the resource.
      */
 
-     
 
     public function index()
     {
@@ -48,14 +50,10 @@ class DocumentController extends Controller
        //verificar DOCUMENTO
             //FAZER
 
-       //validar dados name email password e departement
-       $validator = Validator::make($request->all(),[
-        'name' => 'required|string|max:191',
-        'email' => 'required|email|max:191',
-        'password' => 'required|string|max:20',
-        'department_id' => 'required|digits|max:1'
-
-    ]);
+        //validar dados path
+        $validator = Validator::make($request->all(),[
+            'path' => 'required|string|max:191',
+        ]);
 
 
         if($validator->fail()){ //document se falha retorna 403
@@ -64,11 +62,11 @@ class DocumentController extends Controller
                 'error'=> $validator->messages()
             ],422);
         }else{
-            $document = Document::create($request->all());
+            $document = Document::create($request->all()); //cria documentos 
             //return 201 (created status and documents created)
             return response()->json([ 
                 'status' => 201,
-                'documents' => $document
+                'documents' => $document, 'documento criado com sucesso'
             ]);
         }
     
@@ -91,7 +89,7 @@ class DocumentController extends Controller
         }else{
                 return response()->json([
                     "status"=> 404,
-                    "message"=> "sem document"
+                    "message"=> "sem documento"
                     ],404);
 
             }
@@ -104,37 +102,33 @@ class DocumentController extends Controller
      */
     public function update(Request $request, int $id)
     {
+        //validar dados path
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:191',
-            'email' => 'required|email|max:191',
-            'password' => 'required|string|max:20',
-            'department_id' => 'required|digits|max:1'
+            'path' => 'required|string|max:191',
         ]);
-    
-        if($validator->fail()){ //document se falha retorna 404
+        
+        if($validator->fail()){ //user se falha retorna 404
             return response()->json([
-                'status' => 404,
-                'message' => "Nao existe esse utilizador"
-            ]);
+                'status' => 422,
+                'message' => "Nao existe esse documento"
+            ],422);
         }else{
-
-            $document = Document::find($id); //find by id the document and update after
+            //find by id the document and update after
+            $document = Document::find($id);
+            $file = $request->file('file');
             if($document){
-                $document = Document::update([
-                    //COMPLETAR
-         ]);
-            
-
-
-            //return 201 (created status and documents created)
-            return response()->json([ 
+                $document->update([
+                    "path" => $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension())
+                ]);
+            //return 201 (created status and document updated)
+            return response()->json([
                 'status' => 200,
-                'documents' => $document
+                'message' => 'documento updated com sucesso'
             ]);
-        }else{
+            }else{
             return response()->json([
                 'status' => 404,
-                'message' => "Nao existe esse utilizador"
+                'message' => "nao existe esse documento"
             ]);
         }
     };
