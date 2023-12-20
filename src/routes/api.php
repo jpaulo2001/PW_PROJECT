@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\API\DocumentController;
-use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\DocumentMdataController;
+use App\Http\Controllers\Api\DepartmentController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +34,7 @@ Route::apiResource('users', UserController::class); // api resource for all user
 
 Route::apiResource('documents', DocumentController::class); // api resource for all users
 
+Route::apiResource('departments', DepartmentController::class); // api resource for all users
+
+
+Route::apiResource('documentsMdatas', DocumentMdataController::class); // api resource for all users
