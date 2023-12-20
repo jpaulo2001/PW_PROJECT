@@ -191,7 +191,7 @@ class DocumentController extends Controller
             }
 
             $metadata = ['1', '2', '3', '4', '5', '6'];
-            $values = [$request->doc_name, $file ? $file->getSize() : $document->size, $file ? $file->getClientOriginalExtension() : $document->extension, $request->type, $request->author, $request->proprietary];
+            $values = [$request->doc_name,$file->getSize(),$file->getClientOriginalExtension(), $request->type, $request->author, $request->proprietary];
 
             for ($i = 0; $i < count($metadata); $i++) {
                 $documentMdata = DocumentMdata::where('mdata_id', $metadata[$i])->where('document_id', $document->id)->first();
@@ -200,7 +200,7 @@ class DocumentController extends Controller
                     $documentMdata->save();
                 }
             }
-            
+
             $selectedDepartments = $request->selected_departments;
             $selected_permissions = $request->selected_permissions;
 
