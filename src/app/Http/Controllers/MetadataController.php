@@ -38,10 +38,7 @@ class MetadataController extends Controller
     public function store(Request $request)
     {
         $mdata = new Mdata;
-        $mdata->doc_name = $request->doc_name;
-        $mdata->size = $request->size;
-        $mdata->type = $request->type;
-        $mdata->format = $request->format;
+        $mdata->mdata = $request->mdata;
         $mdata->save();
         return redirect()->route('Mdata')->with('sucess');
     }
@@ -68,27 +65,22 @@ class MetadataController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Mdata $mdata)
     {
-        $mdata = Mdata::find($id);
-        $mdata->doc_name = $request->input("doc_name");
-        $mdata->size = $request->input("size");
-        $mdata->type = $request->input("type");
-        $mdata->format = $request->input("format");
-        $mdata->update();
+        $validatedData = $request->validate([
+            'mdata' => 'required',
+        ]);
+        $mdata->update($validatedData);
         return redirect()->route('Mdata.index')->with('sucess');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy( Mdata $mdata)
     {
-        $mdata = Mdata::find($id);
-        if (empty($mdata)) {
-            abort(404);
-        }
         $mdata->delete();
-        return redirect()->route('Mdata.index');
+
+        return redirect()->route('Mdata.index')->with('success', 'User deleted successfully');
     }
 }
