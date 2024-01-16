@@ -5,10 +5,13 @@
     <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
-        @foreach($mdatas as $mdata)
-            <b>{{ $mdata->mdata }}</b><br>
-            <input type="text" name="mdata[]" id="" class="form-control"><br>
+        @foreach($mdatas as $key => $mdata)
+            @if($key != 1 && $key != 2)
+                <b>{{ $mdata->mdata }}</b><br>
+                <input type="text" name="mdata[]" id="" class="form-control"><br>
+            @endif
         @endforeach
+
 
         <b>Escolher departamento:</b> <br>
         @foreach ($departments as $department)

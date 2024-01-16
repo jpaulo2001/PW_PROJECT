@@ -100,7 +100,7 @@ class DocumentController extends Controller
         $mdatas[1] = $size;
         $mdatas[2] = $extension;
         $request->merge(['mdata' => $mdatas]);
-        
+
         $document->uuid = Uuid::uuid4()->toString();
         $document->save();
 
