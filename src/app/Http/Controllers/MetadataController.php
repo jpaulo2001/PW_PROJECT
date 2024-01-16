@@ -20,8 +20,13 @@ class MetadataController extends Controller
      */
     public function index()
     {
-        $mdata = Mdata::orderBy('id');
-        return view('Mdata.index',['Mdata' => $mdata]);
+        $mdatas = Mdata::orderBy('mdata')->paginate(25);
+        return view(
+            'documentMdatas.index',
+            [
+                'mdatas' => $mdatas
+            ]
+        );
     }
 
     /**
@@ -29,7 +34,7 @@ class MetadataController extends Controller
      */
     public function create()
     {
-        return view ('Mdata.create');
+        return view ('documentMdatas.create');
     }
 
     /**
@@ -40,17 +45,18 @@ class MetadataController extends Controller
         $mdata = new Mdata;
         $mdata->mdata = $request->mdata;
         $mdata->save();
-        return redirect()->route('Mdata')->with('sucess');
+        return redirect()->route('documentMdatas.index')->with('sucess');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $format)
     {
-        $mdata = Mdata::all();
+        $mdatas = Mdata::all();
 
-        return view('Mdata.show', ['Mdata' => $mdata]);
+        return view('documentMdatas.show', ['mdatas' => $mdatas]);
     }
 
     /**
@@ -58,20 +64,21 @@ class MetadataController extends Controller
      */
     public function edit(string $id)
     {
-        $mdata = Mdata::find($id);
-        return view('Mdata.edit', compact('mdata'));
+        $mdatas = Mdata::find($id);
+        return view('documentMdatas.edit', compact('mdatas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Mdata $mdata)
+    public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'mdata' => 'required',
-        ]);
-        $mdata->update($validatedData);
-        return redirect()->route('Mdata.index')->with('sucess');
+        $mdata = Mdata::find($id);
+        if($mdata){
+            $mdata->mdata = $request->mdata;
+            $mdata->save();
+        }
+        return redirect()->route('documentMdatas.index')->with('success', 'Mdata updated successfully');
     }
 
     /**
@@ -81,6 +88,6 @@ class MetadataController extends Controller
     {
         $mdata->delete();
 
-        return redirect()->route('Mdata.index')->with('success', 'User deleted successfully');
+        return redirect()->route('documentMdatas.index')->with('success', 'User deleted successfully');
     }
 }

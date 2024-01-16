@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col">
-                <a href="{{ route('documents.create') }}" class="btn btn-success btn-sm mb-3">Criar</a>
+                <a href="{{ route('documents.create') }}" class="btn btn-success btn-sm mb-3">Criar Documento</a>
+                <a href="{{ route('documentMdatas.index') }}" class="btn btn-success btn-sm mb-3">Meta dados personalizados</a>
+
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -22,25 +24,25 @@
                                 <td>
                                     @if ($documentData = \DB::table('document_mdatas')
                                         ->where('document_id', $document->id)
-                                        ->where('mdata_id', 1)
-                                        ->select('content')
-                                        ->first())
-                                        {{ $documentData->content }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($documentData = \DB::table('document_mdatas')
-                                        ->where('document_id', $document->id)
-                                        ->where('mdata_id', 4)
-                                        ->select('content')
-                                        ->first())
-                                        {{ $documentData->content }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($documentData = \DB::table('document_mdatas')
-                                        ->where('document_id', $document->id)
                                         ->where('mdata_id', 3)
+                                        ->select('content')
+                                        ->first())
+                                        {{ $documentData->content }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($documentData = \DB::table('document_mdatas')
+                                        ->where('document_id', $document->id)
+                                        ->where('mdata_id', 6)
+                                        ->select('content')
+                                        ->first())
+                                        {{ $documentData->content }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($documentData = \DB::table('document_mdatas')
+                                        ->where('document_id', $document->id)
+                                        ->where('mdata_id', 5)
                                         ->select('content')
                                         ->first())
                                         {{ $documentData->content }}

@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/documentsPermitions', DocumentPermitionController::class);
 
-    Route::resource('/documentMdata', DocumentMetadataController::class);
+    Route::resource('/documentMdatas', MetadataController::class);
 
 
     Route::resource('/documents', DocumentController::class);
