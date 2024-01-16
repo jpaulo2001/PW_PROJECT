@@ -6,7 +6,7 @@
         @csrf
 
         @foreach($mdatas as $key => $mdata)
-            @if($key != 1 && $key != 2)
+            @if($key != 0 && $key != 1)
                 <b>{{ $mdata->mdata }}</b><br>
                 <input type="text" name="mdata[]" id="" class="form-control"><br>
             @endif

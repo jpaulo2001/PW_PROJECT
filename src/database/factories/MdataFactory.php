@@ -16,9 +16,9 @@ class MdataFactory extends Factory
      */
     protected static $index = 0;
     protected static $types = [
-        'doc_name',
         'size',
         'format',
+        'doc_name',
         'type',
         'author',
         'proprietary',

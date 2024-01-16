@@ -94,26 +94,22 @@ class DocumentController extends Controller
 
         $document = new Document;
         $document->path = $file->storeAs('files', $request->input('mdata')[0] . '.' . $file->getClientOriginalExtension());
-        $size = $file->getSize();
-        $extension = $file->getClientOriginalExtension();
-        $mdatas = $request->input('mdata');
-        $mdatas[1] = $size;
-        $mdatas[2] = $extension;
-        $request->merge(['mdata' => $mdatas]);
-
         $document->uuid = Uuid::uuid4()->toString();
         $document->save();
 
-        $mdatas = $request->input('mdata');
+        $size = $file->getSize();
+        $extension = $file->getClientOriginalExtension();
 
-        foreach($mdatas as $key => $value) {
+        $mdatas = $request->input('mdata');
+        array_unshift($mdatas, $size, $extension); // Adiciona o tamanho e a extensão no início do array
+
+        for($key = 0; $key < count($mdatas); $key++) {
             $documentMdata = new DocumentMdata;
             $documentMdata->mdata_id = $key+1;
             $documentMdata->document_id = $document->id;
-            $documentMdata->content = $value;
+            $documentMdata->content = $mdatas[$key];
             $documentMdata->save();
         }
-
 
         $userDocument= new UserDocument;
         $userDocument->document_id = $document->id;
@@ -188,7 +184,7 @@ class DocumentController extends Controller
         $users = User::all();
         $mdatas = Mdata::all();
 
-        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas'));
+        return view('documents.edit', compact('document', 'departments', 'permitions', 'users', 'mdatas'));
     }
 
     /**
@@ -203,23 +199,22 @@ class DocumentController extends Controller
                 $document->path = $file->storeAs('files', $request->input('mdata')[0] . '.' . $file->getClientOriginalExtension());
                 $size = $file->getSize();
                 $extension = $file->getClientOriginalExtension();
+
                 $mdatas = $request->input('mdata');
-                $mdatas[1] = $size;
-                $mdatas[2] = $extension;
+                array_unshift($mdatas, $size, $extension); // Adiciona o tamanho e a extensão no início do array
+
                 $request->merge(['mdata' => $mdatas]);
-            }
+                $document->save();
 
-            $document->save();
-
-            $mdatas = $request->input('mdata');
-
-            foreach($mdatas as $key => $value) {
-                $documentMdata = DocumentMdata::where('mdata_id', $key+1)->where('document_id', $document->id)->first();
-                if ($documentMdata) {
-                    $documentMdata->content = $value;
-                    $documentMdata->save();
+                foreach($mdatas as $key => $value) {
+                    $documentMdata = DocumentMdata::where('mdata_id', $key+1)->where('document_id', $document->id)->first();
+                    if ($documentMdata) {
+                        $documentMdata->content = $value;
+                        $documentMdata->save();
+                    }
                 }
             }
+
 
             $selectedDepartments = $request->selected_departments;
             $selected_permissions = $request->selected_permissions;
