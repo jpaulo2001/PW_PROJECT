@@ -182,13 +182,13 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        // Mexi aqui , dps e preciso alterar como tava antes
         $document = Document::find($id);
         $departments = Department::all();
         $permitions = DocumentPermition::all();
         $users = User::all();
+        $mdatas = Mdata::all();
 
-        return view('documents.edit', compact('document', 'departments', 'permitions', 'users'));
+        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas'));
     }
 
     /**
@@ -197,20 +197,26 @@ class DocumentController extends Controller
     public function update(Request $request, string $id)
     {
         $document = Document::find($id);
-
         if ($document) {
             $file = $request->file('file');
             if ($file) {
-                $document->path = $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension());
+                $document->path = $file->storeAs('files', $request->input('mdata')[0] . '.' . $file->getClientOriginalExtension());
+                $size = $file->getSize();
+                $extension = $file->getClientOriginalExtension();
+                $mdatas = $request->input('mdata');
+                $mdatas[1] = $size;
+                $mdatas[2] = $extension;
+                $request->merge(['mdata' => $mdatas]);
             }
 
-            $metadata = ['1', '2', '3', '4', '5', '6'];
-            $values = [$request->doc_name,$file->getSize(),$file->getClientOriginalExtension(), $request->type, $request->author, $request->proprietary];
+            $document->save();
 
-            for ($i = 0; $i < count($metadata); $i++) {
-                $documentMdata = DocumentMdata::where('mdata_id', $metadata[$i])->where('document_id', $document->id)->first();
+            $mdatas = $request->input('mdata');
+
+            foreach($mdatas as $key => $value) {
+                $documentMdata = DocumentMdata::where('mdata_id', $key+1)->where('document_id', $document->id)->first();
                 if ($documentMdata) {
-                    $documentMdata->content = $values[$i];
+                    $documentMdata->content = $value;
                     $documentMdata->save();
                 }
             }
