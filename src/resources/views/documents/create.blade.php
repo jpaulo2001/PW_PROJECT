@@ -5,17 +5,10 @@
     <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
-        <b>Nome documento:</b> <input type="text" name="doc_name" id="" class="form-control"><br>
-        @error('doc_name') <span class="text-danger">{{ $message }}</span><br>@enderror
-
-        <b>Tipo de Documento:</b> <input type="text" name="type" id="" class="form-control"><br>
-        @error('type') <span class="text-danger">{{ $message }}</span><br>@enderror
-
-        <b>Autor:</b> <input type="text" name="author" id="" class="form-control"><br>
-        @error('author') <span class="text-danger">{{ $message }}</span><br>@enderror
-
-        <b>Proprietario:</b> <input type="text" name="proprietary" id="" class="form-control"><br>
-        @error('proprietary') <span class="text-danger">{{ $message }}</span><br>@enderror
+        @foreach($mdatas as $mdata)
+            <b>{{ $mdata->mdata }}</b><br>
+            <input type="text" name="mdata[]" id="" class="form-control"><br>
+        @endforeach
 
         <b>Escolher departamento:</b> <br>
         @foreach ($departments as $department)

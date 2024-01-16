@@ -80,8 +80,9 @@ class DocumentController extends Controller
         $users = User::all();
         $departments = Department::all();
         $permitions = DocumentPermition::all();
+        $mdatas = Mdata::all();
 
-        return view('documents.create', compact('users', 'departments', 'permitions'));
+        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas'));
     }
 
     /**
@@ -92,20 +93,27 @@ class DocumentController extends Controller
         $file = $request->file('file');
 
         $document = new Document;
-        $document->path = $file->storeAs('files', $request->doc_name . '.' . $file->getClientOriginalExtension());
+        $document->path = $file->storeAs('files', $request->input('mdata')[0] . '.' . $file->getClientOriginalExtension());
+        $size = $file->getSize();
+        $extension = $file->getClientOriginalExtension();
+        $mdatas = $request->input('mdata');
+        $mdatas[1] = $size;
+        $mdatas[2] = $extension;
+        $request->merge(['mdata' => $mdatas]);
+        
         $document->uuid = Uuid::uuid4()->toString();
         $document->save();
 
-        $metadata = ['1', '2', '3', '4', '5', '6'];
-        $values = [$request->doc_name,$file->getSize(),$file->getClientOriginalExtension(), $request->type, $request->author, $request->proprietary];
+        $mdatas = $request->input('mdata');
 
-        for ($i = 0; $i < count($metadata); $i++) {
+        foreach($mdatas as $key => $value) {
             $documentMdata = new DocumentMdata;
-            $documentMdata->mdata_id = $metadata[$i];
+            $documentMdata->mdata_id = $key+1;
             $documentMdata->document_id = $document->id;
-            $documentMdata->content = $values[$i];
+            $documentMdata->content = $value;
             $documentMdata->save();
         }
+
 
         $userDocument= new UserDocument;
         $userDocument->document_id = $document->id;
