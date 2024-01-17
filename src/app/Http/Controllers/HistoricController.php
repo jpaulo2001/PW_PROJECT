@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Historic;
+use App\Models\Document;
+
 use Illuminate\Support\Facades\Redirect;
 use App\Services\HistoricService;
 
@@ -56,10 +58,9 @@ class HistoricController extends Controller
     public function show($id)
     {
         $historics = Historic::where('document_id', $id)->get();
-
-        return view('historics.show', ['historics' => $historics]);
+    
+        return view('historics.show')->with(['historics' => $historics, 'document_id' => $id]);
     }
-
 
     /**
      * Show the form for editing the specified resource.

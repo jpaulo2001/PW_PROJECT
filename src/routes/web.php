@@ -9,7 +9,9 @@ use App\Http\Controllers\MetadataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistoricController;
 use App\Http\Controllers\UserTypeController;
+use App\Services\DashboardService;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +31,8 @@ Route::get('/', function () {
 })->name('inicio');
 
 //main dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
 
-
+Route::get('/dashboard', [DashboardController::class, 'index']);
 //register
 Route::get('/auth/register', function(){
     return view('register');

@@ -12,7 +12,8 @@ class Historic extends Model
 
 
 
-    public function historic(){
+    public function document()
+    {
         return $this->belongsTo(Document::class);
     }
 

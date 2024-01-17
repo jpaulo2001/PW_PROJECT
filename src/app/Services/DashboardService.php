@@ -1,29 +1,33 @@
 <?php
 
-
-
-
 namespace App\Services;
+
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use function PHPUnit\Framework\isEmpty;
 use App\Models\Document;
-use App\Models\DocumentMdata;
+use App\Models\Historic;
 
 class DashboardService
 {
-    protected function getLastSevenDocuments(Document $document, ?Carbon $date = null)
+    public function getLastSevenDocuments()
     {
-        if ($date == null) {
-            $date = Carbon::now();
+        // Get the last seven documents
+        $documents = Document::orderBy('created_at', 'desc')->take(7)->get();
+    
+        if ($documents->isEmpty()) {
+            return collect(); // or handle the case where no documents are found
         }
-
-        return DocumentMdata::query()
-            ->where('documents_id', $document->id)
-            ->where('created_at', '>=', $date = Carbon::now()->subDays(7))
+    
+        // Extract document IDs
+        $documentIds = $documents->pluck('id');
+    
+        // Get historic records for the last seven documents
+        $date = Carbon::now()->subDays(1000);
+    
+        return Historic::whereIn('document_id', $documentIds)
+            ->where('created_at', '>=', $date)
             ->orderBy('created_at')
             ->get();
     }
-}
 
+
+}
