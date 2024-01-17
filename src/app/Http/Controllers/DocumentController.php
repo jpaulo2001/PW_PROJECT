@@ -193,10 +193,11 @@ class DocumentController extends Controller
     public function update(Request $request, string $id)
     {
         $document = Document::find($id);
+
         if ($document) {
             $file = $request->file('file');
             if ($file) {
-                $document->path = $file->storeAs('files', $request->input('mdata')[0] . '.' . $file->getClientOriginalExtension());
+                $document->path = $file->storeAs('files', $request->input('mdata')[2] . '.' . $file->getClientOriginalExtension());
                 $size = $file->getSize();
                 $extension = $file->getClientOriginalExtension();
 
