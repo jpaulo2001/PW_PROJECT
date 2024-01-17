@@ -43,13 +43,7 @@ class DocumentMetadataController extends Controller
      */
     public function store(Request $request)
     {
-        $documentMdata = new DocumentMdata;
-        $documentMdata->mdata_id = $request->mdata_id;
-        $documentMdata->document_id = $request->document_id;
-        $documentMdata->content = $request->content;
-        $documentMdata->value = $request->value;
-        $documentMdata->save();
-        return redirect()->route('documentMdata')->with('sucess');
+        //
     }
 
     /**

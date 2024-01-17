@@ -25,7 +25,7 @@ return new class extends Migration
             $table->softdeletes();
             $table->foreignId("mdata_id")->constrained();
             $table->foreignId("document_id")->constrained();
-            $table->string("content"); // se o id da metatada for equivalente ao autor o value sera por exemplo HP
+            $table->string("content")->nullable();
         });
 
     }

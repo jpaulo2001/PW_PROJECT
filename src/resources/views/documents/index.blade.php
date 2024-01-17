@@ -33,7 +33,7 @@
                                 <td>
                                     @if ($documentData = \DB::table('document_mdatas')
                                         ->where('document_id', $document->id)
-                                        ->where('mdata_id', 6)
+                                        ->where('mdata_id', 4)
                                         ->select('content')
                                         ->first())
                                         {{ $documentData->content }}
@@ -42,7 +42,7 @@
                                 <td>
                                     @if ($documentData = \DB::table('document_mdatas')
                                         ->where('document_id', $document->id)
-                                        ->where('mdata_id', 5)
+                                        ->where('mdata_id', 2)
                                         ->select('content')
                                         ->first())
                                         {{ $documentData->content }}
