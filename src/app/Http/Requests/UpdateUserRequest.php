@@ -26,13 +26,14 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'max:250', 'min:6'],
             'email' => ['nullable', 'email'],
             'password' => ['required', 'min:8', 'max:16'],
-            'department_id' => ['nullable', 'min:1', 'max:2']
+            'department_id' => ['nullable', 'min:1', 'max:2'],
+            'user_type_permition_id' => ['nullable', 'min:1', 'max:2']
         ];
     }
 
     public function toDTO(): UserDTO
     {
-        return new UserDTO($this->name, $this->email, $this->password, $this->department_id);
+        return new UserDTO($this->name, $this->email, $this->password, $this->department_id, $this->user_type_permition_id);
     }
 }
 
