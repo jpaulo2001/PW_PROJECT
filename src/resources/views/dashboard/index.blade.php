@@ -70,6 +70,7 @@
             </div>
             <div class="col-sm">
                 <h1>Memoria Utilizada</h1>
+
             </div>
           </div>
 

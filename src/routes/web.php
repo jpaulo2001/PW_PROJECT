@@ -12,6 +12,7 @@ use App\Http\Controllers\UserTypeController;
 use App\Services\DashboardService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UploadFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::get('/', function () {
 //main dashboard
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
+
+
 //register
 Route::get('/auth/register', function(){
     return view('register');
