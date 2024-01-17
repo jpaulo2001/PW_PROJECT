@@ -17,19 +17,19 @@
                         <tr>
                             <th>{{ $mdata->mdata}}</th>
                             <td class="text-end">
-                                @can('update', APP\Models\User::class)
+{{--                                @can('update', APP\Models\User::class)--}}
                                     <a href="{{ route('documentMdatas.edit', ['documentMdata' => $mdata->id]) }}"
                                        class="btn btn-warning btn-outline-sm">Modificar</a>
-                                @endcan
+{{--                                @endcan--}}
 
-                                @can('delete', APP\Models\User::class)
+{{--                                @can('delete', APP\Models\User::class)--}}
                                     <form action="{{ route('documentMdatas.destroy', ['documentMdata' => $mdata->id]) }}"
                                           method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-delete btn-outline-danger">Eliminar</button>
                                     </form>
-                                @endcan
+{{--                                @endcan--}}
 
                             </td>
                         </tr>

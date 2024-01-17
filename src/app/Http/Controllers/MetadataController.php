@@ -20,7 +20,7 @@ class MetadataController extends Controller
      */
     public function index()
     {
-        $mdatas = Mdata::orderBy('mdata')->paginate(25);
+        $mdatas = Mdata::orderBy('id')->paginate(25);
         return view(
             'documentMdatas.index',
             [
@@ -84,10 +84,13 @@ class MetadataController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( Mdata $mdata)
+    public function destroy(string $id)
     {
+        $mdata = Mdata::find($id);
+        if (empty($mdata)) {
+            abort(404);
+        }
         $mdata->delete();
-
-        return redirect()->route('documentMdatas.index')->with('success', 'User deleted successfully');
+        return redirect()->route('documentMdatas.index');
     }
 }
