@@ -2,34 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Auth\Controller;
+use App\Http\Controllers\Controller;
 use App\Services\DashboardService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-
-
 
 class DashboardController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request, DashboardService $service) //service layer
+    protected $dashboardService;
+
+    public function __construct(DashboardService $dashboardService)
     {
-
-        
-
-
-
-        return view(
-            'dashboard',
-            [
-                'data' => $this->getLastSevenDocuments()  // informaçao dos documentos nos ultimos 7 dias editados/criados/eliminados
-            ]
-        );
+        $this->dashboardService = $dashboardService;
     }
 
+    public function index()
+    {
+        $lastSevenDocuments = $this->dashboardService->getLastSevenDocuments();
 
-
-
+        return view('dashboard.index', ['lastSevenDocuments' => $lastSevenDocuments]);
+    }
 }
