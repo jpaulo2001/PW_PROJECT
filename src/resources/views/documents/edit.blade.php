@@ -7,15 +7,17 @@
         @method('PUT')
 
         @foreach($mdatas as $key => $mdata)
-            @if($key != 0 && $key != 1)
+            @if($key > 1)
                 <b>{{ $mdata->mdata }}</b><br>
-                <input type="text" name="mdata[{{ $key }}]" id="" class="form-control" value="{{ old('mdata.' . $key, $documentData = \DB::table('document_mdatas')
-                                ->where('document_id', $document->id)
-                                ->where('mdata_id', $key+1)
-                                ->select('content')
-                                ->first()->content ?? '') }}"><br>
+                <input type="hidden" name="mdata_id[]" value="{{ $mdata->id }}">
+                <input type="text" name="mdata_value[]" class="form-control" value="{{ old('mdata_value.' . $key, $documentData = \DB::table('document_mdatas')
+                            ->where('document_id', $document->id)
+                            ->where('mdata_id', $mdata->id)
+                            ->select('content')
+                            ->first()->content ?? '') }}"><br>
             @endif
         @endforeach
+
 
         <b>Escolher departamento:</b> <br>
         @foreach ($departments as $department)

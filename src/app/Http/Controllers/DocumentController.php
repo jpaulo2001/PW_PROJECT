@@ -93,24 +93,27 @@ class DocumentController extends Controller
         $file = $request->file('file');
 
         $document = new Document;
-        $document->path = $file->storeAs('files', $request->input('mdata')[0] . '.' . $file->getClientOriginalExtension());
+        $document->path = $file->storeAs('files', $request->input('mdata_value')[0] . '.' . $file->getClientOriginalExtension());
         $document->uuid = Uuid::uuid4()->toString();
         $document->save();
 
         $size = $file->getSize();
         $extension = $file->getClientOriginalExtension();
 
-        $mdatas = $request->input('mdata');
-        array_unshift($mdatas, $size, $extension); // Adiciona o tamanho e a extensão no início do array
+        $mdatas_ids = $request->input('mdata_id');
+        $mdatas_values = $request->input('mdata_value');
 
-        for($key = 0; $key < count($mdatas); $key++) {
+// Adiciona o tamanho e a extensão no inico do array
+        array_unshift($mdatas_values, $size, $extension);
+        array_unshift($mdatas_ids, 1, 2); // Adiciona IDs ficticios pro size e tipo
+
+        for($key = 0; $key < count($mdatas_ids); $key++) {
             $documentMdata = new DocumentMdata;
-            $documentMdata->mdata_id = $key+1;
+            $documentMdata->mdata_id = $mdatas_ids[$key];
             $documentMdata->document_id = $document->id;
-            $documentMdata->content = $mdatas[$key];
+            $documentMdata->content = $mdatas_values[$key];
             $documentMdata->save();
         }
-
         $userDocument= new UserDocument;
         $userDocument->document_id = $document->id;
         $userDocument->user_id = Auth::user()->id;
@@ -197,25 +200,44 @@ class DocumentController extends Controller
         if ($document) {
             $file = $request->file('file');
             if ($file) {
-                $document->path = $file->storeAs('files', $request->input('mdata')[2] . '.' . $file->getClientOriginalExtension());
+                $document->path = $file->storeAs('files', $request->input('mdata_value')[2] . '.' . $file->getClientOriginalExtension());
                 $size = $file->getSize();
                 $extension = $file->getClientOriginalExtension();
 
-                $mdatas = $request->input('mdata');
-                array_unshift($mdatas, $size, $extension); // Adiciona o tamanho e a extensão no início do array
+                $mdatas_ids = $request->input('mdata_id');
+                $mdatas_values = $request->input('mdata_value');
 
-                $request->merge(['mdata' => $mdatas]);
                 $document->save();
 
-                foreach($mdatas as $key => $value) {
-                    $documentMdata = DocumentMdata::where('mdata_id', $key+1)->where('document_id', $document->id)->first();
-                    if ($documentMdata) {
-                        $documentMdata->content = $value;
-                        $documentMdata->save();
+                // Update the size metadata
+                $sizeMdata = DocumentMdata::where('mdata_id', 1)->where('document_id', $document->id)->first();
+                if ($sizeMdata) {
+                    $sizeMdata->content = $size;
+                    $sizeMdata->save();
+                } else {
+                    DocumentMdata::create(['mdata_id' => 1, 'document_id' => $document->id, 'content' => $size]);
+                }
+
+                // Update the format metadata
+                $formatMdata = DocumentMdata::where('mdata_id', 2)->where('document_id', $document->id)->first();
+                if ($formatMdata) {
+                    $formatMdata->content = $extension;
+                    $formatMdata->save();
+                } else {
+                    DocumentMdata::create(['mdata_id' => 2, 'document_id' => $document->id, 'content' => $extension]);
+                }
+
+                // Update the rest of the metadata
+                foreach($mdatas_ids as $key => $mdata_id) {
+                    if ($mdata_id != 1 && $mdata_id != 2) {
+                        $documentMdata = DocumentMdata::where('mdata_id', $mdata_id)->where('document_id', $document->id)->first();
+                        if ($documentMdata) {
+                            $documentMdata->content = $mdatas_values[$key];
+                            $documentMdata->save();
+                        }
                     }
                 }
             }
-
 
             $selectedDepartments = $request->selected_departments;
             $selected_permissions = $request->selected_permissions;
@@ -261,9 +283,9 @@ class DocumentController extends Controller
 
             $document->save();
 
-            return redirect()->route('documents.update', $id)->with('success', 'Documento atualizado com sucesso!');
+            return redirect()->route('documents.index', $id)->with('success', 'Documento atualizado com sucesso!');
         } else {
-            return redirect()->route('documents.update', $id)->with('error', 'Documento não encontrado!');
+            return redirect()->route('documents.index', $id)->with('error', 'Documento não encontrado!');
         }
     }
 

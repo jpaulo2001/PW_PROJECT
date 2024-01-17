@@ -6,12 +6,12 @@
         @csrf
 
         @foreach($mdatas as $key => $mdata)
-            @if($key != 0 && $key != 1)
+            @if($key > 1)
                 <b>{{ $mdata->mdata }}</b><br>
-                <input type="text" name="mdata[]" id="" class="form-control"><br>
+                <input type="hidden" name="mdata_id[]" value="{{ $mdata->id }}">
+                <input type="text" name="mdata_value[]" class="form-control"><br>
             @endif
         @endforeach
-
 
         <b>Escolher departamento:</b> <br>
         @foreach ($departments as $department)
