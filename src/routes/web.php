@@ -32,6 +32,7 @@ Route::get('/', function () {
 })->name('inicio');
 
 //main dashboard
+Route::get('/dashboard/get-file-sizes', [DashboardController::class, 'getFileSizes'])->name('file-sizes');
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 

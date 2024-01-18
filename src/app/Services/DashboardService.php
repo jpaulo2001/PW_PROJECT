@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Document;
-use App\Models\Historic;
+use App\Models\DocumentMdata;
 
 class DashboardService
 {
@@ -21,11 +21,11 @@ class DashboardService
         $documentIds = $documents->pluck('id');
     
         // Get historic records for the last seven documents
-        $date = Carbon::now()->subDays(1000);
+        $date = Carbon::now()->subDays(7);
     
-        return Historic::whereIn('document_id', $documentIds)
+        return DocumentMdata::whereIn('document_id', $documentIds)
             ->where('created_at', '>=', $date)
-            ->orderBy('created_at')
+            ->orderByDesc('created_at') // Order by 'created_at' in descending order
             ->get();
     }
 

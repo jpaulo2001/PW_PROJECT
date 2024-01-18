@@ -2,12 +2,7 @@
 @extends('layouts.autenticado')
 
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
+
 
     .container {
         max-width: 1200px;
@@ -44,35 +39,74 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>Documentos da Semana</h1>
+                <h1>Ultimos Documentos Modificados</h1>
 
-        @php
-            $documents = app(\App\Services\DashboardService::class)->getLastSevenDocuments();
-        @endphp
+                    @php
+                        $documents = app(\App\Services\DashboardService::class)->getLastSevenDocuments();
+                    @endphp
 
-        @if ($documents->isEmpty())
-            <p>Não existem Documentos na ultima semana.</p>
-        @else
-            <ul>
-                @foreach ($documents as $document)
-                    <li>
-                        <strong>Document ID:</strong> {{ $document->document_id }}
-                        <!-- Add other relevant fields as needed -->
-                        <br>
-                        <strong>Created At:</strong> {{ $document->created_at }}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-            </div>
-            <div class="col-sm">
-                <h1>Ultimos Documentos</h1>
+                    @if ($documents->isEmpty())
+                        <p>Não existem Documentos na ultima semana.</p>
+                    @else
+                        <ul>
+                            @foreach ($documents as $document)
+                                <li>
+                                    <strong>Document ID:</strong> {{ $document->document_id }}
+                                    <!-- Add other relevant fields as needed -->
+                                    <br>
+                                    <strong>Created At:</strong> {{ $document->created_at }}
+                                    @can('view', $document)
+                                    <a href="route{{documents.show}}" class="btn btn-primary btn-outline">Ver</a>
+                                    @endcan
+
+                                    <a href="" class="btn btn-warning btn-outline-sm">Modificar</a>
+                                    <a href="" class="btn btn-delete btn-outline-danger">Eliminar</a>
+
+
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
             </div>
             <div class="col-sm">
                 <h1>Memoria Utilizada</h1>
+                <html>
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load("current", {packages:["corechart"]});
+                        google.charts.setOnLoadCallback(drawChart);
 
+                        function drawChart() {
+                            // Make an AJAX request to the Laravel route
+                            $.ajax({
+                                url: '/dashboard/get-file-sizes',
+                                dataType: 'json',
+                                success: function(data) {
+                                    var chartData = [['Memoria', 'Valor memoria']];
+                                    $.each(data, function(key, value) {
+                                        chartData.push([key, value]);
+                                    });
+
+                                    var chartDataArray = google.visualization.arrayToDataTable(chartData);
+
+                                    var options = {
+                                        is3D: true,
+                                    };
+
+                                    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                                    chart.draw(chartDataArray, options);
+                                }
+                            });
+                        }
+                    </script>
+                </head>
+                <body>
+                    <div id="piechart_3d" style="width: 400px; height: 600px;"></div>
+                </body> 
+                </html>
             </div>
-          </div>
-
+        </div>
     </div>
 @endsection
