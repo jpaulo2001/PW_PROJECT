@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\DashboardService;
 use Illuminate\Support\Facades\File;
 
-
 class DashboardController extends Controller
 {
     protected $dashboardService;
@@ -14,13 +13,6 @@ class DashboardController extends Controller
     public function __construct(DashboardService $dashboardService)
     {
         $this->dashboardService = $dashboardService;
-    }
-
-    public function index()
-    {
-        $lastSevenDocuments = $this->dashboardService->getLastSevenDocuments();
-
-        return view('dashboard.index', ['lastSevenDocuments' => $lastSevenDocuments]);
     }
 
     public function getFileSizes()
@@ -47,6 +39,15 @@ class DashboardController extends Controller
             'Memoria Livre' => $freeMemoryGB,
         ];
 
-        return response()->json($memoryData);
+        return $memoryData;
     }
+    public function index()
+    {
+        $lastSevenDocuments = $this->dashboardService->getLastSevenDocuments();
+        $fileSizes = $this->dashboardService->getFileSizes(); // Make sure this method is called correctly
+
+        return view('dashboard.index', compact('lastSevenDocuments', 'fileSizes'));
+    }
+
+
 }

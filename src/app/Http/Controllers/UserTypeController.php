@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\UserType;
 use App\Models\UserTypePermition;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Services\UserTypeService;
 
 class UserTypeController extends Controller
@@ -19,60 +18,38 @@ class UserTypeController extends Controller
 
     public function index()
     {
-        $usertypes = UserTypePermition::orderBy('type')->paginate(25);
-        return view(
-            'userTypes.index',
-            [
-                'userTypes' => $usertypes
-            ]
-        );
+        $userTypes = $this->userTypeService->getAllUserTypes();
+
+        return view('userTypes.index', [
+            'userTypes' => $userTypes
+        ]);
     }
+
     public function update(Request $request, UserType $userType)
     {
-        $validatedData = $request->validate([
-            'user_id' => 'required',
-            'user_type_permition_id' => 'required',
-        ]);
+        $this->userTypeService->updateUserType($request, $userType);
 
-        $userType->update($validatedData);
+        // You might want to redirect or return a response here.
     }
+
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'user_type_permition' => 'required',
-        ]);
-
-        $user = Auth::user();
-
-        $permission = UserTypePermition::firstOrCreate(['type' => $validatedData['user_type_permition']]);
-
-        $userType = new UserType();
-        $userType->user_id = $user->id;
-        $userType->user_type_permition_id = $permission->id;
-        $userType->save();
+        $this->userTypeService->storeUserType($request);
 
         return redirect()->route('userTypes.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $usertypespermition = new UserTypePermition();
+        $usertypespermition = $this->userTypeService->createUserType();
+
         return view('userTypes.create', compact('usertypespermition'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $usertypespermition = UserTypePermition::find($id);
-        if (empty($usertypespermition)) {
-            abort(404);
-        }
-        $usertypespermition->delete();
+        $this->userTypeService->destroyUserType($id);
+
         return redirect()->route('userTypes.index');
     }
 }

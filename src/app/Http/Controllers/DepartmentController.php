@@ -7,96 +7,70 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\DocumentPermitionService;
+use App\Services\DepartmentService;
 
 
+
+
+namespace App\Http\Controllers;
+
+use App\Services\DepartmentService;
+use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
     protected $departmentService;
 
-    public function __construct(DocumentPermitionService $departmentService)
+    public function __construct(DepartmentService $departmentService)
     {
         $this->departmentService = $departmentService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $departments = Department::orderBy('name')->paginate(25);
-        return view(
-            'departments.index',
-            [
-                'departments' => $departments
-            ]
-        );
+        $departments = $this->departmentService->getAllDepartments();
+        return view('departments.index', ['departments' => $departments]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $department = new Department();
-        return view('departments.create', compact('department'));
+        return view('departments.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $department = new Department;
-        $department->name = $request->name;
-        $department->code = $request->code;
-        $department->save();
-        return redirect()->route('departments.index')->with('sucess');
+        $data = $request->only(['name', 'code']);
+        $this->departmentService->createDepartment($data);
+
+        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        $department = Department::all();
+        $department = $this->departmentService->getDepartmentById($id);
 
-        return view('departments.show', ['departments' => $department]);
-
+        return view('departments.show', ['department' => $department]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $department = Department::find($id);
-        return view('departments.edit', compact('department'));
+        $department = $this->departmentService->getDepartmentById($id);
+
+        return view('departments.edit', ['department' => $department]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //update logic
-        $department = Department::find($id);
-        $department->name = $request->input('name');
-        $department->code = $request->input('code');
-        $department->update();
-        return redirect()->route('departments.index')->with('sucess');
+        $data = $request->only(['name', 'code']);
+        $this->departmentService->updateDepartment($id, $data);
+
+        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $department = Department::find($id);
-        if (empty($department)) {
-            abort(404);
-        }
-        $department->delete();
-        return redirect()->route('departments.index');
+        $this->departmentService->deleteDepartment($id);
+
+        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
     }
 }
