@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResourceCollection;
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+
         $users = User::all();
         if ($users->count() > 0){
             return response()->json([
@@ -50,7 +50,7 @@ class UserController extends Controller
             'department_id' => 'required|digits|max:1'
 
         ]);
-        
+
         if($validator->fail()){ //user se falha retorna 422
 
             return response()->json([
@@ -88,13 +88,13 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if($user){
-            return response()->json([ 
+            return response()->json([
                 'status' => 200,
                 'users' => $user, //'user encontrado com sucesso'
             ]);
         }
         else{
-            return response()->json([ 
+            return response()->json([
                 'status' => 404,
                 'users' => 'user nao encontrado'
             ],404);
@@ -104,7 +104,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    
+
     public function update(Request $request, int $id)
     {
         //validar dados name email password e departement
@@ -116,7 +116,7 @@ class UserController extends Controller
             'department_id' => 'required|digits|max:1'
 
         ]);
-        
+
         if($validator->fail()){ //user se falha retorna 404
 
             return response()->json([
@@ -161,7 +161,7 @@ class UserController extends Controller
        if ($user) {
             $user ->delete();
            return response()->json([
-               "status"=> 200, 
+               "status"=> 200,
                "message"=> $user, "removido com sucesso"]);
 
 

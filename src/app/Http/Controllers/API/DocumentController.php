@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\DocumentResourceCollection;
@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;  
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +40,7 @@ class DocumentController extends Controller
     }
 
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -62,14 +62,14 @@ class DocumentController extends Controller
                 'error'=> $validator->messages()
             ],422);
         }else{
-            $document = Document::create($request->all()); //cria documentos 
+            $document = Document::create($request->all()); //cria documentos
             //return 201 (created status and documents created)
-            return response()->json([ 
+            return response()->json([
                 'status' => 201,
                 'documents' => $document, 'documento criado com sucesso'
             ]);
         }
-    
+
     }
 
     /**
@@ -106,7 +106,7 @@ class DocumentController extends Controller
         $validator = Validator::make($request->all(),[
             'path' => 'required|string|max:191',
         ]);
-        
+
         if($validator->fail()){ //user se falha retorna 404
             return response()->json([
                 'status' => 422,
@@ -147,7 +147,7 @@ class DocumentController extends Controller
         if ($document) {
             $document ->delete();
             return response()->json([
-                "status"=> 200, 
+                "status"=> 200,
                 "message"=> $document, "removido com sucesso"]);
 
 
