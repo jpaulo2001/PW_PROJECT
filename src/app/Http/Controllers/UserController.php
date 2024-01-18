@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\UserType;
 
@@ -51,18 +52,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
+        $userDTO = $request->toDTO();
+
         $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->department_id = $request->department_id;
+        $user->name = $userDTO->name;
+        $user->email = $userDTO->email;
+        $user->password = Hash::make($userDTO->password);
+        $user->department_id = $userDTO->department_id;
         $user->save();
 
         $userType = new UserType;
         $userType->user_id = $user->id;
-        $userType->user_type_permition_id = $request->user_type_permition_id;
+        $userType->user_type_permition_id = $userDTO->user_type_permition_id;
         $userType->save();
 
         return redirect()->route('users.index');
