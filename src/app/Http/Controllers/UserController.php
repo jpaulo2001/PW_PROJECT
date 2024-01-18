@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\UserType;
 
 use App\Http\Controllers\Auth\Controller;
@@ -10,7 +11,6 @@ use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\DTO\UserDTO;
-
 use Illuminate\Support\Facades\Hash;
 
 
@@ -93,26 +93,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            //'email' => 'required|email',
-            'department_id' => 'required',
-            'user_type_permition_id' => 'required',
-        ]);
 
-        $user->update($validatedData);
+        $userDTO = $request->toDTO($user);
+
+        // Update the User
+        $user->update($userDTO->toArray());
 
         // Update the UserType
         $userType = UserType::where('user_id', $user->id)->first();
         if ($userType) {
-            $userType->user_type_permition_id = $request->user_type_permition_id;
+            $userType->user_type_permition_id = $userDTO->user_type_permition_id;
             $userType->save();
         }
 
         return redirect()->route('users.index')->with('success', 'User and UserType updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
