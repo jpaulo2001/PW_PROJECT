@@ -34,6 +34,7 @@
         font-weight: bold;
         color: #333;
     }
+    
 </style>
 @section('main-content')
     <div class="container">
@@ -56,7 +57,7 @@
                                     <br>
                                     <strong>Created At:</strong> {{ $document->created_at }}
                                     @can('view', $document)
-                                    <a href="route{{documents.show}}" class="btn btn-primary btn-outline">Ver</a>
+                                    <a href="" class="btn btn-primary btn-outline">Ver</a>
                                     @endcan
 
                                     <a href="" class="btn btn-warning btn-outline-sm">Modificar</a>

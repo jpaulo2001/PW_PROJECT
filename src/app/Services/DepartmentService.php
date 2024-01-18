@@ -6,33 +6,48 @@ use App\Models\Department;
 
 class DepartmentService
 {
-    public function createDepartment(array $departmentData)
+    public function getAllDepartments()
+    {
+        return Department::orderBy('name')->paginate(25);
+    }
+
+    public function createDepartment($data)
     {
         $department = new Department;
-        $department->name = $departmentData['name'];
-        $department->code = $departmentData['code'];
+        $department->name = $data['name'];
+        $department->code = $data['code'];
         $department->save();
 
         return $department;
     }
 
-    public function updateDepartment(string $id, array $departmentData)
+    public function getDepartmentById($id)
+    {
+        return Department::find($id);
+    }
+
+    public function updateDepartment($id, $data)
     {
         $department = Department::find($id);
+
         if ($department) {
-            $department->name = $departmentData['name'];
-            $department->code = $departmentData['code'];
-            $department->save();
+            $department->name = $data['name'];
+            $department->code = $data['code'];
+            $department->update();
         }
 
         return $department;
     }
 
-    public function deleteDepartment(string $id)
+    public function deleteDepartment($id)
     {
         $department = Department::find($id);
+
         if ($department) {
             $department->delete();
         }
+
+        return $department;
     }
 }
+

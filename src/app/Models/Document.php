@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Document extends Model
 {
     use HasFactory, SoftDeletes;
@@ -16,7 +17,6 @@ class Document extends Model
     public function documentMdata(){
         return $this->belongsToMany(DocumentMdata::class);
     }
-
 
     public function historic(){
         return $this->hasMany(Historic::class);
