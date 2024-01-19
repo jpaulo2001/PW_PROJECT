@@ -25,6 +25,7 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
+    
     /**
      * Display a listing of the resource.
      */
@@ -38,6 +39,7 @@ class UserController extends Controller
             ]
         );
     }
+
 
     /**
      * Show the form for creating a new resource.

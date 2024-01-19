@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 
-class FileController extends Controller
+class FileController extends Controller // File controller class
 {
-    public function getFileSizes()
+    public function getFileSizes() // Function to get file sizes
     {
-        $folderPath = storage_path('app/files');
-        $files = File::files($folderPath);
+        $folderPath = storage_path('app/files'); // Set folder path
+        $files = File::files($folderPath); // Get all files in folder
 
-        $fileSizes = [];
+        $fileSizes = []; // Initialize file sizes array
 
-        foreach ($files as $file) {
-            $fileSizes[basename($file)] = File::size($file);
+        foreach ($files as $file) {   // Loop through each file
+            $fileSizes[basename($file)] = File::size($file);  // Get and store file size
         }
 
-        return response()->json($fileSizes);
+        return response()->json($fileSizes);  // Return file sizes as JSON response
     }
 }
