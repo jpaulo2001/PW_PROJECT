@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Document extends Model
 {
     use HasFactory, SoftDeletes;
-    // adicionei isto aqui numa tentativa de funcionar
     protected $fillable = ['doc_name', 'type', 'author', 'proprietary'];
 
 
     public function documentMdata(){
-        return $this->belongsToMany(DocumentMdata::class);
+        return $this->hasMany(DocumentMdata::class);
     }
+
 
     public function historic(){
         return $this->hasMany(Historic::class);
