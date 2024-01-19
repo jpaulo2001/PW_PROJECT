@@ -11,7 +11,6 @@
                     <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Código</th>
                         <th class="text-end">Ações</th>
                     </tr>
                     </thead>
@@ -24,7 +23,7 @@
                                     <a href="{{ route('documentMdatas.edit', ['documentMdata' => $mdata->id]) }}"
                                        class="btn btn-warning btn-outline-sm">Modificar</a>
                                 @endcan
-                                
+
                                 @can('delete', APP\Models\User::class)
                                     <form action="{{ route('documentMdatas.destroy', ['documentMdata' => $mdata->id]) }}" method="POST" class="d-inline">
                                         @csrf
