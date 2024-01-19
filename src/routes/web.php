@@ -83,6 +83,8 @@ Route::resource('/uploadfile', \App\Http\Controllers\UploadFileController::class
 
 
 //send email
+Route::get('/mail', [DocumentController::class, 'sendEmailsToUsers'])->name('emails.email');
+
 /*
 
 Route::get('/sendbasicemail',\App\Http\Controllers\MailController::class, 'basic_email');

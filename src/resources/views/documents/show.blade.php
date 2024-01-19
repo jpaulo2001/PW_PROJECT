@@ -14,6 +14,8 @@
                         Documento</a>
                     <a href="{{ route('historics.show', $document->id) }}" class="btn btn-secondary">Ver Histórico</a>
 
+                    <a href="{{ route('emails.email') }}" class="btn btn-primary btn-sm mb-3">Enviar E-mail</a>
+
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}

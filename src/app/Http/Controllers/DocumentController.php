@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
 use Ramsey\Uuid\Uuid;
 use App\DTO\DocumentDTO;
-
+use App\Mail\Mail as MailClass;
+use Illuminate\Support\Facades\Mail;
 
 class DocumentController extends Controller
 {
@@ -339,6 +340,26 @@ class DocumentController extends Controller
             ->select('mdatas.*')
             ->where('document_mdatas.document_id', $documentId)
             ->first();
+    }
+
+    public function sendEmailsToUsers()
+    {
+        $documents = Document::all();
+
+        foreach ($documents as $document) {
+            // Obtenha todos os utilizadores associados ao documento
+            $users = $document->userDocument()->pluck('user_id');
+
+            // Enviar e-mail para cada utilizador associado a este documento
+            foreach ($users as $userId) {
+                $user = User::find($userId);
+
+                // Certifique-se de que você está utilizando a classe Mail corretamente
+                Mail::to($user->email)->send(new MailClass($user, $document));
+            }
+        }
+
+        return redirect()->back()->with('success', 'E-mails enviados com sucesso!');
     }
 
 }
