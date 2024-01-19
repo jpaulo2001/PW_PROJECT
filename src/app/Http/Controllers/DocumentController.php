@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
+use App\Http\Requests\CreateDocumentRequest;
 use App\Models\Department;
 use App\Models\DocumentPermitionType;
 use App\Models\DocumentPermition;
@@ -88,38 +89,38 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateDocumentRequest $request)
     {
-        $file = $request->file('file');
+        $documentDTO = $request->toDTO();
+
+        $file = $documentDTO->file;
 
         $document = new Document;
-        $document->path = $file->storeAs('files', $request->input('mdata_value')[0] . '.' . $file->getClientOriginalExtension());
+        $document->path = $file->storeAs('files', $documentDTO->mdatas_values[0] . '.' . $file->getClientOriginalExtension());
         $document->uuid = Uuid::uuid4()->toString();
         $document->save();
 
         $size = $file->getSize();
         $extension = $file->getClientOriginalExtension();
 
-        $mdatas_ids = $request->input('mdata_id');
-        $mdatas_values = $request->input('mdata_value');
+        // Add the size and extension at the beginning of the array
+        array_unshift($documentDTO->mdatas_values, $size, $extension);
+        array_unshift($documentDTO->mdatas_ids, 1, 2); // Add fictitious IDs for size and type
 
-// Adiciona o tamanho e a extensão no inico do array
-        array_unshift($mdatas_values, $size, $extension);
-        array_unshift($mdatas_ids, 1, 2); // Adiciona IDs ficticios pro size e tipo
-
-        for($key = 0; $key < count($mdatas_ids); $key++) {
+        for($key = 0; $key < count($documentDTO->mdatas_ids); $key++) {
             $documentMdata = new DocumentMdata;
-            $documentMdata->mdata_id = $mdatas_ids[$key];
+            $documentMdata->mdata_id = $documentDTO->mdatas_ids[$key];
             $documentMdata->document_id = $document->id;
-            $documentMdata->content = $mdatas_values[$key];
+            $documentMdata->content = $documentDTO->mdatas_values[$key];
             $documentMdata->save();
         }
+
         $userDocument= new UserDocument;
         $userDocument->document_id = $document->id;
         $userDocument->user_id = Auth::user()->id;
         $userDocument-> save();
 
-        // Permissao para o user que carregou o documento
+        // Permission for the user who uploaded the document
         for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
             $docPermition = new DocumentPermitionType;
             $docPermition->user_id = Auth::user()->id;
@@ -128,11 +129,9 @@ class DocumentController extends Controller
             $docPermition->save();
         }
 
-        $selectedDepartments = $request->selected_departments;
-        $selected_permissions = $request->selected_permissions;
-        if ($selectedDepartments) {
-            foreach ($selectedDepartments as $departmentId) {
-                foreach ($selected_permissions as $permissionsID) {
+        if ($documentDTO->selectedDepartments) {
+            foreach ($documentDTO->selectedDepartments as $departmentId) {
+                foreach ($documentDTO->selected_permissions as $permissionsID) {
                     DocumentPermitionType::firstOrCreate(
                         ['document_permition_id' => $permissionsID,
                             'department_id' => $departmentId,
@@ -143,13 +142,10 @@ class DocumentController extends Controller
             }
         }
 
-        $selectedUsers = $request->selected_users;
-        $selectedUserPermissions = $request->selected_user_permissions;
-
-        if ($selectedUsers) {
-            foreach ($selectedUsers as $userId) {
-                if (isset($selectedUserPermissions[$userId])) {
-                    foreach ($selectedUserPermissions[$userId] as $permissionId) {
+        if ($documentDTO->selectedUsers) {
+            foreach ($documentDTO->selectedUsers as $userId) {
+                if (isset($documentDTO->selectedUserPermissions[$userId])) {
+                    foreach ($documentDTO->selectedUserPermissions[$userId] as $permissionId) {
                         DocumentPermitionType::firstOrCreate(
                             ['document_permition_id' => $permissionId,
                                 'user_id' => $userId,
@@ -159,8 +155,10 @@ class DocumentController extends Controller
                 }
             }
         }
+
         return redirect()->route('documents.store')->with('success');
     }
+
 
 
     /**
