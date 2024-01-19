@@ -15,6 +15,7 @@ use App\Models\Mdata;
 use App\Models\UserDocument;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Historic;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
@@ -83,8 +84,9 @@ class DocumentController extends Controller
         $departments = Department::all();
         $permitions = DocumentPermition::all();
         $mdatas = Mdata::all();
+        $historics = Historic::all();
 
-        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas'));
+        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas','historics'));
     }
 
     /**
@@ -120,6 +122,11 @@ class DocumentController extends Controller
         $userDocument->document_id = $document->id;
         $userDocument->user_id = Auth::user()->id;
         $userDocument-> save();
+        
+        $historic = new Historic;
+        $historic->document_id = $document->id;
+        $historic->body = 'Document created';  // You can customize the body message
+        $historic->save();
 
         // Permission for the user who uploaded the document
         for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
