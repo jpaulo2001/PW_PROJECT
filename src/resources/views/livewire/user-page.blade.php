@@ -1,4 +1,10 @@
 <div>
+    <div class="col-6">
+        <p class="lead">Filtro</p>
+        <input type="text" wire:model.debounce.500ms="search" class="form-control">
+    </div>
+
+
     @foreach ($users as $user)
         <div class="form-check">
             <input class="form-check-input" type="checkbox" name="selected_users[]" value="{{ $user->id }}">
