@@ -12,20 +12,21 @@ class DashboardService
     {
         // Get the last seven documents
         $documents = Document::orderBy('created_at', 'desc')->take(5)->get();
-
+    
         if ($documents->isEmpty()) {
             return collect(); // or handle the case where no documents are found
         }
-
+    
         // Extract document IDs
         $documentIds = $documents->pluck('id');
-
-        // Get historic records for the last seven documents
+    
+        // Get distinct historic records for the last seven documents
         $date = Carbon::now()->subDays(5);
-
+    
         return Historic::whereIn('document_id', $documentIds)
             ->where('created_at', '>=', $date)
             ->orderByDesc('created_at') // Order by 'created_at' in descending order
+            ->distinct('document_id') // Select distinct records based on 'document_id'
             ->get();
     }
 

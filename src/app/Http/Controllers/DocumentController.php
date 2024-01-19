@@ -125,7 +125,7 @@ class DocumentController extends Controller
         
         $historic = new Historic;
         $historic->document_id = $document->id;
-        $historic->body = 'Document created';  // You can customize the body message
+        $historic->body = ('Document created');
         $historic->save();
 
         // Permission for the user who uploaded the document
@@ -174,6 +174,10 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
+        $historic = new Historic;
+        $historic->document_id = $document->id;
+        $historic->body = ('Document Checked');
+        $historic->save();
         if (Auth::user()->can('view', $document)) {
             return view('documents.show', ['document' => $document]);
         } else {
@@ -187,11 +191,16 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
+        
         $document = Document::find($id);
         $departments = Department::all();
         $permitions = DocumentPermition::all();
         $users = User::all();
         $mdatas = Mdata::all();
+        $historic = new Historic;
+        $historic->document_id = $document->id;
+        $historic->body = ('Document Edited');
+        $historic->save();
 
         return view('documents.edit', compact('document', 'departments', 'permitions', 'users', 'mdatas'));
     }
@@ -276,6 +285,10 @@ class DocumentController extends Controller
                     }
                 }
             }
+            $historic = new Historic;
+            $historic->document_id = $document->id;
+            $historic->body = ('Document Updated');
+            $historic->save();
 
             $document->save();
 
@@ -295,7 +308,10 @@ class DocumentController extends Controller
             $document->delete();
             return redirect()->route('documents.index')->with('success', 'Document deleted successfully');
         }
-
+        $historic = new Historic;
+        $historic->document_id = $document->id;
+        $historic->body = ('Document Deleted');
+        $historic->save();
         return redirect()->route('documents.index')->with('error', 'You do not have permission to delete this document');
     }
 
@@ -309,6 +325,10 @@ class DocumentController extends Controller
         if (!Storage::exists($path)) {
             return redirect()->back()->with('error', 'The document doesnt exist.');
         }
+        $historic = new Historic;
+        $historic->document_id = $document->id;
+        $historic->body = ('Document Dowloaded');
+        $historic->save();
 
         return Storage::download($path);
     }

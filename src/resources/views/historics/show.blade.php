@@ -15,9 +15,8 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Data da Modificação</th>
-                                <th>Corpo</th>
+                                <th>Modificações</th>
 
 
                             </tr>
@@ -25,7 +24,6 @@
                             <tbody>
                             @foreach ($historics as $historic)
                                 <tr>
-                                    <td>{{ $historic->id }}</td>
                                     <td>{{ $historic->created_at }}</td>
                                     <td>{{ $historic->body }}</td>
 
