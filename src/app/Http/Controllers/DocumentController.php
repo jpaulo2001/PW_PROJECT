@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\Controller;
 use App\Http\Requests\CreateDocumentRequest;
+use App\Http\Requests\UpdateDocumentRequest;
 use App\Models\Department;
 use App\Models\DocumentPermitionType;
 use App\Models\DocumentPermition;
@@ -191,19 +192,16 @@ class DocumentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateDocumentRequest $request, Document $document)
     {
-        $document = Document::find($id);
+        $documentDTO = $request->toDTO();
 
         if ($document) {
-            $file = $request->file('file');
+            $file = $documentDTO->file;
             if ($file) {
-                $document->path = $file->storeAs('files', $request->input('mdata_value')[2] . '.' . $file->getClientOriginalExtension());
+                $document->path = $file->storeAs('files', $documentDTO->mdatas_values[2] . '.' . $file->getClientOriginalExtension());
                 $size = $file->getSize();
                 $extension = $file->getClientOriginalExtension();
-
-                $mdatas_ids = $request->input('mdata_id');
-                $mdatas_values = $request->input('mdata_value');
 
                 $document->save();
 
@@ -226,23 +224,20 @@ class DocumentController extends Controller
                 }
 
                 // Update the rest of the metadata
-                foreach($mdatas_ids as $key => $mdata_id) {
+                foreach($documentDTO->mdatas_ids as $key => $mdata_id) {
                     if ($mdata_id != 1 && $mdata_id != 2) {
                         $documentMdata = DocumentMdata::where('mdata_id', $mdata_id)->where('document_id', $document->id)->first();
                         if ($documentMdata) {
-                            $documentMdata->content = $mdatas_values[$key];
+                            $documentMdata->content = $documentDTO->mdatas_values[$key];
                             $documentMdata->save();
                         }
                     }
                 }
             }
 
-            $selectedDepartments = $request->selected_departments;
-            $selected_permissions = $request->selected_permissions;
-
-            if ($selectedDepartments) {
-                foreach ($selectedDepartments as $departmentId) {
-                    foreach ($selected_permissions as $permissionsID) {
+            if ($documentDTO->selectedDepartments) {
+                foreach ($documentDTO->selectedDepartments as $departmentId) {
+                    foreach ($documentDTO->selected_permissions as $permissionsID) {
                         $docPermition = DocumentPermitionType::firstOrCreate(
                             ['document_permition_id' => $permissionsID,
                                 'department_id' => $departmentId,
@@ -257,13 +252,10 @@ class DocumentController extends Controller
                 }
             }
 
-            $selectedUsers = $request->selected_users;
-            $selectedUserPermissions = $request->selected_user_permissions;
-
-            if ($selectedUsers) {
-                foreach ($selectedUsers as $userId) {
-                    if (isset($selectedUserPermissions[$userId])) {
-                        foreach ($selectedUserPermissions[$userId] as $permissionId) {
+            if ($documentDTO->selectedUsers) {
+                foreach ($documentDTO->selectedUsers as $userId) {
+                    if (isset($documentDTO->selectedUserPermissions[$userId])) {
+                        foreach ($documentDTO->selectedUserPermissions[$userId] as $permissionId) {
                             $docPermition = DocumentPermitionType::firstOrCreate(
                                 ['document_permition_id' => $permissionId,
                                     'user_id' => $userId,
@@ -278,12 +270,9 @@ class DocumentController extends Controller
                 }
             }
 
-
             $document->save();
 
-            return redirect()->route('documents.index', $id)->with('success', 'Documento atualizado com sucesso!');
-        } else {
-            return redirect()->route('documents.index', $id)->with('error', 'Documento não encontrado!');
+            return redirect()->route('documents.index')->with('success');
         }
     }
 
