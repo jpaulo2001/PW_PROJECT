@@ -32,22 +32,9 @@
         @error('selected_departments') <span class="text-danger">{{ $message }}</span><br>@enderror
 
         <b>Escolher Utilizador:</b> <br>
-        @foreach ($users as $user)
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="selected_users[]" value="{{ $user->id }}">
-                <label class="form-check-label">{{ $user->name }}</label>
-            </div>
-
-            <b>Permissões do Utilizador:</b> <br>
-            @foreach ($permitions as $permition)
-                <div class="form-check">
-                    <input class="form-check-input user-permission" type="checkbox" name="selected_user_permissions[{{ $user->id }}][]" value="{{ $permition->id }}">
-                    <label class="form-check-label">{{ $permition->types }}</label>
-                </div>
-            @endforeach
-            @error('permition') <span class="text-danger">{{ $message }}</span><br>@enderror
-        @endforeach
+        @livewire('user-page')
         @error('selected_users') <span class="text-danger">{{ $message }}</span><br>@enderror
+
 
         <b>Escolher ficheiro:</b><br>
         <input type="file" name="file" class="form-control"><br>

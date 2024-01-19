@@ -122,7 +122,7 @@ class DocumentController extends Controller
         $userDocument->document_id = $document->id;
         $userDocument->user_id = Auth::user()->id;
         $userDocument-> save();
-        
+
         $historic = new Historic;
         $historic->document_id = $document->id;
         $historic->body = ('Document created');
@@ -191,7 +191,7 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        
+
         $document = Document::find($id);
         $departments = Department::all();
         $permitions = DocumentPermition::all();
