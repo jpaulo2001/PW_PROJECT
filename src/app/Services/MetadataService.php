@@ -6,33 +6,31 @@ use App\Models\Mdata;
 
 class MetadataService
 {
-    public function createMetadata(array $metadataData)
+    public function getAllMdatas()
     {
-        $mdata = new Mdata;
-        $mdata->doc_name = $metadataData['doc_name'];
-        $mdata->size = $metadataData['size'];
-        $mdata->type = $metadataData['type'];
-        $mdata->format = $metadataData['format'];
-        $mdata->save();
-
-        return $mdata;
+        return Mdata::orderBy('id')->paginate(25);
     }
 
-    public function updateMetadata(string $id, array $metadataData)
+    public function createMdata($mdata)
     {
-        $mdata = Mdata::find($id);
-        if ($mdata) {
-            $mdata->doc_name = $metadataData['doc_name'];
-            $mdata->size = $metadataData['size'];
-            $mdata->type = $metadataData['type'];
-            $mdata->format = $metadataData['format'];
-            $mdata->save();
+        Mdata::create(['mdata' => $mdata]);
+    }
+
+    public function getMdataById($id)
+    {
+        return Mdata::find($id);
+    }
+
+    public function updateMdata($id, $mdata)
+    {
+        $mdataModel = Mdata::find($id);
+        if ($mdataModel) {
+            $mdataModel->mdata = $mdata;
+            $mdataModel->save();
         }
-
-        return $mdata;
     }
 
-    public function deleteMetadata(string $id)
+    public function deleteMdata($id)
     {
         $mdata = Mdata::find($id);
         if ($mdata) {

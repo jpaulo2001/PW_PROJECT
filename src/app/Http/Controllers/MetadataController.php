@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Mdata;
 use App\Services\MetadataService;
 
 class MetadataController extends Controller
@@ -20,13 +19,8 @@ class MetadataController extends Controller
      */
     public function index()
     {
-        $mdatas = Mdata::orderBy('id')->paginate(25);
-        return view(
-            'documentMdatas.index',
-            [
-                'mdatas' => $mdatas
-            ]
-        );
+        $mdatas = $this->metadataService->getAllMdatas();
+        return view('documentMdatas.index', ['mdatas' => $mdatas]);
     }
 
     /**
@@ -34,7 +28,7 @@ class MetadataController extends Controller
      */
     public function create()
     {
-        return view ('documentMdatas.create');
+        return view('documentMdatas.create');
     }
 
     /**
@@ -42,20 +36,16 @@ class MetadataController extends Controller
      */
     public function store(Request $request)
     {
-        $mdata = new Mdata;
-        $mdata->mdata = $request->mdata;
-        $mdata->save();
-        return redirect()->route('documentMdatas.index')->with('sucess');
+        $this->metadataService->createMdata($request->mdata);
+        return redirect()->route('documentMdatas.index')->with('success', 'Mdata created successfully');
     }
-
 
     /**
      * Display the specified resource.
      */
     public function show(string $format)
     {
-        $mdatas = Mdata::all();
-
+        $mdatas = $this->metadataService->getAllMdatas();
         return view('documentMdatas.show', ['mdatas' => $mdatas]);
     }
 
@@ -64,8 +54,8 @@ class MetadataController extends Controller
      */
     public function edit(string $id)
     {
-        $mdatas = Mdata::find($id);
-        return view('documentMdatas.edit', compact('mdatas'));
+        $mdata = $this->metadataService->getMdataById($id);
+        return view('documentMdatas.edit', compact('mdata'));
     }
 
     /**
@@ -73,11 +63,7 @@ class MetadataController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $mdata = Mdata::find($id);
-        if($mdata){
-            $mdata->mdata = $request->mdata;
-            $mdata->save();
-        }
+        $this->metadataService->updateMdata($id, $request->mdata);
         return redirect()->route('documentMdatas.index')->with('success', 'Mdata updated successfully');
     }
 
@@ -86,11 +72,7 @@ class MetadataController extends Controller
      */
     public function destroy(string $id)
     {
-        $mdata = Mdata::find($id);
-        if (empty($mdata)) {
-            abort(404);
-        }
-        $mdata->delete();
-        return redirect()->route('documentMdatas.index');
+        $this->metadataService->deleteMdata($id);
+        return redirect()->route('documentMdatas.index')->with('success', 'Mdata deleted successfully');
     }
 }

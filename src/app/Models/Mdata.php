@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Mdata extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ['mdata'];
 
 
     public function documentMdata(){
