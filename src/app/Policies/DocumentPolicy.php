@@ -60,7 +60,7 @@ class DocumentPolicy
     /**
      * Determine whether the Document can create models.
      */
-    public function create(Document $document): bool
+    public function create(): bool
     {
         return true;
     }
