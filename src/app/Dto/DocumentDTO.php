@@ -4,35 +4,36 @@ namespace App\Dto;
 
 class DocumentDTO
 {
-    public string $path;
-    public string $doc_name;
-    public string $author;
-    public string $type;
-    public string $proprietary;
-    public string $file_size;
-    public string $file_extension;
+    public $file;
+    public $mdatas_ids;
+    public $mdatas_values;
+    public $selectedDepartments;
+    public $selected_permissions;
+    public $selectedUsers;
+    public $selectedUserPermissions;
 
-    public function __construct(string $path, string $doc_name, string $author, string $type, string $proprietary, string $file_size, string $file_extension)
+    public function __construct($data)
     {
-        $this->path = $path;
-        $this->doc_name = $doc_name;
-        $this->author = $author;
-        $this->type = $type;
-        $this->proprietary = $proprietary;
-        $this->file_size = $file_size;
-        $this->file_extension = $file_extension;
+        $this->file = $data['file'];
+        $this->mdatas_ids = $data['mdata_id'];
+        $this->mdatas_values = $data['mdata_value'];
+        $this->selectedDepartments = $data['selected_departments'] ?? [];
+        $this->selected_permissions = $data['selected_permissions'] ?? [];
+        $this->selectedUsers = $data['selected_users'] ?? [];
+        $this->selectedUserPermissions = $data['selected_user_permissions'] ?? [];
     }
+
 
     public function toArray(): array
     {
         return [
-            'path' => $this->path,
-            'doc_name' => $this->doc_name,
-            'author' => $this->author,
-            'type' => $this->type,
-            'proprietary' => $this->proprietary,
-            'file_size' => $this->file_size,
-            'file_extension' => $this->file_extension,
+            'file' => $this->file,
+            'mdata_id' => $this->mdatas_ids,
+            'mdata_value' => $this->mdatas_values,
+            'selected_departments' => $this->selectedDepartments,
+            'selected_permissions' => $this->selected_permissions,
+            'selected_users' => $this->selectedUsers,
+            'selected_user_permissions' => $this->selectedUserPermissions,
         ];
     }
 }
