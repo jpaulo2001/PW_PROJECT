@@ -76,12 +76,12 @@ class HistoricController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //update logic
         $historic = Historic::find($id);
         $historic->body = $request->input('body');
         $historic->document_id = $request->input("document_id");
         $historic->update();
         return redirect()->route('historics.index')->with('sucess');
+
     }
 
     /**
@@ -93,6 +93,7 @@ class HistoricController extends Controller
         if (empty($historic)) {
             abort(404);
         }
+        
         $historic->delete();
         return redirect()->route('historics.index');
     }

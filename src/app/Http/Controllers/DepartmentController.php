@@ -21,6 +21,7 @@ class DepartmentController extends Controller
 {
     protected $departmentService;
 
+    // Inject DepartmentService
     public function __construct(DepartmentService $departmentService)
     {
         $this->departmentService = $departmentService;
@@ -28,16 +29,19 @@ class DepartmentController extends Controller
 
     public function index()
     {
+        // Get departments from service
         $departments = $this->departmentService->getAllDepartments();
+        // Return departments view with data
         return view('departments.index', ['departments' => $departments]);
     }
 
-    public function create()
+   
+    public function create() // Display department creation form
     {
         return view('departments.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request) // Store new department
     {
         $data = $request->only(['name', 'code']);
         $this->departmentService->createDepartment($data);
@@ -45,21 +49,21 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index')->with('success', 'Department created successfully.');
     }
 
-    public function show($id)
-    {
+    public function show($id)  // show new department by id
+    { 
         $department = $this->departmentService->getDepartmentById($id);
 
         return view('departments.show', ['department' => $department]);
     }
 
-    public function edit($id)
+    public function edit($id) // edit new department by id
     {
         $department = $this->departmentService->getDepartmentById($id);
 
         return view('departments.edit', ['department' => $department]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // update new department by id
     {
         $data = $request->only(['name', 'code']);
         $this->departmentService->updateDepartment($id, $data);
@@ -67,7 +71,7 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy($id) // delete new department by id
     {
         $this->departmentService->deleteDepartment($id);
 
