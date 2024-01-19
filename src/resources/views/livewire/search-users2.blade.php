@@ -41,21 +41,26 @@
                     <th class="text-end">Acções</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @foreach($users as $user)
                     <tr>
                         <td>
                             <input type="checkbox" wire:model="selectedUsers.{{ $user->id }}">
                         </td>
+
+
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ optional($user->department)->name }}</td>
                         <td class="text-end">
                             <a href="{{ route('users.show', ['user' => $user]) }}" class="btn btn-primary btn-sm">Ver</a>
+
                             @can('update', $user)
                                 <a href="{{ route('users.edit', ['user' => $user]) }}"
                                    class="btn btn-warning btn-sm">Modificar</a>
                             @endcan
+
                             @can('delete', $user)
                                 @if ($user->id == $userId)
                                     <button wire:click="deleteUser({{ $user->id }})" class="btn btn-danger">Tem a
@@ -72,6 +77,7 @@
                 @endforeach
                 </tbody>
             </table>
+
              {{ $users->links() }}
         </div>
     </div>

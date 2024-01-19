@@ -21,6 +21,7 @@ class DepartmentController extends Controller
 {
     protected $departmentService;
 
+    // Inject DepartmentService
     public function __construct(DepartmentService $departmentService)
     {
         $this->departmentService = $departmentService;
@@ -28,7 +29,9 @@ class DepartmentController extends Controller
 
     public function index()
     {
+        // Get departments from service
         $departments = $this->departmentService->getAllDepartments();
+        // Return departments view with data
         return view('departments.index', ['departments' => $departments]);
     }
 

@@ -19,7 +19,6 @@
                         </div>
                     @endif
 
-
                     <p><strong>ID do Documento:</strong> {{ $document->id }}</p>
                     <p><strong>Caminho do Documento:</strong> {{ $document->path }}</p>
 
@@ -27,64 +26,29 @@
                         $documentData = app('App\Http\Controllers\DocumentController')->getDocumentData($document->id);
                     @endphp
 
-                        @if ($documentData)
-                            <p><strong>Nome do Documento:</strong>
-                                @if ($documentData = \DB::table('document_mdatas')
-                                    ->where('document_id', $document->id)
-                                    ->where('mdata_id', 1)
-                                    ->select('content')
-                                    ->first())
-                                    {{ $documentData->content }}
-                                @endif
-                            </p>
+                    @if ($documentData)
+                        @foreach ($documentData as $data)
+                            <p><strong>{{ $data->name }}:</strong> {{ $data->content }}</p>
+                        @endforeach
+                    @endif
 
-                            <p><strong>Tipo:</strong>
-                                @if ($documentData = \DB::table('document_mdatas')
-                                    ->where('document_id', $document->id)
-                                    ->where('mdata_id', 4)
-                                    ->select('content')
-                                    ->first())
-                                    {{ $documentData->content }}
-                                @endif
-                            </p>
-                            <p><strong>Formato:</strong>
-                                @if ($documentData = \DB::table('document_mdatas')
-                                    ->where('document_id', $document->id)
-                                    ->where('mdata_id', 3)
-                                    ->select('content')
-                                    ->first())
-                                    {{ $documentData->content }}
-                                @endif
-                            </p>
+                    @php
+                        if (Storage::exists($document->path)) {
+                            $content = Storage::get($document->path);
+                            $type = Storage::mimeType($document->path);
+                        } else {
+                            $content = 'O documento solicitado não existe.';
+                            $type = '';
+                        }
+                        
+                    @endphp
 
-                            <p><strong>Tamanho:</strong>
-                                @if ($documentData = \DB::table('document_mdatas')
-                                    ->where('document_id', $document->id)
-                                    ->where('mdata_id', 2)
-                                    ->select('content')
-                                    ->first())
-                                    {{ $documentData->content }}
-                                @endif
-                            </p>
-                        @endif
-
-                        @php
-                            if (Storage::exists($document->path)) {
-                                $content = Storage::get($document->path);
-                                $type = Storage::mimeType($document->path);
-                            } else {
-                                $content = 'O documento solicitado não existe.';
-                                $type = '';
-                            }
-                        @endphp
-
-                        @if (Str::startsWith($type, 'image/'))
-                            <img src="data:{{ $type }};base64,{{ base64_encode($content) }}" />
-                        @else
-                            <pre>{{ $content }}</pre>
-                        @endif
+                    @if (Str::startsWith($type, 'image/'))
+                        <img src="data:{{ $type }};base64,{{ base64_encode($content) }}" />
+                    @else
+                        <pre>{{ $content }}</pre>
+                    @endif
                 </div>
-
             </div>
         </div>
     </div>
