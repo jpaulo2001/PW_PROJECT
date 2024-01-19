@@ -13,6 +13,7 @@ use App\Models\Mdata;
 use App\Models\UserDocument;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Historic;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Services\DocumentService;
@@ -81,8 +82,9 @@ class DocumentController extends Controller
         $departments = Department::all();
         $permitions = DocumentPermition::all();
         $mdatas = Mdata::all();
+        $historics = Historic::all();
 
-        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas'));
+        return view('documents.create', compact('users', 'departments', 'permitions', 'mdatas','historics'));
     }
 
     /**
@@ -118,6 +120,11 @@ class DocumentController extends Controller
         $userDocument->document_id = $document->id;
         $userDocument->user_id = Auth::user()->id;
         $userDocument-> save();
+        
+        $historic = new Historic;
+        $historic->document_id = $document->id;
+        $historic->body = 'Document created';  // You can customize the body message
+        $historic->save();
 
         // Permissao para o user que carregou o documento
         for ($permition_id = 1; $permition_id <= 4; $permition_id++) {
@@ -127,6 +134,8 @@ class DocumentController extends Controller
             $docPermition->document_id = $document->id;
             $docPermition->save();
         }
+
+
 
         $selectedDepartments = $request->selected_departments;
         $selected_permissions = $request->selected_permissions;
@@ -159,6 +168,7 @@ class DocumentController extends Controller
                 }
             }
         }
+
         return redirect()->route('documents.store')->with('success');
     }
 

@@ -3,7 +3,7 @@
 namespace App\Services;
 use Carbon\Carbon;
 use App\Models\Document;
-use App\Models\DocumentMdata;
+use App\Models\Historic;
 use Illuminate\Support\Facades\File;
 
 class DashboardService
@@ -23,7 +23,7 @@ class DashboardService
         // Get historic records for the last seven documents
         $date = Carbon::now()->subDays(5);
 
-        return DocumentMdata::whereIn('document_id', $documentIds)
+        return Historic::whereIn('document_id', $documentIds)
             ->where('created_at', '>=', $date)
             ->orderByDesc('created_at') // Order by 'created_at' in descending order
             ->get();
@@ -51,7 +51,7 @@ class DashboardService
 
         $memoryData = [
             'Memoria Ocupada' => $occupiedMemoryGB,
-            'Memoria Livre' => $freeMemoryGB,
+            'Memoria Livre' => $freeMemoryGB
         ];
 
         return $memoryData;
