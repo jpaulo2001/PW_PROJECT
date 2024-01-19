@@ -5,7 +5,7 @@
         <div class="row mt-5">
             <div class="col">
 
-                @livewire('search-users2')
+                @livewire ('search-users2')
 
                 <table class="table table-striped table-hover">
                     <!-- Resto do conteúdo da tabela -->
