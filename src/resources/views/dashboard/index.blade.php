@@ -5,6 +5,7 @@
 
 
     .container {
+        
         max-width: 1200px;
         margin: 20px auto;
         background-color: #fff;
@@ -34,6 +35,11 @@
         font-weight: bold;
         color: #333;
     }
+    ul{
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
     
 </style>
 @section('main-content')
@@ -46,65 +52,66 @@
                         $documents = app(\App\Services\DashboardService::class)->getLastSevenDocuments();
                     @endphp
 
-                    @if ($documents->isEmpty())
-                        <p>Não existem Documentos na ultima semana.</p>
-                    @else
-                        <ul>
-                            @foreach ($documents as $document)
-                                <li>
-                                    <strong>Document ID:</strong> {{ $document->document_id }}
-                                    <br>
-                                    <strong>Created At:</strong> {{ $document->created_at }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                @if ($documents->isEmpty())
+                <p>No documents found in the last 3 days.</p>
+                @else
+                <ul>
+                    @foreach ($documents as $document)
+                        <li>
+                            Document ID: {{ $document->id }}<br>
+                            Criado em : {{ $document->created_at }}<br>
+                        </li>
+                    @endforeach
+                </ul>
+
+                @endif
             </div>
             <div class="col-sm">
               <h1>Memoria Utilizada</h1>
-<html>
-<head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script type="text/javascript">
-        google.charts.load("current", {packages:["corechart"]});
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            // Make an AJAX request to the Laravel route
-            $.ajax({
-                url: '/dashboard/get-file-sizes',
-                dataType: 'json',
-                success: function(data) {
-                    var totalMemory = 100; // Assuming total memory is 100% (you can modify this value based on your system)
-                    var usedMemory = 0;
-
-                    var chartData = [['Memoria', 'Valor memoria']];
-                    $.each(data, function(key, value) {
-                        chartData.push([key, value]);
-                        usedMemory += value;
-                    });
-
-                    var remainingMemory = totalMemory - usedMemory;
-                    chartData.push(['Memoria Disponivel', remainingMemory]);
-
-                    var chartDataArray = google.visualization.arrayToDataTable(chartData);
-
-                    var options = {
-                        is3D: true,
-                    };
-
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-                    chart.draw(chartDataArray, options);
-                }
-            });
-        }
-    </script>
-</head>
-<body>
-    <div id="piechart_3d" style="width: 400px; height: 600px;"></div>
-</body> 
-</html>
+              <html>
+              <head>
+                  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                  <script type="text/javascript">
+                      google.charts.load("current", {packages:["corechart"]});
+                      google.charts.setOnLoadCallback(drawChart);
+              
+                      function drawChart() {
+                          // Make an AJAX request to the Laravel route
+                          $.ajax({
+                              url: '/dashboard/get-file-sizes',
+                              dataType: 'json',
+                              success: function(data) {
+                                  var totalMemory = 100; // Assuming total memory is 100% (you can modify this value based on your system)
+                                  var usedMemory = 0;
+              
+                                  var chartData = [['Memoria', 'Valor memoria']];
+                                  $.each(data, function(key, value) {
+                                      chartData.push([key, value]);
+                                      usedMemory += value;
+                                  });
+              
+                                  
+                                  var remainingMemory = totalMemory - usedMemory;
+                                  chartData.push(['Memoria Disponivel', remainingMemory]);
+              
+                                  var chartDataArray = google.visualization.arrayToDataTable(chartData);
+              
+                                  var options = {
+                                      is3D: true,
+                                  };
+              
+                                  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                                  chart.draw(chartDataArray, options);
+                              }
+                          });
+                      }
+                  </script>
+              </head>
+              <body>
+                  <div id="piechart_3d" style="width: 400px; height: 600px;"></div>
+              </body> 
+              </html>
             </div>
         </div>
     </div>

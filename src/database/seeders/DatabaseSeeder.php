@@ -30,8 +30,7 @@ class DatabaseSeeder extends Seeder
         if (App::environment() == 'local') {
             Department::factory(8)->create();
             User::factory(500)->create();
-            User::factory()->create(['name' => 'Test User', 'email' => 'test@example.com', 'password'=> "test123"]);
-
+            User::factory()->create(['name' => 'admin', 'email' => 'admin@example.com', 'password'=> "admin123"]);
             Document::factory(500)->create();
             Historic::factory(500)->create();
             Mdata::factory(6)->create();
@@ -39,6 +38,7 @@ class DatabaseSeeder extends Seeder
             DocumentPermitionType::factory(500)->create();
             UserTypePermition::factory(5)->create();
             UserType::factory(500)->create();
+            UserType::factory()->create(['user_type_permition_id'=>'1','user_id'=>"501"]);
 
             DocumentMdata::factory(500)->create(); // ok
 

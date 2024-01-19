@@ -15,6 +15,8 @@ class DashboardController extends Controller
         $this->dashboardService = $dashboardService;
     }
 
+    
+
     public function getFileSizes()
     {
         $folderPath = storage_path('app/files');
