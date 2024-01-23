@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col">
-                @can('create', App\Models\User::class)
+{{--                @can('create', App\Models\User::class)--}}
                     <a href="{{ route('documentMdatas.create') }}" class="btn btn-success btn-sm mb-3">Criar</a>
-                @endcan
+{{--                @endcan--}}
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
