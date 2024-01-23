@@ -33,7 +33,7 @@
                         <p><strong>Nome do Documento:</strong>
                             @if ($documentData = \DB::table('document_mdatas')
                                 ->where('document_id', $document->id)
-                                ->where('mdata_id', 1)
+                                ->where('mdata_id', 3)
                                 ->select('content')
                                 ->first())
                                 {{ $documentData->content }}
@@ -52,7 +52,7 @@
                         <p><strong>Formato:</strong>
                             @if ($documentData = \DB::table('document_mdatas')
                                 ->where('document_id', $document->id)
-                                ->where('mdata_id', 3)
+                                ->where('mdata_id', 2)
                                 ->select('content')
                                 ->first())
                                 {{ $documentData->content }}
@@ -62,7 +62,7 @@
                         <p><strong>Tamanho:</strong>
                             @if ($documentData = \DB::table('document_mdatas')
                                 ->where('document_id', $document->id)
-                                ->where('mdata_id', 2)
+                                ->where('mdata_id', 1)
                                 ->select('content')
                                 ->first())
                                 {{ $documentData->content }}
