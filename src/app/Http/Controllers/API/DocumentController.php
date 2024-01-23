@@ -47,8 +47,6 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-       //verificar DOCUMENTO
-            //FAZER
 
         //validar dados path
         $validator = Validator::make($request->all(),[
@@ -109,7 +107,7 @@ class DocumentController extends Controller
 
         if($validator->fail()){ //user se falha retorna 404
             return response()->json([
-                'status' => 422,
+                'status' => 422, // nao pode ser processado
                 'message' => "Nao existe esse documento"
             ],422);
         }else{

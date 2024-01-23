@@ -26,7 +26,7 @@
                         $documentData = app('App\Http\Controllers\DocumentController')->getDocumentData($document->id);
                     @endphp
 
-                    @if ($documentData)
+                    @if (is_array($documentData))
                         @foreach ($documentData as $data)
                             <p><strong>{{ $data->name }}:</strong> {{ $data->content }}</p>
                         @endforeach
@@ -40,7 +40,7 @@
                             $content = 'O documento solicitado não existe.';
                             $type = '';
                         }
-                        
+
                     @endphp
 
                     @if (Str::startsWith($type, 'image/'))
