@@ -17,8 +17,6 @@
                             <tr>
                                 <th>Data da Modificação</th>
                                 <th>Modificações</th>
-
-
                             </tr>
                             </thead>
                             <tbody>
@@ -26,8 +24,6 @@
                                 <tr>
                                     <td>{{ $historic->created_at }}</td>
                                     <td>{{ $historic->body }}</td>
-
-
                                 </tr>
                             @endforeach
                             </tbody>

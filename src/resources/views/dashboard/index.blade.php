@@ -5,7 +5,7 @@
 
 
     .container {
-        
+
         max-width: 1200px;
         margin: 20px auto;
         background-color: #fff;
@@ -40,7 +40,7 @@
         padding: 0;
         margin: 0;
     }
-    
+
 </style>
 @section('main-content')
     <div class="container">
@@ -102,11 +102,10 @@
                                         </head>
                                         <body>
                                             <div id="piechart_3d" style="width: 400px; height: 600px;"></div>
-                                        </body> 
+                                        </body>
                                         </html>
                                     </div>
                                 </div>
-                
             </div>
         </div>
     </div>

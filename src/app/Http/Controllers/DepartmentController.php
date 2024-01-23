@@ -10,13 +10,6 @@ use App\Services\DocumentPermitionService;
 use App\Services\DepartmentService;
 
 
-
-
-namespace App\Http\Controllers;
-
-use App\Services\DepartmentService;
-use Illuminate\Http\Request;
-
 class DepartmentController extends Controller
 {
     protected $departmentService;
@@ -35,7 +28,7 @@ class DepartmentController extends Controller
         return view('departments.index', ['departments' => $departments]);
     }
 
-   
+
     public function create() // Display department creation form
     {
         return view('departments.create');
@@ -50,7 +43,7 @@ class DepartmentController extends Controller
     }
 
     public function show($id)  // show new department by id
-    { 
+    {
         $department = $this->departmentService->getDepartmentById($id);
 
         return view('departments.show', ['department' => $department]);

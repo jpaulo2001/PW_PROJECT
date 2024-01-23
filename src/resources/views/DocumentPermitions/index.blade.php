@@ -16,8 +16,8 @@
                             <th>{{ $permition->name }}</th>
                             <th>{{ $permition->code }}</th>
                             <td class="text-end">
-                                </form>
-                                @endcan
+{{--                                </form>--}}
+{{--                                @endcan--}}
                             </td>
                         </tr>
                     @endforeach

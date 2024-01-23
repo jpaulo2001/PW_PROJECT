@@ -108,7 +108,7 @@ class DocumentController extends Controller
         $extension = $file->getClientOriginalExtension();
 
         // Add the size and extension at the beginning of the array
-        array_unshift($documentDTO->mdatas_values, $size, $extension);
+        array_unshift($documentDTO->mdatas_values, $size, $extension); // um ou mais elementos no array
         array_unshift($documentDTO->mdatas_ids, 1, 2); // Add fictitious IDs for size and type
 
         for($key = 0; $key < count($documentDTO->mdatas_ids); $key++) {
@@ -347,14 +347,13 @@ class DocumentController extends Controller
         $documents = Document::all();
 
         foreach ($documents as $document) {
-            // Obtenha todos os utilizadores associados ao documento
+            // Obter todos os utilizadores associados ao documento
             $users = $document->userDocument()->pluck('user_id');
 
             // Enviar e-mail para cada utilizador associado a este documento
             foreach ($users as $userId) {
                 $user = User::find($userId);
 
-                // Certifique-se de que você está utilizando a classe Mail corretamente
                 Mail::to($user->email)->send(new MailClass($user, $document));
             }
         }

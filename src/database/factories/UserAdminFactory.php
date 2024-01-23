@@ -33,7 +33,6 @@ class UserAdminFactory extends Factory
     {
         return $this->state([
             'user_type_permition_id' => 1,
-            // Set any additional attributes for admin users here
         ]);
     }
 }
